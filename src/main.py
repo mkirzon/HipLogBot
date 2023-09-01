@@ -16,6 +16,7 @@ run_with_ngrok(app)  # Initialize ngrok when the app is run
 # else:
 #   print('all good')
 
+# change
 @app.route('/')
 def hello():
     return "Hello, Flask on Google Colab!"
