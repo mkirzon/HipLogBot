@@ -1,4 +1,6 @@
-from src.models.measurement import Measurement
+import sys 
+print(sys.path)
+from measurement import Measurement
 
 class Record:
   """

@@ -1,5 +1,8 @@
+import sys
 import pytest
-from src.models.measurement import Measurement  
+print(sys.path)
+from models.measurement import Measurement  
+
 
 def test_initialization():
     m = Measurement(10, "mg")
