@@ -1,4 +1,4 @@
-import json
+from src.models.measurement import Measurement
 
 class Record:
   """
