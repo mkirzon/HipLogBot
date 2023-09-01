@@ -1,7 +1,7 @@
 import sys
 import pytest
 print(sys.path)
-from models.measurement import Measurement  
+from src.models.measurement import Measurement  
 
 
 def test_initialization():

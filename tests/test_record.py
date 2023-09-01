@@ -1,9 +1,9 @@
 # import pytest
 import sys
-sys.path.append('/Users/mkirzon/Documents/2023/230901 - Hip Log Bot/src/mypkg/models')
+sys.path.append('/Users/mkirzon/Documents/2023/230901 - Hip Log Bot/src/models')
 
-from models.record import Record, Activity, Pain
-from models.measurement import Measurement  
+from src.models.record import Record, Activity, Pain
+from src.models.measurement import Measurement  
 
 # Tests for Record class
 def test_record_initialization():
