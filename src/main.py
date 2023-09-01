@@ -5,6 +5,10 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import traceback
 
+from services.db_logs import DBLogs
+from services.intent_handler import Intent
+
+
 app = Flask(__name__)
 run_with_ngrok(app)  # Initialize ngrok when the app is run
 

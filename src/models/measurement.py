@@ -20,13 +20,11 @@ class Measurement:
       'unit': self.unit
     }
 
-  # Additional methods can be added for functionality like conversion
-  # For example, to convert weights from pounds to kilograms:
   def to_kilograms(self):
-    if self.unit == "pounds":
-      converted_value = self.amount * 0.453592
-      return Measurement(converted_value, "kg")
+    if self.unit == "lb":
+      self.amount = self.amount * 0.453592
+      self.unit = "kg"
     elif self.unit == "kg":
-      return self
+      pass
     else:
       raise ValueError(f"Cannot convert {self.unit} to kilograms")
