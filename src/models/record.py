@@ -1,5 +1,8 @@
-import sys 
+import logging
 from src.models.measurement import Measurement
+
+logger = logging.getLogger(__name__)
+
 
 class Record:
   """
@@ -12,10 +15,12 @@ class Record:
     self.name = name
     for key, value in attributes.items():
       setattr(self, f"{key}", value)
+    logger.debug(f"Initialized Record '{self.name}' with {len(self.get_attributes())} attributes")
 
   def get_attributes(self) -> dict:
     """Get a dictionary of all the Record attributes that we created. Necessary because these are dynamically created. 
-    This is different from `to_dict()` because the values here can be non-dicts (eg Measurement)
+    This is different from `to_dict()` because the values here can be non-dicts (eg Measurement). 
+    Note this also returns the name
 
     Returns:
         dict: Dict value

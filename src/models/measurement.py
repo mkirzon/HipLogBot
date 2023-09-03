@@ -1,3 +1,7 @@
+import logging
+
+logger = logging.getLogger(__name__)
+
 class Measurement:
   ALLOWED_UNITS = ["mg", "oz", "g", "CD", "kg", "lb", "t", 	"s", "second", "min", "h", "day", "wk", "mo", "yr", "decade", "century"]
 
