@@ -23,7 +23,6 @@ run_with_ngrok(app)  # Initialize ngrok when the app is run
 # else:
 #   print('all good')
 
-# change4
 
 @app.route('/')
 def hello():
@@ -33,7 +32,7 @@ def hello():
 @app.route('/webhook', methods=['POST'])
 def webhook():
 
-  # Get dialog flow request
+# Get dialog flow request
   req = request.get_json(force=True)
 
   try:
