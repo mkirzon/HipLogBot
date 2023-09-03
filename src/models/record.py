@@ -1,6 +1,5 @@
 import sys 
-print(sys.path)
-from measurement import Measurement
+from src.models.measurement import Measurement
 
 class Record:
   """
@@ -15,6 +14,13 @@ class Record:
       setattr(self, f"{key}", value)
 
   def get_attributes(self) -> dict:
+    """Get a dictionary of all the Record attributes that we created. Necessary because these are dynamically created. 
+    This is different from `to_dict()` because the values here can be non-dicts (eg Measurement)
+
+    Returns:
+        dict: Dict value
+    """
+
     attrs = {}
     for key, value in self.__dict__.items():
         if not key.startswith('__') and not callable(value):
@@ -34,7 +40,12 @@ class Record:
 
     return ', '.join(parts)
 
-  def to_dict(self):
+  def to_dict(self) -> dict:
+    """Get a fully converted dictionary representation of the record (even nested objects will be standard dicts)
+
+    Returns:
+        dict: Dictionary
+    """
     x = {}
     for k, v in self.get_attributes().items():
       if isinstance(v, Measurement):

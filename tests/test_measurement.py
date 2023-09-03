@@ -1,6 +1,5 @@
 import sys
 import pytest
-print(sys.path)
 from src.models.measurement import Measurement  
 
 
