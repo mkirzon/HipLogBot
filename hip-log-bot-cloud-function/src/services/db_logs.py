@@ -10,7 +10,6 @@ class DBLogs:
         """Initialize a handler for my Firestore database.
         This assumes you have the firebase app already started outside of this context
         with `firebase_admin.initialize_app()`
-
         """
         self._db = firestore.client()
         self._collection_ref = self._db.collection("activityLogs")

@@ -1,5 +1,3 @@
-# This is for testing what i'm doing in cloud function
-
 import os
 import logging
 import traceback
@@ -7,18 +5,19 @@ import firebase_admin
 import functions_framework
 from services.db_logs import DBLogs
 from services.intent_handler import Intent
+from dotenv import load_dotenv
+
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG)
 
-# Currently this is what i have to do different in cloud functions since for some
-# reason this isn't detected automatically from the service account(but I'm not
-# convinced it's using the service accoutn )
-os.environ["GOOGLE_CLOUD_PROJECT"] = "hip-log-bot"
+logger = logging.getLogger(__name__)
+load_dotenv()
 
 
 @functions_framework.http
 def main(request):
+    logger.debug("Starting function")
     req = request.get_json(force=True)
 
     # Initialize the firebase components
@@ -32,6 +31,9 @@ def main(request):
     # Start pasting here
     try:
         # Initialize handlers
+        # logger.debug(
+        #     f"Env var 'GOOGLE_APPLICATION_CREDENTIALS': {os.environ['GOOGLE_APPLICATION_CREDENTIALS']}"
+        # )
         db_logs = DBLogs()
         intent = Intent(req)
         logger.info(
