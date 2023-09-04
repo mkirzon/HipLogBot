@@ -3,12 +3,13 @@ import traceback
 import logging
 import firebase_admin
 
+from dotenv import load_dotenv
 from flask import Flask, request
 from flask_ngrok import run_with_ngrok
 
 
-from services.db_logs import DBLogs
-from services.intent_handler import Intent
+from src.services.db_logs import DBLogs
+from src.services.intent_handler import Intent
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -16,9 +17,7 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 run_with_ngrok(app)  # Initialize ngrok when the app is run
 
-os.environ[
-    "FIRESTORE_KEY_PROD"
-] = "/Users/mkirzon/Downloads/Project Auths/hip-log-bot-firebase-prod.json"
+load_dotenv()
 
 
 @app.route("/")
@@ -33,7 +32,7 @@ def webhook():
 
     # Initialize the firebase components
     firebase_cred = firebase_admin.credentials.Certificate(
-        os.environ.get("FIRESTORE_KEY_PROD")
+        os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
     )
     try:
         fb_app = firebase_admin.get_app(firebase_cred)

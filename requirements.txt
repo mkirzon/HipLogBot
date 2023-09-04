@@ -3,3 +3,4 @@ flask-ngrok>=0.0.25
 flask>=0.8
 pytest
 functions-framework==3.*
+python-dotenv
