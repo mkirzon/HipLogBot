@@ -17,7 +17,7 @@ app = Flask(__name__)
 run_with_ngrok(app)  # Initialize ngrok when the app is run
 
 os.environ[
-    "FIRESTORE_KEY_PROD"
+    " "
 ] = "/Users/mkirzon/Downloads/Project Auths/hip-log-bot-firebase-prod.json"
 
 
