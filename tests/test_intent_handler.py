@@ -26,13 +26,25 @@ def sample_requests():
                 "intent": {"displayName": "LogActivity"},
             }
         },
+        "pain_basic": {
+            "queryResult": {
+                "parameters": {
+                    "pain_level": "2",
+                    "body_part": "Left hip",
+                    "date": "2023-08-31T12:00:00+01:00",
+                },
+                "intent": {
+                    "displayName": "LogPain",
+                },
+            }
+        },
     }
 
     return x
 
 
 # Tests for DailyLog class
-def test_intent_initialization(sample_requests):
+def test_intent_initialization_for_activity(sample_requests):
     intent = Intent(sample_requests["activity_basic"])
     assert intent._type == "LogActivity"
     assert intent._raw_entity == {
@@ -48,6 +60,12 @@ def test_intent_initialization_with_weight(sample_requests):
         "name": "Hip Adductions",
         "weight": {"amount": 10, "unit": "kg"},
     }
+
+
+def test_intent_initialization_for_pain(sample_requests):
+    intent = Intent(sample_requests["pain_basic"])
+    assert intent._date == "2023-08-31"
+    assert intent._log_input == {"name": "Left Hip", "level": 2}
 
 
 def test_invalid_intent_type():

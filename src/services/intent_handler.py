@@ -1,4 +1,3 @@
-import copy
 import json
 import logging
 
@@ -82,10 +81,10 @@ class Intent:
         """Parse the raw entity dict into the dict input that matches the dict
         initialization format of the Activity/Pain/Record classes
 
-        This sets the _log_input attribute, which is different from raw_entity:
+        This sets the _log_input attribute, which aligns the names and types:
         * 'date' is removed
         * 'acitivity' or 'body_part' will be renamed to 'name'
-        * 'pain_level' will be renamed to 'level'
+        * 'pain_level' will be renamed to 'level' and cast to int
         * Any attributes that are empty (strings), will be skipped
 
         Raises:
@@ -116,4 +115,4 @@ class Intent:
             elif self.type == "LogPain":
                 logger.debug("Parsing LogPain entity")
                 self._log_input["name"] = self._log_input.pop("body_part").title()
-                self._log_input["level"] = self._log_input.pop("pain_level")
+                self._log_input["level"] = int(self._log_input.pop("pain_level"))
