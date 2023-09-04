@@ -1,16 +1,31 @@
-# import models.record
+import os
 import logging
-from models.daily_log import DailyLog
-from src.models.record import Activity
+import firebase_admin
 
-logging.basicConfig(level=logging.DEBUG)
+from services.db_logs import DBLogs
 
-# record = Record("Test", attr1="value1", attr2=Measurement(10, "kg"))
+logging.basicConfig(level=logging.INFO)
 
-log = DailyLog("2021-09-01")
-activity1 = Activity("Running", duration={"amount": 10, "unit": "min"})
-log.add_activity(**activity1.get_attributes())
 
-activity2 = Activity("Running", duration={"amount": 15, "unit": "min"})
-# Expecting a warning when adding the same activity name again
-res = log.add_activity(**activity2.get_attributes())
+# Initialize the firebase components
+os.environ[
+    "FIRESTORE_KEY_PROD"
+] = "/Users/mkirzon/Downloads/Project Auths/hip-log-bot-firebase-prod.json"
+
+firebase_cred = firebase_admin.credentials.Certificate(
+    os.environ.get("FIRESTORE_KEY_PROD")
+)
+
+try:
+    fb_app = firebase_admin.get_app(firebase_cred)
+except ValueError:
+    fb_app = firebase_admin.initialize_app(firebase_cred)
+
+db_logs = DBLogs()
+print(db_logs.num_logs)
+
+
+try:
+    firebase_admin.delete_app(fb_app)
+except ValueError:
+    pass

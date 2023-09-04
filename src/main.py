@@ -1,23 +1,24 @@
+import os
 import traceback
 import logging
 import firebase_admin
 
 from flask import Flask, request
 from flask_ngrok import run_with_ngrok
-from firebase_admin import credentials
+
 
 from services.db_logs import DBLogs
 from services.intent_handler import Intent
 
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 run_with_ngrok(app)  # Initialize ngrok when the app is run
 
-# Initialize the firebase components
-fb_app = firebase_admin.initialize_app(
-    credential=credentials.Certificate("/content/hip-log-bot-firebase.json")
-)
+os.environ[
+    "FIRESTORE_KEY_PROD"
+] = "/Users/mkirzon/Downloads/Project Auths/hip-log-bot-firebase-prod.json"
 
 
 @app.route("/")
@@ -29,6 +30,17 @@ def hello():
 def webhook():
     # Get dialog flow request
     req = request.get_json(force=True)
+
+    # Initialize the firebase components
+    firebase_cred = firebase_admin.credentials.Certificate(
+        os.environ.get("FIRESTORE_KEY_PROD")
+    )
+    try:
+        fb_app = firebase_admin.get_app(firebase_cred)
+        logger.info("Opened existing Firestore app")
+    except ValueError:
+        fb_app = firebase_admin.initialize_app(firebase_cred)
+        logger.info("Opened new Firestore app")
 
     try:
         # Initialize handlers
@@ -69,6 +81,14 @@ def webhook():
         res = "FAILED"
         print("\n")
         traceback.print_exc()
+
+    # Close fireabse
+    try:
+        firebase_admin.delete_app(fb_app)
+        logger.info("Closed Firestore app")
+    except ValueError:
+        logger.warning("Failed to close Firestore app")
+        pass
 
     # Send response back to DialogFlow
     response = {"fulfillmentText": res}
