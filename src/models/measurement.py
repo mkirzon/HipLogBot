@@ -24,6 +24,11 @@ class Measurement:
         "century",
     ]
 
+    # Magic methods
+    def __str__(self):
+        return f"{self.amount}{self.unit}"
+
+    # Initialization
     def __init__(self, amount: float, unit: str):
         self.amount = amount
 
@@ -34,17 +39,22 @@ class Measurement:
 
         self.unit = unit
 
-    def __str__(self):
-        return f"{self.amount}{self.unit}"
-
-    def to_dict(self):
-        return {"amount": self.amount, "unit": self.unit}
-
+    # Public methods
     def to_kilograms(self):
+        """Convert the measurement to kilograms.
+
+        Raises:
+            ValueError: If current measurement can't be converted (eg unsupported unit)
+        """
         if self.unit == "lb":
+            logger.debug("Converting lb to kg")
             self.amount = self.amount * 0.453592
             self.unit = "kg"
         elif self.unit == "kg":
             pass
         else:
             raise ValueError(f"Cannot convert {self.unit} to kilograms")
+
+    # Converters
+    def to_dict(self):
+        return {"amount": self.amount, "unit": self.unit}
