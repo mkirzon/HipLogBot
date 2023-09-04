@@ -23,14 +23,13 @@ def main(request):
     req = request.get_json(force=True)
 
     # Initialize the firebase components
-    fb_cred = firebase_admin.credentials.Certificate(
-        os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
-    )
+    # fb_cred = firebase_admin.credentials.Certificate()
     try:
         fb_app = firebase_admin.get_app()
         logger.info("Opened existing Firestore app")
     except ValueError:
-        fb_app = firebase_admin.initialize_app(credential=fb_cred)
+        # fb_app = firebase_admin.initialize_app(credential=fb_cred)
+        fb_app = firebase_admin.initialize_app()
         logger.info("Opened new Firestore app")
 
     try:
