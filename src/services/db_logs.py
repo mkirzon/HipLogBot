@@ -1,6 +1,6 @@
 import logging
 from firebase_admin import firestore
-from src.models.daily_log import DailyLog
+from models.daily_log import DailyLog
 
 logger = logging.getLogger(__name__)
 
