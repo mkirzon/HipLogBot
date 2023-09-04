@@ -1,78 +1,118 @@
-import copy
+import json
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class Intent:
-  ALLOWED_TYPES = ['LogPain', 'LogActivity', 'GetNumLogs']
+    ALLOWED_TYPES = ["LogPain", "LogActivity", "GetNumLogs"]
 
-  def __init__(self, req):
-    self._type = req['queryResult']['intent']['displayName']
-    self._raw_entity = req['queryResult']['parameters']
-    self._log_input = None
-    self._date = None
+    # Magic methods
+    def __str__(self):
+        return f"{self.type} {f'(date={self._date})' if self._date else ''}: {json.dumps(self._log_input)}"  # noqa
 
-    if self.type not in self.ALLOWED_TYPES:
-      raise ValueError('Unsupported intent passed')
+    # Class methods
+    @classmethod
+    def extract_date(cls, date: str):
+        """
+        Format timestamp to just the date component string
 
-    self._parse_entity()
+        Parameters:
+        - date (str): full timestamp string in '%Y-%m-%dT%H:%M:%S%z' format
+        (e.g '2023-07-24T12:00:00+01:00')
 
-    print(f"Parsed Dialogflow request into a {self.type} intent")
+        Returns:
+        str: a date string in the '%Y-%m-%d' format
+        """
 
-  def _extract_date(self, date: str) -> str:
-    """
-    Format timestamp to just the date component string
+        return date.split("T")[0]
 
-    Parameters:
-    - date (str): full timestamp string in '%Y-%m-%dT%H:%M:%S%z' format (e.g '2023-07-24T12:00:00+01:00')
+    # Initialization
+    def __init__(self, req):
+        self._type = req["queryResult"]["intent"]["displayName"]
+        self._raw_entity = req["queryResult"]["parameters"]
+        self._log_input = None
+        self._date = None
 
-    Returns:
-    str: a date string in the '%Y-%m-%d' format
-    """
+        if self.type not in self.ALLOWED_TYPES:
+            raise ValueError("Unsupported intent passed")
 
-    return date.split('T')[0]
+        self._extract_log_input()
 
-  def _parse_entity(self):
+        logger.info(f"Parsed Dialogflow request into a {self.type} intent")
 
-    # Initialize the copy since we'll just modifying the parsed entitites
-    self._log_input = copy.deepcopy(self._raw_entity)
+    # Properties
+    @property
+    def type(self):
+        return self._type
 
-    if self.type =='GetNumLogs':
-      pass
-    else:
-      # Expecting a date parameter for these intents
-      if not self._raw_entity['date']:
-        raise ValueError("Input entity is missing a date among the attributes")
+    @property
+    def entity(self):
+        """The raw entity"""
+        return self._raw_entity
 
-      # Extract date as a top level attribute and remove it from the parsed entities as it's not needed there
-      self._date = self._extract_date(self._raw_entity['date'])
-      self._log_input.pop('date', None)
+    @property
+    def log_input(self):
+        """Get the log input that the entity was parsed into."""
+        return self._log_input
 
-      # For now, the only difference is that some of the names mismatch from the request to my OO model
-      if self.type == 'LogActivity':
-        print('Parsing LogActivity entity')
-        self._log_input['name'] = self._log_input.pop('activity').capitalize()
+    @property
+    def date(self):
+        return self._date
 
-      elif self.type == 'LogPain':
-        print('Parsing LogPain entity')
-        self._log_input['name'] = self._log_input.pop('body_part').capitalize()
-        self._log_input['level'] = self._log_input.pop('pain_level')
+    # Public Methods
 
-  def __str__(self):
-    return f"""{self.type} {f'(date={self._date})' if self._date else ''}: {json.dumps(self._log_input)}
-    """
+    # Private methods
+    def _set_date(self):
+        """
+        Format timestamp to just the date component string
 
-  @property
-  def type(self):
-    return self._type
+        Parameters:
+        - date (str): full timestamp string in '%Y-%m-%dT%H:%M:%S%z' format
+        (e.g '2023-07-24T12:00:00+01:00')
 
-  @property
-  def entity(self):
-    """The raw entity"""
-    return self._raw_entity
+        Returns:
+        str: a date string in the '%Y-%m-%d' format
+        """
 
-  @property
-  def log_input(self):
-    """Get the log input that the entity was parsed into"""
-    return self._log_input
+        self._date = Intent.extract_date(self._raw_entity["date"])
 
-  @property
-  def date(self):
-    return self._date
+    def _extract_log_input(self):
+        """Parse the raw entity dict into the dict input that matches the dict
+        initialization format of the Activity/Pain/Record classes
+
+        This sets the _log_input attribute, which aligns the names and types:
+        * 'date' is removed
+        * 'acitivity' or 'body_part' will be renamed to 'name'
+        * 'pain_level' will be renamed to 'level' and cast to int
+        * Any attributes that are empty (strings), will be skipped
+
+        Raises:
+            ValueError: raises errors if date is missing for intent types that should
+            include a date
+        """
+        # Initialize the copy since we'll just modifying the parsed entitites
+        self._log_input = {k: v for k, v in self._raw_entity.items() if v != ""}
+
+        if self.type == "GetNumLogs":
+            pass
+        else:
+            # Expecting a date parameter for these intents
+            if not self._raw_entity.get("date"):
+                raise ValueError("Input entity is missing a date among the attributes")
+
+            # Extract date as a top level attribute and remove it from the parsed
+            # entities as it's not needed there
+            self._set_date()
+            self._log_input.pop("date", None)
+
+            # For now, the only difference is that some of the names mismatch from the
+            # request to my OO model
+            if self.type == "LogActivity":
+                logger.debug("Parsing LogActivity entity")
+                self._log_input["name"] = self._log_input.pop("activity").title()
+
+            elif self.type == "LogPain":
+                logger.debug("Parsing LogPain entity")
+                self._log_input["name"] = self._log_input.pop("body_part").title()
+                self._log_input["level"] = int(self._log_input.pop("pain_level"))
