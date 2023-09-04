@@ -8,7 +8,8 @@ logger = logging.getLogger(__name__)
 class DBLogs:
     def __init__(self):
         """Initialize a handler for my Firestore database.
-        This assumes you have the firebase app already started outside of this context with `firebase_admin.initialize_app()`
+        This assumes you have the firebase app already started outside of this context
+        with `firebase_admin.initialize_app()`
 
         """
         self._db = firestore.client()
