@@ -1,5 +1,5 @@
 import logging
-from src.models.measurement import Measurement
+from models.measurement import Measurement
 
 logger = logging.getLogger(__name__)
 
