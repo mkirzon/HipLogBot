@@ -38,7 +38,7 @@ class Intent:
         if self.type not in self.ALLOWED_TYPES:
             raise ValueError("Unsupported intent passed")
 
-        self._parse_entity()
+        self._extract_log_input()
 
         logger.info(f"Parsed Dialogflow request into a {self.type} intent")
 
@@ -78,7 +78,7 @@ class Intent:
 
         self._date = Intent.extract_date(self._raw_entity["date"])
 
-    def _parse_entity(self):
+    def _extract_log_input(self):
         """Parse the raw entity dict into the dict input that matches the dict
         initialization format of the Activity/Pain/Record classes
 
@@ -86,13 +86,14 @@ class Intent:
         * 'date' is removed
         * 'acitivity' or 'body_part' will be renamed to 'name'
         * 'pain_level' will be renamed to 'level'
+        * Any attributes that are empty (strings), will be skipped
 
         Raises:
             ValueError: raises errors if date is missing for intent types that should
             include a date
         """
         # Initialize the copy since we'll just modifying the parsed entitites
-        self._log_input = copy.deepcopy(self._raw_entity)
+        self._log_input = {k: v for k, v in self._raw_entity.items() if v != ""}
 
         if self.type == "GetNumLogs":
             pass
@@ -110,9 +111,9 @@ class Intent:
             # request to my OO model
             if self.type == "LogActivity":
                 logger.debug("Parsing LogActivity entity")
-                self._log_input["name"] = self._log_input.pop("activity").capitalize()
+                self._log_input["name"] = self._log_input.pop("activity").title()
 
             elif self.type == "LogPain":
                 logger.debug("Parsing LogPain entity")
-                self._log_input["name"] = self._log_input.pop("body_part").capitalize()
+                self._log_input["name"] = self._log_input.pop("body_part").title()
                 self._log_input["level"] = self._log_input.pop("pain_level")

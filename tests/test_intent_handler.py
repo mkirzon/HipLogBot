@@ -12,7 +12,20 @@ def sample_requests():
                     "displayName": "LogActivity",
                 },
             }
-        }
+        },
+        "activity_with_weight": {
+            "queryResult": {
+                "queryText": "yesterday",
+                "parameters": {
+                    "activity": "Hip Adductions",
+                    "weight": {"amount": 10, "unit": "kg"},
+                    "date": "2023-08-30T12:00:00+01:00",
+                    "duration": "",
+                    "reps": "",
+                },
+                "intent": {"displayName": "LogActivity"},
+            }
+        },
     }
 
     return x
@@ -27,6 +40,14 @@ def test_intent_initialization(sample_requests):
         "activity": "Yoga",
     }
     assert intent._date == "2023-07-24"
+
+
+def test_intent_initialization_with_weight(sample_requests):
+    intent = Intent(sample_requests["activity_with_weight"])
+    assert intent.log_input == {
+        "name": "Hip Adductions",
+        "weight": {"amount": 10, "unit": "kg"},
+    }
 
 
 def test_invalid_intent_type():
