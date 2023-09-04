@@ -1,7 +1,5 @@
 import logging
-import pytest
-from src.models.record import Activity, Pain, Record
-from src.models.measurement import Measurement
+from src.models.record import Activity, Pain
 from src.models.daily_log import DailyLog
 
 
@@ -12,6 +10,7 @@ def test_dailylog_initialization():
     assert log._activities == {}
     assert log._pains == {}
 
+
 def test_add_activity():
     log = DailyLog("2021-09-01")
     activity = Activity("Running", duration={"amount": 10, "unit": "min"})
@@ -19,11 +18,12 @@ def test_add_activity():
     assert "Running" in log._activities
     assert isinstance(log.get_activity("Running"), Activity)
 
+
 def test_add_existing_activity(caplog):
     log = DailyLog("2021-09-01")
     activity1 = Activity("Running", duration={"amount": 10, "unit": "min"})
     log.add_activity(**activity1.get_attributes())
-    
+
     activity2 = Activity("Running", duration={"amount": 15, "unit": "min"})
     # Expecting a warning when adding the same activity name again
     with caplog.at_level(logging.DEBUG):
@@ -39,4 +39,5 @@ def test_add_pain():
     assert "Headache" in log.pains
     assert log.pains["Headache"].level == 2
 
-# More tests can be added as required, for example, testing other methods, edge cases, etc.
+
+# More tests can be added as required, for example, testing other methods, edge cases
