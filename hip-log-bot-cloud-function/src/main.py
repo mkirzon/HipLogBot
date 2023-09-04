@@ -10,30 +10,31 @@ from dotenv import load_dotenv
 
 logging.basicConfig(level=logging.INFO)
 logging.basicConfig(level=logging.DEBUG)
-
 logger = logging.getLogger(__name__)
-load_dotenv()
+
+# Get env variables for auth
+if not load_dotenv():
+    logger.info(".env file not found")
 
 
 @functions_framework.http
 def main(request):
-    logger.debug("Starting function")
+    logger.debug("Starting main()")
     req = request.get_json(force=True)
 
     # Initialize the firebase components
+    fb_cred = firebase_admin.credentials.Certificate(
+        os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
+    )
     try:
         fb_app = firebase_admin.get_app()
         logger.info("Opened existing Firestore app")
     except ValueError:
-        fb_app = firebase_admin.initialize_app()
+        fb_app = firebase_admin.initialize_app(credential=fb_cred)
         logger.info("Opened new Firestore app")
 
-    # Start pasting here
     try:
         # Initialize handlers
-        # logger.debug(
-        #     f"Env var 'GOOGLE_APPLICATION_CREDENTIALS': {os.environ['GOOGLE_APPLICATION_CREDENTIALS']}"
-        # )
         db_logs = DBLogs()
         intent = Intent(req)
         logger.info(
@@ -76,7 +77,7 @@ def main(request):
     # Close fireabse
     try:
         firebase_admin.delete_app(fb_app)
-        logger.info("Closed Firestore app")
+        logger.debug("Closed Firestore app")
     except ValueError:
         logger.warning("Failed to close Firestore app")
         pass
