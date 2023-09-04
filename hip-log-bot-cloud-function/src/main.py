@@ -1,47 +1,35 @@
 import os
-import traceback
 import logging
+import traceback
 import firebase_admin
-
-from dotenv import load_dotenv
-from flask import Flask, request
-from flask_ngrok import run_with_ngrok
-
-
+import functions_framework
 from services.db_logs import DBLogs
 from services.intent_handler import Intent
+from dotenv import load_dotenv
+
 
 logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-app = Flask(__name__)
-run_with_ngrok(app)  # Initialize ngrok when the app is run
-
-load_dotenv()
-
-
-@app.route("/")
-def hello():
-    return "Hello"
+# Get env variables for auth
+if not load_dotenv():
+    logger.info(".env file not found")
 
 
-@app.route("/webhook", methods=["POST"])
-def webhook():
-    # Get dialog flow request
+@functions_framework.http
+def main(request):
+    logger.debug("Starting main()")
     req = request.get_json(force=True)
 
     # Initialize the firebase components
-    firebase_cred = firebase_admin.credentials.Certificate(
-        os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
-    )
     try:
-        fb_app = firebase_admin.get_app(firebase_cred)
+        fb_app = firebase_admin.get_app()
         logger.info("Opened existing Firestore app")
     except ValueError:
-        fb_app = firebase_admin.initialize_app(firebase_cred)
+        fb_app = firebase_admin.initialize_app()
         logger.info("Opened new Firestore app")
 
-    # When copying for deployment, start here:
     try:
         # Initialize handlers
         db_logs = DBLogs()
@@ -86,7 +74,7 @@ def webhook():
     # Close fireabse
     try:
         firebase_admin.delete_app(fb_app)
-        logger.info("Closed Firestore app")
+        logger.debug("Closed Firestore app")
     except ValueError:
         logger.warning("Failed to close Firestore app")
         pass
@@ -95,8 +83,3 @@ def webhook():
     response = {"fulfillmentText": res}
 
     return response
-
-
-if __name__ == "__main__":
-    # app.run()
-    app.run(port=443, host="0.0.0.0", ssl_context="adhoc")
