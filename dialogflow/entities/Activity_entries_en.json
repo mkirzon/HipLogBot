@@ -1,0 +1,112 @@
+[
+  {
+    "value": "Pullups",
+    "synonyms": [
+      "Pullup",
+      "Pullups",
+      "chinups"
+    ]
+  },
+  {
+    "value": "Handstands",
+    "synonyms": [
+      "Handstand"
+    ]
+  },
+  {
+    "value": "Physio",
+    "synonyms": [
+      "Physio"
+    ]
+  },
+  {
+    "value": "Run",
+    "synonyms": [
+      "Run",
+      "jog",
+      "ran"
+    ]
+  },
+  {
+    "value": "Cycle",
+    "synonyms": [
+      "Bicycle",
+      "Bike",
+      "biked",
+      "cycled",
+      "rode",
+      "bike ride",
+      "Cycled"
+    ]
+  },
+  {
+    "value": "Yoga",
+    "synonyms": [
+      "Yoga"
+    ]
+  },
+  {
+    "value": "Salsa",
+    "synonyms": [
+      "Salsa"
+    ]
+  },
+  {
+    "value": "Plank",
+    "synonyms": [
+      "Plank"
+    ]
+  },
+  {
+    "value": "Foam Rolled",
+    "synonyms": [
+      "Foam Rolled"
+    ]
+  },
+  {
+    "value": "Tennis",
+    "synonyms": [
+      "Tennis",
+      "played tennis",
+      "badmin",
+      "badminton"
+    ]
+  },
+  {
+    "value": "Frisbee",
+    "synonyms": [
+      "Frisbee",
+      "Ultimate",
+      "friz",
+      "fris"
+    ]
+  },
+  {
+    "value": "Surf",
+    "synonyms": [
+      "Surf",
+      "surfing",
+      "surfed"
+    ]
+  },
+  {
+    "value": "Hip Adductions",
+    "synonyms": [
+      "Hip Adductions",
+      "adduction"
+    ]
+  },
+  {
+    "value": "Hip Abductions",
+    "synonyms": [
+      "Hip Abductions",
+      "abduction"
+    ]
+  },
+  {
+    "value": "Pushups",
+    "synonyms": [
+      "Pushups"
+    ]
+  }
+]

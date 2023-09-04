@@ -1,0 +1,9 @@
+{
+  "id": "d1f1edce-8138-45fe-bbab-c14edb7f533f",
+  "name": "PainLevel",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": false,
+  "allowFuzzyExtraction": false
+}

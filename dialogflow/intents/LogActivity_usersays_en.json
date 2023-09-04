@@ -1,0 +1,1072 @@
+[
+  {
+    "id": "b6d08868-0381-4825-833e-9e8bd0e06e8e",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "5",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "pushups",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "yesterday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "9f304786-634e-48b5-b3ba-d1f22cb98c50",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "hip adductions",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": true
+      },
+      {
+        "text": " with ",
+        "userDefined": false
+      },
+      {
+        "text": "10kg",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "yesterday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "73700902-1b35-4128-8e71-bbbbd14c90a6",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "hip adductions",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": true
+      },
+      {
+        "text": " with ",
+        "userDefined": false
+      },
+      {
+        "text": "10kg",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "fa8f7c69-4752-409e-b929-7c2c7022cb6d",
+    "data": [
+      {
+        "text": "I did ",
+        "userDefined": false
+      },
+      {
+        "text": "10",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "pullups",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "1a6712ef-e748-41ac-974a-8c0418809764",
+    "data": [
+      {
+        "text": "I played ",
+        "userDefined": false
+      },
+      {
+        "text": "badminton",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "e5d6b807-d492-4c74-b14e-670a74df01bb",
+    "data": [
+      {
+        "text": "I ",
+        "userDefined": false
+      },
+      {
+        "text": "just",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "ran",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "1deafc9c-4f9c-4875-93b7-053334762b60",
+    "data": [
+      {
+        "text": "I used the ",
+        "userDefined": false
+      },
+      {
+        "text": "elliptical",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": true
+      },
+      {
+        "text": " for ",
+        "userDefined": false
+      },
+      {
+        "text": "10 minutes",
+        "meta": "@sys.duration",
+        "alias": "duration",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "a55f2bb4-2cc3-43af-9c4a-fd05a193fe31",
+    "data": [
+      {
+        "text": "I held a ",
+        "userDefined": false
+      },
+      {
+        "text": "plank",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " for ",
+        "userDefined": false
+      },
+      {
+        "text": "30 seconds",
+        "meta": "@sys.duration",
+        "alias": "duration",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "d4bb1849-73dc-474e-a196-37890e99ee90",
+    "data": [
+      {
+        "text": "I did ",
+        "userDefined": false
+      },
+      {
+        "text": "pullups",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "2066f826-cf11-4fa0-bb20-14152bc20646",
+    "data": [
+      {
+        "text": "I went on a ",
+        "userDefined": false
+      },
+      {
+        "text": "bike",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ride",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "1894ff70-d9f6-46ed-a6c8-b42285e33e1d",
+    "data": [
+      {
+        "text": "I went ",
+        "userDefined": false
+      },
+      {
+        "text": "surfing",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "45c619a8-6a78-4914-8dae-f258845c15e9",
+    "data": [
+      {
+        "text": "I ",
+        "userDefined": false
+      },
+      {
+        "text": "surfed",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "8d0bc0c8-25e7-43eb-9125-00965fb121c3",
+    "data": [
+      {
+        "text": "I went ",
+        "userDefined": false
+      },
+      {
+        "text": "swimming",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": true
+      },
+      {
+        "text": " on ",
+        "userDefined": false
+      },
+      {
+        "text": "January 1st",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "9154b9dc-8554-4d5e-b2e0-0706ff7d082e",
+    "data": [
+      {
+        "text": "I ",
+        "userDefined": false
+      },
+      {
+        "text": "cycled",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "c6e5a567-e218-4155-8417-592e1520874e",
+    "data": [
+      {
+        "text": "I played frisbee",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "bba83099-47f5-4a43-9b68-9e763d6c3456",
+    "data": [
+      {
+        "text": "I ",
+        "userDefined": false
+      },
+      {
+        "text": "ran",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "6b68a748-e7df-4105-bc73-bd6721c339f8",
+    "data": [
+      {
+        "text": "I ",
+        "userDefined": false
+      },
+      {
+        "text": "ran",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "5 days ago",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "a6dd793f-fb76-40db-9124-d47756ae18ae",
+    "data": [
+      {
+        "text": "I played ",
+        "userDefined": false
+      },
+      {
+        "text": "tennis",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "532105b5-3189-4fe3-8233-b4e32f530b55",
+    "data": [
+      {
+        "text": "I did ",
+        "userDefined": false
+      },
+      {
+        "text": "yoga",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "yesterday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "ad4163cb-c179-4c66-9584-9a9895c71689",
+    "data": [
+      {
+        "text": "I did ",
+        "userDefined": false
+      },
+      {
+        "text": "yoga",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "3b178797-91ee-4fc8-b53b-27fe4c8925e9",
+    "data": [
+      {
+        "text": "I ",
+        "userDefined": false
+      },
+      {
+        "text": "ran",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "c062a240-d41f-4a87-962a-58f07c6324d0",
+    "data": [
+      {
+        "text": "I did ",
+        "userDefined": false
+      },
+      {
+        "text": "physio",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "de9eded4-7ca0-400a-9f00-49f98a815bed",
+    "data": [
+      {
+        "text": "i play badminton",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "2319196d-5e69-40a3-8235-c9be07492030",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "frisbee",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "fb9c37f6-73a4-4656-8282-07df848a691a",
+    "data": [
+      {
+        "text": "i played ",
+        "userDefined": false
+      },
+      {
+        "text": "yoga",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "f9669f82-d2e9-4b5b-a88b-f4298db6b099",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "yoga",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "9afe283d-25ef-409c-87d9-25553b65f571",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "yoga",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " on asdf",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "d6ec773a-6633-4033-ba48-b9089bf56830",
+    "data": [
+      {
+        "text": "i went on a ",
+        "userDefined": false
+      },
+      {
+        "text": "bike ride",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "07a22785-65b0-4878-821d-7dfbcebda0a1",
+    "data": [
+      {
+        "text": "I Played squash ",
+        "userDefined": false
+      },
+      {
+        "text": "yesterday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "7707afd9-f4fb-410f-9a2f-dda5650beb9e",
+    "data": [
+      {
+        "text": "I Played squash yesterday",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "11410a7b-06b7-4d34-a05f-8377d05aa323",
+    "data": [
+      {
+        "text": "I Played ",
+        "userDefined": false
+      },
+      {
+        "text": "squash",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "yesterday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "622f853a-9918-4920-ba40-b108d686efdc",
+    "data": [
+      {
+        "text": "i played ",
+        "userDefined": false
+      },
+      {
+        "text": "badmin",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "564404cc-6c80-44f2-9e0a-6a070db56fa6",
+    "data": [
+      {
+        "text": "i played ",
+        "userDefined": false
+      },
+      {
+        "text": "badminton",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "cb265f61-3f67-4050-9940-58fa9abd0393",
+    "data": [
+      {
+        "text": "i ",
+        "userDefined": false
+      },
+      {
+        "text": "salsa",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "47350840-59c7-49c0-8b2e-8d6cf128c091",
+    "data": [
+      {
+        "text": "i used the ",
+        "userDefined": false
+      },
+      {
+        "text": "elliptical",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " for ",
+        "userDefined": false
+      },
+      {
+        "text": "10 minutes",
+        "meta": "@sys.duration",
+        "alias": "duration",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "a2bbf82d-c545-4174-b99d-8e5e30593f98",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "yoga",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "6e2b9cc9-6868-47be-925b-9001cdd5fbaa",
+    "data": [
+      {
+        "text": "i ",
+        "userDefined": false
+      },
+      {
+        "text": "ran",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "5 days ago",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "4ec3d6f9-ef65-4629-8a4b-e754fd2e2ece",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "5",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "pushups",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "213 days ago",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "yoga",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "yesterday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      },
+      {
+        "text": " for ",
+        "userDefined": false
+      },
+      {
+        "text": "10 minutes",
+        "meta": "@sys.duration",
+        "alias": "duration",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "yoga",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "yesterday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      },
+      {
+        "text": " for ",
+        "userDefined": false
+      },
+      {
+        "text": "12 minutes",
+        "meta": "@sys.duration",
+        "alias": "duration",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "handstands",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "yesterday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      },
+      {
+        "text": ", ",
+        "userDefined": false
+      },
+      {
+        "text": "10",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": " reps",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  }
+]

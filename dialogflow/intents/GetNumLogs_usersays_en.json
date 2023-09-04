@@ -1,0 +1,53 @@
+[
+  {
+    "id": "9a8f835a-6fa5-44fa-8f48-4dcc336a241c",
+    "data": [
+      {
+        "text": "How many records are there?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "9946c713-cd50-430c-b4c4-f1e0e98ceac3",
+    "data": [
+      {
+        "text": "How many records do I have?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "8adef809-419e-4393-9bbf-8844d97314d3",
+    "data": [
+      {
+        "text": "How many days have I logged?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "data": [
+      {
+        "text": "how many logs do i have",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  }
+]

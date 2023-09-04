@@ -1,0 +1,32 @@
+[
+  {
+    "value": "Left hip",
+    "synonyms": [
+      "Left hip",
+      "lh",
+      "hip left",
+      "l hip"
+    ]
+  },
+  {
+    "value": "Right hip",
+    "synonyms": [
+      "Right hip",
+      "rh"
+    ]
+  },
+  {
+    "value": "Left knee",
+    "synonyms": [
+      "Left knee",
+      "lk"
+    ]
+  },
+  {
+    "value": "Right knee",
+    "synonyms": [
+      "Right knee",
+      "rk"
+    ]
+  }
+]
