@@ -78,8 +78,10 @@ def test_intent_initialization_for_pain(sample_requests):
     assert intent._log_input == {"name": "Left Hip", "level": 2}
 
 
-# def test_intent_initialization_for_get_daily_log(sample_requests):
-#     intent = Intent(sample_requests["get_daily_log"])
+def test_intent_initialization_for_get_daily_log(sample_requests):
+    intent = Intent(sample_requests["get_daily_log"])
+    assert intent.type == "GetDailyLog"
+    assert intent.date == "2023-09-05"
 
 
 def test_invalid_intent_type():
@@ -91,7 +93,7 @@ def test_invalid_intent_type():
             },
         }
     }
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="Unsupported intent passed"):
         Intent(req)
 
 

@@ -35,9 +35,7 @@ def main(request):
 
         # Parse the intent
         intent = Intent(req)
-        logger.info(
-            "The intent request parsed into the following `log_input`:\n{intent}"
-        )
+        logger.info(f"The intent request was parsed: {intent}")
 
         # First handle generic requests, that don't require specific log queries.
         # Otherwise do log-based actions
@@ -51,17 +49,18 @@ def main(request):
             log = db_logs.get_log(intent.date)
 
         elif intent.type == "LogActivity":
-            log = db_logs.get_log(intent.date)
             logger.debug("IntentType if-case: LogActivity")
+            log = db_logs.get_log(intent.date)
             log.add_activity(**intent.log_input)
+            logger.info(f"Log item created/updated:\n{log}")
 
         elif intent.type == "LogPain":
-            log = db_logs.get_log(intent.date)
             logger.debug("IntentType if-case: LogPain")
+            log = db_logs.get_log(intent.date)
             log.add_pain(**intent.log_input)
+            logger.info(f"Log item created/updated:\n{log}")
 
-        if intent.type in ["LogActivity", "LogPain"]:
-            logger.info(f"Log item created:\n{log}")
+        if intent.type in ["LogActivity", "LogPain", "GetDailyLog"]:
             res = log.__str__()
 
             # Upload the new/modified log back
@@ -69,7 +68,18 @@ def main(request):
             db_logs.upload_log(log)
             logger.info("Upload complete of this log")
 
-    except:  # noqa
+    except ValueError as e:  # noqa
+        # Graceful message back if supported case
+        if "Unsupported intent passed" in str(e):
+            res = f"The processing server doesn't support this yet (intent = {req['queryResult']['intent']['displayName']}))"
+
+        else:
+            # TODO: standardize this block cuz it's used twice
+            logger.error(f"Failed logging, here's the input request:\n{req}\n")
+            traceback.print_exc()
+            res = "FAILED"
+
+    except Exception:
         logger.error(f"Failed logging, here's the input request:\n{req}\n")
         traceback.print_exc()
         res = "FAILED"
