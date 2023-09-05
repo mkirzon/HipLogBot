@@ -52,9 +52,12 @@ class Record:
 
         return ", ".join(parts)
 
-    def to_dict(self) -> dict:
+    def to_dict(self, skip_empty=False) -> dict:
         """Get a fully converted dictionary representation of the record (even
         nested objects will be standard dicts)
+
+        Args:
+            skip_empty: if value is None, then it will be removed
 
         Returns:
             dict: Dictionary

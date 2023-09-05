@@ -76,6 +76,9 @@ class DailyLog:
             )
             res = "update"
         else:
+            logging.info(
+                f"Activity '{name}' doesn't exist yet for {self._date}. Creating new entry."  # noqa
+            )
             res = "new"
 
         # Create/update activity with the provided attributes and add it to

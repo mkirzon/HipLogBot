@@ -34,8 +34,13 @@ class DBLogs:
 
         return log
 
-    def upload_log(self, log):
-        self._collection_ref.document(log.date).set(log.to_dict())
+    def upload_log(self, log: DailyLog):
+        # Convert log to dict and add timestamps
+        log_dict = log.to_dict()
+        log_dict["updatedAt"] = firestore.SERVER_TIMESTAMP
+
+        logger.info(f"Will upload this dict:\n{log_dict}")
+        self._collection_ref.document(log.date).set(log_dict)
 
         # In case this was a new one, update the count
         # TODO: run this only if log was new

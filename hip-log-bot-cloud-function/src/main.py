@@ -61,12 +61,14 @@ def main(request):
             logger.info(f"Log item created/updated:\n{log}")
 
         if intent.type in ["LogActivity", "LogPain", "GetDailyLog"]:
-            res = log.__str__()
+            # TODO add logic to bubble up new vs update status
 
             # Upload the new/modified log back
             logger.info("Uploading new/modified log")
             db_logs.upload_log(log)
             logger.info("Upload complete of this log")
+
+            res = log.__str__()
 
     except ValueError as e:  # noqa
         # Graceful message back if supported case
