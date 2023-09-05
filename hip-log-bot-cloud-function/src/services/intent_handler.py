@@ -5,7 +5,7 @@ logger = logging.getLogger(__name__)
 
 
 class Intent:
-    ALLOWED_TYPES = ["LogPain", "LogActivity", "GetNumLogs"]
+    ALLOWED_TYPES = ["LogPain", "LogActivity", "GetNumLogs", "GetDailyLog"]
 
     # Magic methods
     def __str__(self):
@@ -92,7 +92,9 @@ class Intent:
             include a date
         """
         # Initialize the copy since we'll just modifying the parsed entitites
-        self._log_input = {k: v for k, v in self._raw_entity.items() if v != ""}
+        self._log_input = {
+            k: v for k, v in self._raw_entity.items() if v != "" and k != "date"
+        }
 
         if self.type == "GetNumLogs":
             pass
@@ -104,7 +106,7 @@ class Intent:
             # Extract date as a top level attribute and remove it from the parsed
             # entities as it's not needed there
             self._set_date()
-            self._log_input.pop("date", None)
+            # self._log_input.pop("date", None)
 
             # For now, the only difference is that some of the names mismatch from the
             # request to my OO model

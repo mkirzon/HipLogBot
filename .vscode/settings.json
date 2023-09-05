@@ -1,9 +1,9 @@
 {
     "python.analysis.extraPaths": [
-        "./src"
+        "./hip-log-bot-cloud-function/src"
     ],
     "python.testing.pytestArgs": [
-        "tests"
+        "hip-log-bot-cloud-function"
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,

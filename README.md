@@ -1,27 +1,19 @@
 # Authentication
 
-For Firebase - 
-1. Download the json key to your laptop
+## Firebase
+This authentication is what allows the python code to read/write to Firebase. 
+
+1. Download the json key corresponding to the firebase service account "firebase-adminsdk"
+2. Update the path in `.env` for GOOGLE_APPLICATION_CREDENTIALS to point to this file 
 2. Update references to the environment variable GOOGLE_APPLICATION_CREDENTIALS (eg in main app files, in test files)
 
+## Cloud Functions
+Cloud functions have their own authentication that dictates what tools can _call_ them. In our case, Dialogflow must be able to send POST requests to the Cloud Function webhooks. 
+This is managed with IAM principals and roles.
 
-For Cloufunctions - 
-1. Use the same service account on your local workstation (i.e. the json key file) as the one you c
-
-# Deploying
-First we need to create a zip file containing: main.py, requirements.txt, src/. To do this, create a copy of this project with just those elements. 
-
-1. Create the copy folder
-2. Open a new terminal there
-3. Run this 
-```
-zip -r -X hip-log-pkg.zip .
-```
-
-* -r stands for recursive, so it gets all files and sub-folders.
-* -X excludes those AppleDouble files which ends up getting unzipped by Cloud platforms
-
-2. Upload to Google Cloud Storage bucket 
+In our case, we had to manually create the appropriate service agent for Dialogflow and then grant it the appropriate permissions. Make sure the project IAM settings have an entry for the account  `service-425447198130@gcp-sa-dialogflow.iam.gserviceaccount.com` with these roles granted - 
+1. Cloud Functions Invoker
+2. Dialogflow Service Agent
 
 
 # Architecture & Service Setup
@@ -34,20 +26,24 @@ In reverse chronological order from a user interaction, or in essence, we config
 5. A messenger front end (i.e. Facebook messenger)
 
 
-## Configuring a Firestore 
+## Configuring Firestore db
+TODO 
 
-## Configuring Serverless Function
+## Configuring Cloud Functions
 
 1. Custom Principals with manual roles 
 2. When building the function, allow unauthenticated access 
 
-
-## Configuring a Dialogflow
-
-
-1. 
+## Configuring Dialogflow
+TODO
 
 # Testing
+
+## Running standard pytests
+
+This is tricky. Our requirements: 
+1) The code must remain unchanged, regardless of execution context (main.py locally or on GCP, pytest, VS Debugger)
+2) 
 
 ## Test cloud functions
 
@@ -61,7 +57,6 @@ functions-framework --target=main --source "/Users/mkirzon/Documents/2023/230901
 curl -X POST -H 'Content-Type: application/json' -d '{"responseId":"924e4b7e-57d3-4dc2-a0dd-1750df534df4-6318e683","queryResult":{"queryText":"i did yoga on 2023-12-31","parameters":{"activity":"Yoga","date":"2023-12-31T12:00:00Z","duration":"","reps":"","weight":""},"allRequiredParamsPresent":true,"fulfillmentMessages":[{"text":{"text":[""]}}],"outputContexts":[{"name":"projects/hip-log-bot/agent/sessions/a6480f9a-41d7-18e7-6f0d-c3ee14c98cfe/contexts/__system_counters__","parameters":{"no-input":0,"no-match":0,"activity":"Yoga","activity.original":"yoga","date":"2023-12-31T12:00:00Z","date.original":"2023-12-31","duration":"","duration.original":"","reps":"","reps.original":"","weight":"","weight.original":""}}],"intent":{"name":"projects/hip-log-bot/agent/intents/3f813326-a34e-4845-875d-5803cf3c3cc2","displayName":"LogActivity"},"intentDetectionConfidence":1,"languageCode":"en"},"originalDetectIntentRequest":{"source":"DIALOGFLOW_CONSOLE","payload":{}},"session":"projects/hip-log-bot/agent/sessions/a6480f9a-41d7-18e7-6f0d-c3ee14c98cfe"}' http://192.168.1.87:8080
 ```
 
-
 # Deployment
 
 ## Cloud functions
@@ -73,7 +68,6 @@ Prereqs:
 ```
 gcloud init
 ```
-
 2. `cd` to the cloud function folder 
 3. Deploy with this command - 
 ```
@@ -86,3 +80,17 @@ gcloud functions deploy hip-log-bot-fn4 \
 --trigger-http \
 --allow-unauthenticated
 ```
+
+Note that if you make a new hip log function, you'll have to manually enter permissions for the service agent principal.
+
+
+# Development
+
+## Creating new Intents
+
+1. Create and test them within Dialogflow
+2. Update `ALLOWED_TYPES` within the `Intent` class
+3. Add handling for the new intent in: 
+    i. `Intent._extract_log_input()`
+    ii. `main()`
+
