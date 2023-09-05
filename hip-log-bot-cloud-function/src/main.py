@@ -60,7 +60,7 @@ def main(request):
             logger.debug("IntentType if-case: LogPain")
             log.add_pain(**intent.log_input)
 
-        if intent.type in ["LogActivity", "LogPain"]:
+        if intent.type in ["LogActivity", "LogPain", "GetDailyLog"]:
             logger.info(f"Log item created:\n{log}")
             res = log.__str__()
 
@@ -69,7 +69,18 @@ def main(request):
             db_logs.upload_log(log)
             logger.info("Upload complete of this log")
 
-    except:  # noqa
+    except ValueError as e:  # noqa
+        # Graceful message back if supported case
+        if "Unsupported intent passed" in str(e):
+            res = f"The processing server doesn't support this yet (intent = {req['queryResult']['intent']['displayName']}))"
+
+        else:
+            # TODO: standardize this block cuz it's used twice
+            logger.error(f"Failed logging, here's the input request:\n{req}\n")
+            traceback.print_exc()
+            res = "FAILED"
+
+    except Exception:
         logger.error(f"Failed logging, here's the input request:\n{req}\n")
         traceback.print_exc()
         res = "FAILED"
