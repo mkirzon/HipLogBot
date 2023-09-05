@@ -3,7 +3,7 @@ import traceback
 import firebase_admin
 import functions_framework
 from services.db_logs import DBLogs
-from services.intent_handler import Intent
+from models.intent import Intent
 from dotenv import load_dotenv
 
 

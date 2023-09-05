@@ -1,6 +1,6 @@
 import pytest
 
-from services.intent_handler import Intent
+from models.intent import Intent
 
 
 @pytest.fixture
