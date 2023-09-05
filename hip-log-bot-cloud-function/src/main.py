@@ -35,9 +35,7 @@ def main(request):
 
         # Parse the intent
         intent = Intent(req)
-        logger.info(
-            "The intent request parsed into the following `log_input`:\n{intent}"
-        )
+        logger.info(f"The intent request was parsed: {intent}")
 
         # First handle generic requests, that don't require specific log queries.
         # Otherwise do log-based actions
@@ -51,17 +49,18 @@ def main(request):
             log = db_logs.get_log(intent.date)
 
         elif intent.type == "LogActivity":
-            log = db_logs.get_log(intent.date)
             logger.debug("IntentType if-case: LogActivity")
+            log = db_logs.get_log(intent.date)
             log.add_activity(**intent.log_input)
+            logger.info(f"Log item created/updated:\n{log}")
 
         elif intent.type == "LogPain":
-            log = db_logs.get_log(intent.date)
             logger.debug("IntentType if-case: LogPain")
+            log = db_logs.get_log(intent.date)
             log.add_pain(**intent.log_input)
+            logger.info(f"Log item created/updated:\n{log}")
 
         if intent.type in ["LogActivity", "LogPain", "GetDailyLog"]:
-            logger.info(f"Log item created:\n{log}")
             res = log.__str__()
 
             # Upload the new/modified log back
