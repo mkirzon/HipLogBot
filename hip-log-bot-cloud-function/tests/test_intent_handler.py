@@ -1,5 +1,6 @@
 import pytest
-from src.services.intent_handler import Intent
+
+from services.intent_handler import Intent
 
 
 @pytest.fixture
@@ -38,6 +39,15 @@ def sample_requests():
                 },
             }
         },
+        "get_daily_log": {
+            "queryResult": {
+                "queryText": "What have I done today?",
+                "parameters": {"date": "2023-09-05T12:00:00+01:00"},
+                "intent": {
+                    "displayName": "GetDailyLog",
+                },
+            }
+        },
     }
 
     return x
@@ -68,6 +78,10 @@ def test_intent_initialization_for_pain(sample_requests):
     assert intent._log_input == {"name": "Left Hip", "level": 2}
 
 
+# def test_intent_initialization_for_get_daily_log(sample_requests):
+#     intent = Intent(sample_requests["get_daily_log"])
+
+
 def test_invalid_intent_type():
     req = {
         "queryResult": {
@@ -81,7 +95,6 @@ def test_invalid_intent_type():
         Intent(req)
 
 
-# TODO: logactivity and logpain require date in their entity
 def test_missing_date_for_activity():
     req = {
         "queryResult": {

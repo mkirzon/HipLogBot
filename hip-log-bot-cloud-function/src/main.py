@@ -1,4 +1,3 @@
-import os
 import logging
 import traceback
 import firebase_admin
@@ -33,6 +32,8 @@ def main(request):
     try:
         # Initialize handlers
         db_logs = DBLogs()
+
+        # Parse the intent
         intent = Intent(req)
         logger.info(
             "The intent request parsed into the following `log_input`:\n{intent}"
@@ -45,19 +46,21 @@ def main(request):
             num_logs = db_logs.num_logs
             res = f"There are {num_logs} logs"
 
-        else:
-            logger.debug("IntentType if-case: log-based")
-            # Get the corresponding log for requested date
+        elif intent.type == "GetDailyLog":
+            logger.debug("IntentType: GetDailyLog")
             log = db_logs.get_log(intent.date)
 
-            if intent.type == "LogActivity":
-                logger.debug("IntentType if-case: LogActivity")
-                log.add_activity(**intent.log_input)
+        elif intent.type == "LogActivity":
+            log = db_logs.get_log(intent.date)
+            logger.debug("IntentType if-case: LogActivity")
+            log.add_activity(**intent.log_input)
 
-            elif intent.type == "LogPain":
-                logger.debug("IntentType if-case: LogPain")
-                log.add_pain(**intent.log_input)
+        elif intent.type == "LogPain":
+            log = db_logs.get_log(intent.date)
+            logger.debug("IntentType if-case: LogPain")
+            log.add_pain(**intent.log_input)
 
+        if intent.type in ["LogActivity", "LogPain"]:
             logger.info(f"Log item created:\n{log}")
             res = log.__str__()
 

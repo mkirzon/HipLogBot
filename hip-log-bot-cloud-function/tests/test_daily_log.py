@@ -1,6 +1,6 @@
 import logging
-from src.models.record import Activity, Pain
-from src.models.daily_log import DailyLog
+from models.record import Activity, Pain
+from models.daily_log import DailyLog
 
 
 # Tests for DailyLog class
