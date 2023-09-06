@@ -4,6 +4,7 @@ from models.record import Activity, Pain
 
 logger = logging.getLogger(__name__)
 logger.propagate = True
+# logger.setLevel(logging.DEBUG)
 
 
 class DailyLog:
@@ -28,23 +29,34 @@ class DailyLog:
     # Class Methods
     @classmethod
     def from_dict(cls, input_dict):
-        instance = cls(input_dict["date"])
+        logger.debug("Building Log object using `from_dict()` method")
+        daily_log = cls(input_dict["date"])
 
         if input_dict.get("activity_notes"):
-            instance.set_activity_notes(input_dict.get("activity_notes"))
+            logger.debug("Setting 'activity_notes'")
+            daily_log.set_activity_notes(input_dict.get("activity_notes"))
 
         if input_dict.get("pain_notes"):
-            instance.set_pain_notes(input_dict.get("pain_notes"))
+            logger.debug("Setting 'pain_notes'")
+            daily_log.set_pain_notes(input_dict.get("pain_notes"))
 
         if input_dict.get("activities"):
+            logger.debug("Setting 'activities'")
             for activity_name, record in input_dict["activities"].items():
-                instance.add_activity(**record)
+                logger.debug(
+                    f"Adding activity {activity_name} using input dict: {record}"
+                )
+                daily_log.add_activity(**record)
 
         if input_dict.get("pain"):
+            logger.debug("Setting 'pains'")
             for x in input_dict["pain"]:
-                instance.add_pain(**x)
+                logger.debug(f"Adding pain using input dict: {x}")
+                daily_log.add_pain(**x)
 
-        return instance
+        logger.debug("Finished creating a DailyLog instance")
+
+        return daily_log
 
     # Initialization
     def __init__(
@@ -80,12 +92,12 @@ class DailyLog:
         res = None
         if name in self._activities:
             logging.info(
-                f"Activity '{name}' already exists for {self._date}. Overwriting previous entry."  # noqa
+                f"Activity '{name}' already exists in this DailyLog.. Overwriting previous entry."  # noqa
             )
             res = "update"
         else:
             logging.info(
-                f"Activity '{name}' doesn't exist yet for {self._date}. Creating new entry."  # noqa
+                f"Activity '{name}' doesn't exist yet in this DailyLog... adding it as a new activity."  # noqa
             )
             res = "new"
 

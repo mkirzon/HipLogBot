@@ -19,6 +19,5 @@ except ValueError:
     fb_app = firebase_admin.initialize_app()
     logger.info("Opened new Firestore app")
 db_logs = DBLogs()
-a = db_logs.get_log("2023-09-06")
 
-print(a)
+db_logs.get_log("2023-09-01")

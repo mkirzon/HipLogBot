@@ -41,12 +41,20 @@ class DBLogs:
 
     # Public Methods
     def get_log(self, date: str) -> DailyLog:
+        """Get a log object by date
+
+        Query firestore collection by date and return it as a Log object.
+        If date doesn't exist, it initializes the log object
+
+        Returns:
+            DailyLog: a populated or empty (just date) DailyLog object
+        """
         # Input checking
         if not is_valid_date_format(date):
             raise ValueError("Invalid date provided. Must be a 'YYYY-MM-DD' string")
 
         # Download doc as json
-        x = self._collection_ref.document(date).get()
+        x = self._get_document_by_key(date)
 
         if x.exists:
             x = x.to_dict()
@@ -59,21 +67,20 @@ class DBLogs:
             logger.info("Log converted to Python log object successfully")
 
         else:
+            # TODO: this shouldn't live here, but handle it upstream
             print(f"Log for date '{date}' doesn't exist. Initiating DailyLog instance")
             log = DailyLog(date)
 
         return log
 
     def upload_log(self, log: DailyLog):
-        # Convert log to dict and add timestamps
         log_dict = log.to_dict()
-        log_dict["updatedAt"] = firestore.SERVER_TIMESTAMP
 
         logger.info(f"Will upload this dict:\n{log_dict}")
         self._collection_ref.document(log.date).set(log_dict)
 
         # In case this was a new one, update the count
-        # TODO: run this only if log was new
+        # TODO: optimization - run this only if log was new
         self._num_logs = self._get_num_logs()
 
     # Private methods
@@ -81,3 +88,10 @@ class DBLogs:
         documents = self._collection_ref.stream()
         doc_count = sum(1 for _ in documents)
         return doc_count
+
+    def _get_document_by_key(self, key: str):
+        x = self._collection_ref.document(key).get()
+        logger.debug(
+            f"Downloaded document {key}. Created at '{x.create_time}' and last updated at {x.update_time}'"
+        )
+        return x

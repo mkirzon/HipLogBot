@@ -72,7 +72,6 @@ def test_existing_log_keeps_num(db):
     assert n2 == n1
 
 
-# TODO: test valid input date for get_log
 def test_get_log_needs_valid_date(db):
     db_log = DBLogs()
     with pytest.raises(ValueError, match="Invalid date provided"):
