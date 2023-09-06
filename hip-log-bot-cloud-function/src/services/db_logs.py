@@ -92,6 +92,6 @@ class DBLogs:
     def _get_document_by_key(self, key: str):
         x = self._collection_ref.document(key).get()
         logger.debug(
-            f"Downloaded document {key}. Created at '{x.create_time}' and last updated at {x.update_time}'"
+            f"Downloaded document '{self._collection_name}.{key}'. Created at '{x.create_time}' and last updated at {x.update_time}'"
         )
         return x
