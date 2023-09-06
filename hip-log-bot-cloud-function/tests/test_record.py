@@ -44,9 +44,6 @@ def test_activity_with_dict():
     assert isinstance(activity.weight, Measurement)
 
 
-# Tests for Pain class
-
-
 def test_pain_initialization():
     pain = Pain("Headache", 2)
     assert pain.name == "Headache"
@@ -56,3 +53,8 @@ def test_pain_initialization():
 def test_invalid_pain_level():
     with pytest.raises(ValueError):
         Pain("Headache", 5)
+
+
+# TODO: test that empty attributes can be skipped
+def test_empty_attributes_skipped():
+    pass
