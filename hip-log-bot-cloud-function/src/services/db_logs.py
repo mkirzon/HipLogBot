@@ -6,6 +6,13 @@ logger = logging.getLogger(__name__)
 
 
 class DBLogs:
+    """A handler class for interacting with the Firestore Database for the Hip Log Bots
+
+    Attributes:
+        num_logs (int): number of daily logs for current user in the database (assuming a single user)
+
+    """
+
     def __init__(self):
         """Initialize a handler for my Firestore database.
         This assumes you have the firebase app already started outside of this context
@@ -15,7 +22,7 @@ class DBLogs:
         self._collection_ref = self._db.collection("activityLogs")
         self._num_logs = self._get_num_logs()
 
-    def get_log(self, date):
+    def get_log(self, date) -> DailyLog:
         x = self._collection_ref.document(date).get()
 
         if x.exists:
