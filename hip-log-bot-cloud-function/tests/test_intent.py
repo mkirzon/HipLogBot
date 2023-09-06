@@ -123,6 +123,6 @@ def test_extract_date():
     assert Intent.extract_date("2023-07-24T12:00:00+01:00") == "2023-07-24"
 
 
-# TODO: test that empty attributes are removed
+# TODO: test that empty attributes are removed (tbd if this should live here or record)
 def test_missing_attributes_skipped():
     pass

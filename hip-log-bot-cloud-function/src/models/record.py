@@ -68,6 +68,8 @@ class Record:
                 v = v.to_dict()
             x[k] = v
 
+        # TODO: implement skip_empty logic
+
         return x
 
 

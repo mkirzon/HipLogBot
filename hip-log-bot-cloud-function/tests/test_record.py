@@ -44,9 +44,6 @@ def test_activity_with_dict():
     assert isinstance(activity.weight, Measurement)
 
 
-# Tests for Pain class
-
-
 def test_pain_initialization():
     pain = Pain("Headache", 2)
     assert pain.name == "Headache"
