@@ -4,3 +4,4 @@ flask>=0.8
 pytest
 functions-framework==3.*
 python-dotenv
+pytest-env # Needed for loading the pytest.ini file during pytests 

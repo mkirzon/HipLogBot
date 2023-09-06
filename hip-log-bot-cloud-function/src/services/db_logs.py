@@ -1,6 +1,8 @@
 import logging
+import os
 from firebase_admin import firestore
 from models.daily_log import DailyLog
+from utils import is_valid_date_format
 
 logger = logging.getLogger(__name__)
 
@@ -8,21 +10,42 @@ logger = logging.getLogger(__name__)
 class DBLogs:
     """A handler class for interacting with the Firestore Database for the Hip Log Bots
 
+    The database is a schema-less document store, where the collection will contain a set of documents.
+    Each document is a daily record (so it's name will be "2023-03-04")
+
     Attributes:
         num_logs (int): number of daily logs for current user in the database (assuming a single user)
+        collection_name (str): the selected collection name we'll be writing to
 
     """
 
+    # Initialization
     def __init__(self):
         """Initialize a handler for my Firestore database.
         This assumes you have the firebase app already started outside of this context
         with `firebase_admin.initialize_app()`
         """
         self._db = firestore.client()
-        self._collection_ref = self._db.collection("activityLogs")
+        self._collection_name = os.environ["FIRESTORE_COLLECTION_NAME"]
+        self._collection_ref = self._db.collection(self._collection_name)
         self._num_logs = self._get_num_logs()
 
-    def get_log(self, date) -> DailyLog:
+    # Properties
+    @property
+    def num_logs(self):
+        return self._num_logs
+
+    @property
+    def collection_name(self):
+        return self.__collection_name
+
+    # Public Methods
+    def get_log(self, date: str) -> DailyLog:
+        # Input checking
+        if not is_valid_date_format(date):
+            raise ValueError("Invalid date provided. Must be a 'YYYY-MM-DD' string")
+
+        # Download doc as json
         x = self._collection_ref.document(date).get()
 
         if x.exists:
@@ -53,11 +76,8 @@ class DBLogs:
         # TODO: run this only if log was new
         self._num_logs = self._get_num_logs()
 
-    def _get_num_logs(self):
+    # Private methods
+    def _get_num_logs(self) -> int:
         documents = self._collection_ref.stream()
         doc_count = sum(1 for _ in documents)
         return doc_count
-
-    @property
-    def num_logs(self):
-        return self._num_logs

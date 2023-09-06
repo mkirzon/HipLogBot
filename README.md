@@ -45,6 +45,9 @@ This is tricky. Our requirements:
 1) The code must remain unchanged, regardless of execution context (main.py locally or on GCP, pytest, VS Debugger)
 2) 
 
+Some troubleshooing tips -
+* In VSCode, when using the Test Explorer, I suspect that the pytest.ini file isn't loaded when running the workspace shortcut (as oppose to tests folder or individual tests). This is a limitation of the pytest-env plugin I think. 
+
 ## Test cloud functions
 
 1. Start the functions development server. 
@@ -71,17 +74,21 @@ gcloud init
 2. `cd` to the cloud function folder 
 3. Deploy with this command - 
 ```
-gcloud functions deploy hip-log-bot-fn4 \
+gcloud functions deploy hip-log-bot-cf \
 --gen2 \
 --runtime=python311 \
 --region=us-central1 \
 --source=. \
 --entry-point=main \
 --trigger-http \
---allow-unauthenticated
+--allow-unauthenticated \
+--set-env-vars FIRESTORE_COLLECTION_NAME=activityLogs
 ```
 
-Note that if you make a new hip log function, you'll have to manually enter permissions for the service agent principal.
+Notes:
+1. Note that if you make a new hip log function (ie provide a new name besides `hip-log-bot-cf`), you'll have to manually enter permissions for the service agent principal.
+1. We use an env var`FIRESTORE_COLLECTION_NAME` to parametrize the deployment 
+
 
 
 # Development

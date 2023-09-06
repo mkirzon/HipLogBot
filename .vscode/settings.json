@@ -5,7 +5,7 @@
     "python.testing.pytestArgs": [ // i think this is used for test discovery
         "hip-log-bot-cloud-function"
     ],
-    "python.testing.cwd": "${workspaceFolder}/hip-log-bot-cloud-function",  // to force the working directory to the cloud function folder, needed for load_dotenv() to work within pytests
+    // "python.testing.cwd": "${workspaceFolder}/hip-log-bot-cloud-function",  // to force the working directory to the cloud function folder, needed for load_dotenv() to work within pytests. but setting this breaks Test Explorere in Vscode
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
     "[python]": {

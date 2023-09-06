@@ -1,4 +1,5 @@
 import logging
+from typing import Dict
 from models.record import Activity, Pain
 
 logger = logging.getLogger(__name__)
@@ -46,7 +47,14 @@ class DailyLog:
         return instance
 
     # Initialization
-    def __init__(self, date, activites={}, pains={}, activity_notes="", pain_notes=""):
+    def __init__(
+        self,
+        date,
+        activites: Dict[str, Activity] = {},
+        pains: Dict[str, Pain] = {},
+        activity_notes="",
+        pain_notes="",
+    ):
         self.set_date(date)
         self._activities = {}
         self._pains = {}
