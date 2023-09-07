@@ -1,0 +1,86 @@
+[
+  {
+    "id": "5e015ef3-9dc2-4e92-95a0-d8c92c3968f9",
+    "data": [
+      {
+        "text": "Delete ",
+        "userDefined": false
+      },
+      {
+        "text": "last Saturday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": true
+      },
+      {
+        "text": "\u0027s log",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "442f4075-dd28-4d64-bfe9-011b7dfbc6ac",
+    "data": [
+      {
+        "text": "Delete the log for ",
+        "userDefined": false
+      },
+      {
+        "text": "2023-03-03",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "190ad149-8d3d-42ad-8074-b1038afe1e28",
+    "data": [
+      {
+        "text": "Reset ",
+        "userDefined": false
+      },
+      {
+        "text": "today\u0027s",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": true
+      },
+      {
+        "text": " log",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "5b34b243-3b31-4691-b791-58661b90977a",
+    "data": [
+      {
+        "text": "Clear my log for ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  }
+]

@@ -5,7 +5,13 @@ logger = logging.getLogger(__name__)
 
 
 class Intent:
-    ALLOWED_TYPES = ["LogPain", "LogActivity", "GetNumLogs", "GetDailyLog"]
+    ALLOWED_TYPES = [
+        "LogPain",
+        "LogActivity",
+        "GetNumLogs",
+        "GetDailyLog",
+        "DeleteDailyLog",
+    ]
 
     # Magic methods
     def __str__(self):
@@ -97,6 +103,7 @@ class Intent:
         }
 
         if self.type == "GetNumLogs":
+            logger.debug("Parsing 'GetNumLogs' intent")
             pass
         else:
             # Expecting a date parameter for these intents
@@ -106,15 +113,19 @@ class Intent:
             # Extract date as a top level attribute and remove it from the parsed
             # entities as it's not needed there
             self._set_date()
-            # self._log_input.pop("date", None)
+            logger.debug(f"Set intent date as {self._date}")
 
             # For now, the only difference is that some of the names mismatch from the
             # request to my OO model
             if self.type == "LogActivity":
-                logger.debug("Parsing LogActivity entity")
+                logger.debug("Parsing 'LogActivity' intent")
                 self._log_input["name"] = self._log_input.pop("activity").title()
 
             elif self.type == "LogPain":
-                logger.debug("Parsing LogPain entity")
+                logger.debug("Parsing 'LogPain' intent")
                 self._log_input["name"] = self._log_input.pop("body_part").title()
                 self._log_input["level"] = int(self._log_input.pop("pain_level"))
+
+            elif self.type == "DeleteDailyLog":
+                logger.debug("Parsing 'DeleteDailyLog' intent")
+                pass

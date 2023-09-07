@@ -27,7 +27,7 @@ class DBLogs:
         """
         self._db = firestore.client()
         self._collection_name = os.environ["FIRESTORE_COLLECTION_NAME"]
-        self._collection_ref = self._db.collection(self._collection_name)
+        self._collection = self._db.collection(self._collection_name)
         self._num_logs = self._get_num_logs()
 
     # Properties
@@ -49,27 +49,28 @@ class DBLogs:
         Returns:
             DailyLog: a populated or empty (just date) DailyLog object
         """
+        logger.info("Starting DailyLog fetch from database for '{date}'")
         # Input checking
         if not is_valid_date_format(date):
             raise ValueError("Invalid date provided. Must be a 'YYYY-MM-DD' string")
 
         # Download doc as json
-        x = self._get_document_by_key(date)
+        x = self._fetch_document_by_id(date)
 
         if x.exists:
             x = x.to_dict()
-            logger.info(
-                f"Log retrieved successfully. Preview of the returned dict from Firestore:\n{x}"  # noqa
-            )
+            logger.info(f"Retrieved log as dict:\n{x}")  # noqa
 
             # Map the Firestore dict to the DailyLog object
             log = DailyLog.from_dict(x)
-            logger.info("Log converted to Python log object successfully")
+            logger.debug("Converted log dict to DailyLog")
 
         else:
             # TODO: this shouldn't live here, but handle it upstream
-            print(f"Log for date '{date}' doesn't exist. Initiating DailyLog instance")
+            logger.info(f"Didn't find log for '{date}'. Initiating empty DailyLog")
             log = DailyLog(date)
+
+        logger.info("Finished DailyLog fetch from database for '{date}'")
 
         return log
 
@@ -77,21 +78,30 @@ class DBLogs:
         log_dict = log.to_dict()
 
         logger.info(f"Will upload this dict:\n{log_dict}")
-        self._collection_ref.document(log.date).set(log_dict)
+        self._collection.document(log.date).set(log_dict)
 
         # In case this was a new one, update the count
         # TODO: optimization - run this only if log was new
         self._num_logs = self._get_num_logs()
 
+    def delete_log(self, date: str) -> None:
+        # pass
+        try:
+            self._collection.document(date).delete()
+            logger.info(f"Document with ID {date} deleted successfully!")
+        except Exception as e:
+            logger.error(f"An error occurred: {e}")
+
     # Private methods
     def _get_num_logs(self) -> int:
-        documents = self._collection_ref.stream()
+        documents = self._collection.stream()
         doc_count = sum(1 for _ in documents)
         return doc_count
 
-    def _get_document_by_key(self, key: str):
-        x = self._collection_ref.document(key).get()
+    def _fetch_document_by_id(self, document_id: str):
+        """Download the document"""
+        x = self._collection.document(document_id).get()
         logger.debug(
-            f"Downloaded document '{self._collection_name}.{key}'. Created at '{x.create_time}' and last updated at {x.update_time}'"
+            f"Downloaded document '{self._collection_name}.{document_id}'. Created at '{x.create_time}' and last updated at {x.update_time}'"
         )
         return x

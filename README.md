@@ -67,13 +67,13 @@ curl -X POST -H 'Content-Type: application/json' -d '{"responseId":"924e4b7e-57d
 ## Cloud functions
 
 Prereqs:
-* Must have gcloud cli installed
+* Must have gcloud cli installed (and PATH updated to include it)
 
 1. Start the gcloud cli: 
 ```
 gcloud init
 ```
-2. `cd` to the cloud function folder 
+2. `cd` to the cloud function `src` folder 
 3. Deploy with this command - 
 ```
 gcloud functions deploy hip-log-bot-cf \
@@ -88,18 +88,21 @@ gcloud functions deploy hip-log-bot-cf \
 ```
 
 Notes:
-1. Note that if you make a new hip log function (ie provide a new name besides `hip-log-bot-cf`), you'll have to manually enter permissions for the service agent principal.
-1. We use an env var`FIRESTORE_COLLECTION_NAME` to parametrize the deployment 
+1. Note that if you make a new hip log function (ie provide a new name besides `hip-log-bot-cf`), you'll have to make these changes: 
+    i. Manually enter permissions for the service agent principal
+    ii. Update the webhook url in Dialogflow
+1. We include the env var`FIRESTORE_COLLECTION_NAME` to configure the deployed instance with the database-collection (eg a prod vs test one)
 
-
+TODO: 
+1. Make a bash script for deploying (can have separate for prod/staging), but the trick is how to make it work with gcloud considering it needs login
 
 # Development
 
 ## Creating new Intents
 
 1. Create and test them within Dialogflow
-2. Update `ALLOWED_TYPES` within the `Intent` class
-3. Add handling for the new intent in: 
-    i. `Intent._extract_log_input()`
-    ii. `main()`
-
+1. Update `ALLOWED_TYPES` within the `Intent` class
+1. Add handling for the new intent in (in this order): 
+    * `Intent._extract_log_input()`
+    * `main()`
+1. Write test cases

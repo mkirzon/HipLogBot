@@ -76,3 +76,18 @@ def test_get_log_needs_valid_date(db):
     db_log = DBLogs()
     with pytest.raises(ValueError, match="Invalid date provided"):
         db_log.get_log("2023-11111-1")
+
+
+def test_delete_log(db):
+    # Create a log
+    date = "2024-01-01"
+    db_log = DBLogs()
+    db_log.upload_log(DailyLog(date=date, activites={"Yoga": Activity(name="Yoga")}))
+    status1 = db_log._collection.document(date).get().exists
+
+    # Delete it
+    db_log.delete_log(date)
+
+    # Test that it doesn't exist
+    status2 = db_log._collection.document(date).get().exists
+    assert status1 != status2

@@ -35,38 +35,43 @@ def main(request):
 
         # Parse the intent
         intent = Intent(req)
-        logger.info(f"The intent request was parsed: {intent}")
+        logger.info(f"Parsed intent request: {intent}")
 
         # First handle generic requests, that don't require specific log queries.
         # Otherwise do log-based actions
         if intent.type == "GetNumLogs":
-            logger.debug("IntentType if-case: GetNumLogs")
+            logger.info("Starting main logic for intent: GetNumLogs")
             num_logs = db_logs.num_logs
             res = f"There are {num_logs} logs"
 
         elif intent.type == "GetDailyLog":
-            logger.debug("IntentType: GetDailyLog")
+            logger.info("IntentType: GetDailyLog")
             log = db_logs.get_log(intent.date)
 
         elif intent.type == "LogActivity":
-            logger.debug("IntentType if-case: LogActivity")
+            logger.info("Starting main logic for intent: LogActivity")
             log = db_logs.get_log(intent.date)
             log.add_activity(**intent.log_input)
-            logger.info(f"Log item created/updated:\n{log}")
+            logger.info(f"DailyLog (local object) generated:\n{log}")
 
         elif intent.type == "LogPain":
-            logger.debug("IntentType if-case: LogPain")
+            logger.info("Starting main logic for intent: LogPain")
             log = db_logs.get_log(intent.date)
             log.add_pain(**intent.log_input)
-            logger.info(f"Log item created/updated:\n{log}")
+            logger.info(f"DailyLog (local object) generated:\n{log}")
+
+        elif intent.type == "DeleteDailyLog":
+            logger.info("Starting main logic for intent: DeleteDailyLog")
+            db_logs.delete_log(intent.date)
+            res = f"Your entry '{intent.date}' was deleted"
 
         if intent.type in ["LogActivity", "LogPain", "GetDailyLog"]:
             # TODO add logic to bubble up new vs update status
 
             # Upload the new/modified log back
-            logger.info("Uploading new/modified log")
+            logger.info("Uploading DailyLog")
             db_logs.upload_log(log)
-            logger.info("Upload complete of this log")
+            logger.info("Completed upload")
 
             res = log.__str__()
 

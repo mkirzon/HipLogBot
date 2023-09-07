@@ -2,3 +2,6 @@
 __pycache__/
 *.py[cod]
 .DS_STORE
+
+# Local python files used for testing
+main_test.py 

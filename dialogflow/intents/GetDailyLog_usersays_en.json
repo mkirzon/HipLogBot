@@ -1,0 +1,63 @@
+[
+  {
+    "id": "dc00c264-394c-41d1-9220-cfa7558d3526",
+    "data": [
+      {
+        "text": "What have I done ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "fc18cf83-8710-4d68-9aeb-b51550e5dc92",
+    "data": [
+      {
+        "text": "Show me the log for ",
+        "userDefined": false
+      },
+      {
+        "text": "yesterday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "f70ba014-31c5-4320-8fd4-5726690e38c6",
+    "data": [
+      {
+        "text": "How am I doing ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  }
+]

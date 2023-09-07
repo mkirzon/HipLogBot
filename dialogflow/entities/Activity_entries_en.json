@@ -1,33 +1,5 @@
 [
   {
-    "value": "Pullups",
-    "synonyms": [
-      "Pullup",
-      "Pullups",
-      "chinups"
-    ]
-  },
-  {
-    "value": "Handstands",
-    "synonyms": [
-      "Handstand"
-    ]
-  },
-  {
-    "value": "Physio",
-    "synonyms": [
-      "Physio"
-    ]
-  },
-  {
-    "value": "Run",
-    "synonyms": [
-      "Run",
-      "jog",
-      "ran"
-    ]
-  },
-  {
     "value": "Cycle",
     "synonyms": [
       "Bicycle",
@@ -40,36 +12,11 @@
     ]
   },
   {
-    "value": "Yoga",
+    "value": "Foam Roll",
     "synonyms": [
-      "Yoga"
-    ]
-  },
-  {
-    "value": "Salsa",
-    "synonyms": [
-      "Salsa"
-    ]
-  },
-  {
-    "value": "Plank",
-    "synonyms": [
-      "Plank"
-    ]
-  },
-  {
-    "value": "Foam Rolled",
-    "synonyms": [
-      "Foam Rolled"
-    ]
-  },
-  {
-    "value": "Tennis",
-    "synonyms": [
-      "Tennis",
-      "played tennis",
-      "badmin",
-      "badminton"
+      "Foam Rolled",
+      "roller",
+      "foam rolling"
     ]
   },
   {
@@ -82,18 +29,9 @@
     ]
   },
   {
-    "value": "Surf",
+    "value": "Handstands",
     "synonyms": [
-      "Surf",
-      "surfing",
-      "surfed"
-    ]
-  },
-  {
-    "value": "Hip Adductions",
-    "synonyms": [
-      "Hip Adductions",
-      "adduction"
+      "Handstand"
     ]
   },
   {
@@ -104,9 +42,82 @@
     ]
   },
   {
+    "value": "Hip Adductions",
+    "synonyms": [
+      "Hip Adductions",
+      "adduction"
+    ]
+  },
+  {
+    "value": "Mobility",
+    "synonyms": [
+      "Mobility",
+      "mobility session",
+      "hip mobility"
+    ]
+  },
+  {
+    "value": "Physio",
+    "synonyms": [
+      "Physio",
+      "physiotherapy"
+    ]
+  },
+  {
+    "value": "Plank",
+    "synonyms": [
+      "Plank"
+    ]
+  },
+  {
+    "value": "Pullups",
+    "synonyms": [
+      "Pullup",
+      "Pullups",
+      "chinups"
+    ]
+  },
+  {
     "value": "Pushups",
     "synonyms": [
       "Pushups"
+    ]
+  },
+  {
+    "value": "Run",
+    "synonyms": [
+      "Run",
+      "jog",
+      "ran"
+    ]
+  },
+  {
+    "value": "Salsa",
+    "synonyms": [
+      "Salsa"
+    ]
+  },
+  {
+    "value": "Surf",
+    "synonyms": [
+      "Surf",
+      "surfing",
+      "surfed"
+    ]
+  },
+  {
+    "value": "Tennis",
+    "synonyms": [
+      "Tennis",
+      "played tennis",
+      "badmin",
+      "badminton"
+    ]
+  },
+  {
+    "value": "Yoga",
+    "synonyms": [
+      "Yoga"
     ]
   }
 ]
