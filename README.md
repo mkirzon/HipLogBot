@@ -74,7 +74,9 @@ Prereqs:
 gcloud init
 ```
 2. `cd` to the cloud function `src` folder 
-3. Deploy with this command - 
+3. Deploy with these commands -
+
+For prod -
 ```
 gcloud functions deploy hip-log-bot-cf \
 --gen2 \
@@ -87,6 +89,19 @@ gcloud functions deploy hip-log-bot-cf \
 --set-env-vars FIRESTORE_COLLECTION_NAME=activityLogs
 ```
 
+For test - 
+```
+gcloud functions deploy hip-log-bot-cf-test \
+--gen2 \
+--runtime=python311 \
+--region=us-central1 \
+--source=. \
+--entry-point=main \
+--trigger-http \
+--allow-unauthenticated \
+--set-env-vars FIRESTORE_COLLECTION_NAME=activityLogs_test
+```
+
 Notes:
 1. Note that if you make a new hip log function (ie provide a new name besides `hip-log-bot-cf`), you'll have to make these changes: 
     i. Manually enter permissions for the service agent principal
@@ -97,6 +112,12 @@ TODO:
 1. Make a bash script for deploying (can have separate for prod/staging), but the trick is how to make it work with gcloud considering it needs login
 
 # Development
+
+Update local paths across this source repo: 
+1. `.vscode/launch.json`
+1. `hip-log-bot-cloud-function/.env`
+1. `hip-log-bot-cloud-function/tests/conftest.py`
+1. `hip-log-bot-cloud-function/tests/pytest.ini`
 
 ## Creating new Intents
 
