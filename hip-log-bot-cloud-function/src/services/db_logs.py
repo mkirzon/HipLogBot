@@ -49,6 +49,7 @@ class DBLogs:
         Returns:
             DailyLog: a populated or empty (just date) DailyLog object
         """
+        logger.info("Starting DailyLog fetch from database for '{date}'")
         # Input checking
         if not is_valid_date_format(date):
             raise ValueError("Invalid date provided. Must be a 'YYYY-MM-DD' string")
@@ -58,18 +59,18 @@ class DBLogs:
 
         if x.exists:
             x = x.to_dict()
-            logger.info(
-                f"Log retrieved successfully. Preview of the returned dict from Firestore:\n{x}"  # noqa
-            )
+            logger.info(f"Retrieved log as dict:\n{x}")  # noqa
 
             # Map the Firestore dict to the DailyLog object
             log = DailyLog.from_dict(x)
-            logger.info("Log converted to Python log object successfully")
+            logger.debug("Converted log dict to DailyLog")
 
         else:
             # TODO: this shouldn't live here, but handle it upstream
-            print(f"Log for date '{date}' doesn't exist. Initiating DailyLog instance")
+            logger.info(f"Didn't find log for '{date}'. Initiating empty DailyLog")
             log = DailyLog(date)
+
+        logger.info("Finished DailyLog fetch from database for '{date}'")
 
         return log
 

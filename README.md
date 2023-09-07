@@ -93,7 +93,8 @@ Notes:
     ii. Update the webhook url in Dialogflow
 1. We include the env var`FIRESTORE_COLLECTION_NAME` to configure the deployed instance with the database-collection (eg a prod vs test one)
 
-
+TODO: 
+1. Make a bash script for deploying (can have separate for prod/staging), but the trick is how to make it work with gcloud considering it needs login
 
 # Development
 
