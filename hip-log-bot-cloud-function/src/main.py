@@ -40,7 +40,7 @@ def main(request):
         # First handle generic requests, that don't require specific log queries.
         # Otherwise do log-based actions
         if intent.type == "GetNumLogs":
-            logger.debug("IntentType if-case: GetNumLogs")
+            logger.debug("Executing main logic for intent: GetNumLogs")
             num_logs = db_logs.num_logs
             res = f"There are {num_logs} logs"
 
@@ -49,16 +49,20 @@ def main(request):
             log = db_logs.get_log(intent.date)
 
         elif intent.type == "LogActivity":
-            logger.debug("IntentType if-case: LogActivity")
+            logger.debug("Executing main logic for intent: LogActivity")
             log = db_logs.get_log(intent.date)
             log.add_activity(**intent.log_input)
-            logger.info(f"Log item created/updated:\n{log}")
+            logger.info(f"DailyLog (local object) generated:\n{log}")
 
         elif intent.type == "LogPain":
-            logger.debug("IntentType if-case: LogPain")
+            logger.debug("Executing main logic for intent: LogPain")
             log = db_logs.get_log(intent.date)
             log.add_pain(**intent.log_input)
-            logger.info(f"Log item created/updated:\n{log}")
+            logger.info(f"DailyLog (local object) generated:\n{log}")
+
+        elif intent.type == "DeleteDailyLog":
+            logger.debug("Executing main logic for intent: DeleteDailyLog")
+            db_logs.delete_log(intent.date)
 
         if intent.type in ["LogActivity", "LogPain", "GetDailyLog"]:
             # TODO add logic to bubble up new vs update status

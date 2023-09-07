@@ -100,8 +100,8 @@ Notes:
 ## Creating new Intents
 
 1. Create and test them within Dialogflow
-2. Update `ALLOWED_TYPES` within the `Intent` class
-3. Add handling for the new intent in: 
-    i. `Intent._extract_log_input()`
-    ii. `main()`
-
+1. Update `ALLOWED_TYPES` within the `Intent` class
+1. Add handling for the new intent in (in this order): 
+    * `Intent._extract_log_input()`
+    * `main()`
+1. Write test cases
