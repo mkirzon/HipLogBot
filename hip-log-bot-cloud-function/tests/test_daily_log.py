@@ -5,10 +5,16 @@ from models.daily_log import DailyLog
 
 # Tests for DailyLog class
 def test_dailylog_initialization():
-    log = DailyLog("2021-09-01")
+    log = DailyLog("2021-09-01", activities={"Yoga": Activity(name="Yoga")})
     assert log._date == "2021-09-01"
-    assert log._activities == {}
+    assert "Yoga" in log._activities.keys()
     assert log._pains == {}
+
+
+def test_daily_log_initialize_with_activities():
+    a = Activity(name="Yoga")
+    log = DailyLog(date="2023-01-01", activities={"Yoga": a})
+    assert log.activities == {"Yoga": a}
 
 
 def test_add_activity():

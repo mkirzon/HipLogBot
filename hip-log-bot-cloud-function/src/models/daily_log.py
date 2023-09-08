@@ -62,14 +62,14 @@ class DailyLog:
     def __init__(
         self,
         date,
-        activites: Dict[str, Activity] = {},
+        activities: Dict[str, Activity] = {},
         pains: Dict[str, Pain] = {},
         activity_notes="",
         pain_notes="",
     ):
         self.set_date(date)
-        self._activities = {}
-        self._pains = {}
+        self._activities = activities
+        self._pains = pains
         self._activity_notes = activity_notes
         self._pain_notes = pain_notes
 

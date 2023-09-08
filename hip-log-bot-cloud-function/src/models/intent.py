@@ -11,6 +11,7 @@ class Intent:
         "GetNumLogs",
         "GetDailyLog",
         "DeleteDailyLog",
+        "GetActivitySummary",
     ]
 
     # Magic methods
@@ -102,10 +103,12 @@ class Intent:
             k: v for k, v in self._raw_entity.items() if v != "" and k != "date"
         }
 
-        if self.type == "GetNumLogs":
-            logger.debug("Parsing 'GetNumLogs' intent")
-            pass
-        else:
+        logger.debug(
+            "Starting parsing raw intent response based on '{self.type}' logic"
+        )
+
+        # Extract date for date-based activities
+        if self.type in ["LogActivity", "LogPain", "GetDailyLog", "DeleteDailyLog"]:
             # Expecting a date parameter for these intents
             if not self._raw_entity.get("date"):
                 raise ValueError("Input entity is missing a date among the attributes")
@@ -115,17 +118,24 @@ class Intent:
             self._set_date()
             logger.debug(f"Set intent date as {self._date}")
 
+        # Now do the processing. In some cases, the keys/names in the intent need to be renamed
+        if self.type == "GetNumLogs":
+            pass
+
+        elif self.type == "LogActivity":
             # For now, the only difference is that some of the names mismatch from the
             # request to my OO model
-            if self.type == "LogActivity":
-                logger.debug("Parsing 'LogActivity' intent")
-                self._log_input["name"] = self._log_input.pop("activity").title()
+            self._log_input["name"] = self._log_input.pop("activity").title()
 
-            elif self.type == "LogPain":
-                logger.debug("Parsing 'LogPain' intent")
-                self._log_input["name"] = self._log_input.pop("body_part").title()
-                self._log_input["level"] = int(self._log_input.pop("pain_level"))
+        elif self.type == "LogPain":
+            self._log_input["name"] = self._log_input.pop("body_part").title()
+            self._log_input["level"] = int(self._log_input.pop("pain_level"))
 
-            elif self.type == "DeleteDailyLog":
-                logger.debug("Parsing 'DeleteDailyLog' intent")
-                pass
+        elif self.type == "DeleteDailyLog":
+            pass
+
+        elif self.type == "GetActivitySummary":
+            # TODO: log_input no longer makes sense in the context of this intent.
+            #       Maybe activity_name is more of a Intent class attribute?
+            self._log_input["name"] = self._log_input.pop("activity").title()
+            pass

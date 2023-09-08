@@ -40,33 +40,38 @@ def main(request):
         # First handle generic requests, that don't require specific log queries.
         # Otherwise do log-based actions
         if intent.type == "GetNumLogs":
-            logger.info("Starting main logic for intent: GetNumLogs")
             num_logs = db_logs.num_logs
             res = f"There are {num_logs} logs"
 
         elif intent.type == "GetDailyLog":
-            logger.info("IntentType: GetDailyLog")
             log = db_logs.get_log(intent.date)
+            logger.info(f"Retrieved DailyLog (local object) generated:\n{log}")
 
         elif intent.type == "LogActivity":
-            logger.info("Starting main logic for intent: LogActivity")
             log = db_logs.get_log(intent.date)
             log.add_activity(**intent.log_input)
             logger.info(f"DailyLog (local object) generated:\n{log}")
 
         elif intent.type == "LogPain":
-            logger.info("Starting main logic for intent: LogPain")
             log = db_logs.get_log(intent.date)
             log.add_pain(**intent.log_input)
             logger.info(f"DailyLog (local object) generated:\n{log}")
 
         elif intent.type == "DeleteDailyLog":
-            logger.info("Starting main logic for intent: DeleteDailyLog")
             db_logs.delete_log(intent.date)
             res = f"Your entry '{intent.date}' was deleted"
 
+        elif intent.type == "GetActivitySummary":
+            activity_name = intent.log_input["name"]
+            stats = db_logs.get_activity_summary(activity_name)
+            output = [f"**Summary Stats for '{activity_name}'**\n"]
+            output += [f"{k}: {v}" for k, v in stats.items()]
+            res = "\n".join(output)
+
         if intent.type in ["LogActivity", "LogPain", "GetDailyLog"]:
             # TODO add logic to bubble up new vs update status
+
+            # TODO: retrieve into here too but tbd how cuz also need to handle differently
 
             # Upload the new/modified log back
             logger.info("Uploading DailyLog")
@@ -77,7 +82,8 @@ def main(request):
 
     except ValueError as e:  # noqa
         # Graceful message back if supported case
-        if "Unsupported intent passed" in str(e):
+        # TODO: change
+        if "Unsupported intent" in str(e):
             res = f"The processing server doesn't support this yet (intent = {req['queryResult']['intent']['displayName']}))"
 
         else:
