@@ -1,6 +1,7 @@
 import os
 import pytest
 import firebase_admin
+import logging
 
 from firebase_admin import firestore
 from services.db_logs import DBLogs
@@ -50,7 +51,7 @@ def test_new_log_updates_num(db):
     db_log = DBLogs()
     n1 = db_log.num_logs
     db_log.upload_log(
-        DailyLog(date="2024-01-01", activites={"Yoga": Activity(name="Yoga")})
+        DailyLog(date="2024-01-01", activities={"Yoga": Activity(name="Yoga")})
     )
     n2 = db_log.num_logs
     assert n2 == n1 + 1
@@ -60,12 +61,12 @@ def test_existing_log_keeps_num(db):
     db_log = DBLogs()
 
     db_log.upload_log(
-        DailyLog(date="2024-01-01", activites={"Yoga": Activity(name="Yoga")})
+        DailyLog(date="2024-01-01", activities={"Yoga": Activity(name="Yoga")})
     )
     n1 = db_log.num_logs
 
     db_log.upload_log(
-        DailyLog(date="2024-01-01", activites={"Handstand": Activity(name="Yoga")})
+        DailyLog(date="2024-01-01", activities={"Handstand": Activity(name="Yoga")})
     )
     n2 = db_log.num_logs
 
@@ -82,7 +83,7 @@ def test_delete_log(db):
     # Create a log
     date = "2024-01-01"
     db_log = DBLogs()
-    db_log.upload_log(DailyLog(date=date, activites={"Yoga": Activity(name="Yoga")}))
+    db_log.upload_log(DailyLog(date=date, activities={"Yoga": Activity(name="Yoga")}))
     status1 = db_log._collection.document(date).get().exists
 
     # Delete it
@@ -91,3 +92,17 @@ def test_delete_log(db):
     # Test that it doesn't exist
     status2 = db_log._collection.document(date).get().exists
     assert status1 != status2
+
+
+# def test_get_activity_summary(db):
+def test_get_activity_summary(db, caplog):
+    # For reference how to change logging (must use Run mode, not debug mode):
+    # caplog.set_level(logging.DEBUG, logger="services.db_logs")
+
+    db_log = DBLogs()
+    name = "Tennis"
+    for d in ["2023-01-01", "2023-01-02", "2023-01-03"]:
+        db_log.upload_log(DailyLog(date=d, activities={name: Activity(name=name)}))
+
+    x = db_log.get_activity_summary(name)
+    assert x["total_count"] == 3

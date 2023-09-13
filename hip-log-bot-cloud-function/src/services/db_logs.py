@@ -3,8 +3,11 @@ import os
 from firebase_admin import firestore
 from models.daily_log import DailyLog
 from utils import is_valid_date_format
+from google.cloud.firestore_v1 import aggregation
+from google.cloud.firestore_v1.base_query import FieldFilter
 
 logger = logging.getLogger(__name__)
+# print(__name__)
 
 
 class DBLogs:
@@ -91,6 +94,30 @@ class DBLogs:
             logger.info(f"Document with ID {date} deleted successfully!")
         except Exception as e:
             logger.error(f"An error occurred: {e}")
+
+    def get_activity_summary(self, activity_name: str) -> dict:
+        """Get summary statistics for an activity
+
+        Fetch stats with a collection query and format them into a nice summary
+
+        Returns: a dict of stats
+        """
+
+        stats = {}
+
+        # Stat 1: total num
+        # TODO need to filte ron the contents of the keys of thea ctiviteis
+        # query = self._collection.where(filter=FieldFilter("name", "==", activity_name))
+        # query = self._collection.whereEqualTo(f"activities.{activity_name}.exists", true)
+        query = self._collection.where(
+            filter=FieldFilter(f"activities.{activity_name}.name", "==", activity_name)
+        )
+        aggregate_query = aggregation.AggregationQuery(query)
+        aggregate_query.count(alias="all")
+        results = aggregate_query.get()
+        stats["total_count"] = results[0][0].value
+
+        return stats
 
     # Private methods
     def _get_num_logs(self) -> int:

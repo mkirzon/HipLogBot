@@ -48,6 +48,15 @@ def sample_requests():
                 },
             }
         },
+        "get_activity_summary": {
+            "queryResult": {
+                "parameters": {"activity": "Yoga"},
+                "intent": {
+                    "name": "projects/hip-log-bot/agent/intents/0a2df690-4073-45f6-8a55-6111a98bda0d",
+                    "displayName": "GetActivitySummary",
+                },
+            }
+        },
     }
 
     return x
@@ -82,6 +91,11 @@ def test_intent_initialization_for_get_daily_log(sample_requests):
     intent = Intent(sample_requests["get_daily_log"])
     assert intent.type == "GetDailyLog"
     assert intent.date == "2023-09-05"
+
+
+def test_intent_initialization_for_get_activity_summary(sample_requests):
+    intent = Intent(sample_requests["get_activity_summary"])
+    assert intent.type == "GetActivitySummary"
 
 
 def test_invalid_intent_type():
@@ -125,4 +139,10 @@ def test_extract_date():
 
 # TODO: test that empty attributes are removed (tbd if this should live here or record)
 def test_missing_attributes_skipped():
+    pass
+
+
+# TODO
+def test_new_attributes_are_tbd():
+    # What happens at the intent level if eg an activity has some new parameter we didn't expect (eg location=park)
     pass
