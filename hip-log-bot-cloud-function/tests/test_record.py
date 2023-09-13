@@ -1,5 +1,5 @@
 import pytest
-from models.record import Record, Activity, Pain
+from models.record import Record, Activity, Pain, Set
 from models.measurement import Measurement
 
 # Tests for Record class
@@ -21,27 +21,94 @@ def test_record_to_dict():
     }
 
 
+def test_print_record():
+    record = Record("Test", reps="10", attr2="value2")
+    assert record.__str__() == "Test, reps 10, attr2 value2"
+
+
+# Tests for Set class
+def test_set_initialization():
+    s = Set(reps=10)
+    assert s.reps == 10 and s.duration is None
+
+
+def test_set_initialization_with_dict():
+    s = Set(reps=10, duration={"amount": 10, "unit": "min"})
+    assert s.duration.amount == 10 and s.duration.unit == "min"
+
+
+def test_print_set():
+    assert Set(reps=10, duration={"amount": 10, "unit": "min"}).__str__() == "10x:10min"
+    assert Set(reps=10, weight={"amount": 5, "unit": "kg"}).__str__() == "10x:5kg"
+    assert (
+        Set(
+            reps=10,
+            duration={"amount": 10, "unit": "min"},
+            weight={"amount": 5, "unit": "kg"},
+        ).__str__()
+        == "10x:10min:5kg"
+    )
+    assert Set(weight={"amount": 5, "unit": "lb"}).__str__() == "5lb"
+
+
 # Tests for Activity class
-
-
 def test_activity_initialization():
-    duration = Measurement(10, "min")
-    weight = Measurement(50, "kg")
-    activity = Activity("Running", duration=duration, weight=weight)
-    assert activity.name == "Running"
-    assert activity.duration == duration
-    assert activity.weight == weight
+    activity = Activity(
+        "Shoulder Press",
+        sets=[Set(weight=Measurement(10, "kg")), Set(weight=Measurement(12, "kg"))],
+    )
+    assert activity.name == "Shoulder Press" and [
+        x.weight.amount for x in activity.sets
+    ] == [10, 12]
 
 
-def test_activity_with_dict():
+def test_activity_initialization_with_dict():
     activity = Activity(
         "Running",
-        duration={"amount": 10, "unit": "min"},
-        weight={"amount": 50, "unit": "kg"},
+        sets=[
+            Set(
+                duration={"amount": 10, "unit": "min"},
+                weight={"amount": 50, "unit": "kg"},
+            ),
+        ],
     )
-    assert activity.name == "Running"
-    assert isinstance(activity.duration, Measurement)
-    assert isinstance(activity.weight, Measurement)
+    assert (
+        activity.sets[0].duration.amount == 10 and activity.sets[0].weight.amount == 50
+    )
+
+
+def test_add_set_to_activity():
+    activity = Activity("Yoga", sets=[Set(duration=Measurement(10, "min"))])
+    activity.add_set(Set(duration=Measurement(30, "min")))
+
+    assert len(activity.sets) == 2
+
+
+def test_activity_to_dict():
+    activity = Activity(
+        "Shoulder Press",
+        sets=[Set(weight=Measurement(10, "kg")), Set(weight=Measurement(12, "kg"))],
+    )
+
+    assert activity.to_dict() == {
+        "name": "Shoulder Press",
+        "sets": [
+            {"weight": {"amount": 10, "unit": "kg"}},
+            {"weight": {"amount": 12, "unit": "kg"}},
+        ],
+    }
+
+
+def test_print_activity():
+    activity = Activity(
+        "Shoulder Press",
+        sets=[Set(weight=Measurement(10, "kg")), Set(weight=Measurement(12, "kg"))],
+    )
+
+    assert activity.__str__() == "Shoulder Press, sets ['10kg', '12kg']"
+
+
+# Tests for Pain
 
 
 def test_pain_initialization():
@@ -55,6 +122,4 @@ def test_invalid_pain_level():
         Pain("Headache", 5)
 
 
-# TODO: test that empty attributes can be skipped
-def test_empty_attributes_skipped():
-    pass
+# Tests for outward conversions

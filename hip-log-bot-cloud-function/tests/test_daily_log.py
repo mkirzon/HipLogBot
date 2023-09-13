@@ -20,7 +20,7 @@ def test_daily_log_initialize_with_activities():
 def test_add_activity():
     log = DailyLog("2021-09-01")
     activity = Activity("Running", duration={"amount": 10, "unit": "min"})
-    log.add_activity(**activity.get_attributes())
+    log.add_activity(**activity.attributes)
     assert "Running" in log._activities
     assert isinstance(log.get_activity("Running"), Activity)
 
@@ -28,12 +28,12 @@ def test_add_activity():
 def test_add_existing_activity(caplog):
     log = DailyLog("2021-09-01")
     activity1 = Activity("Running", duration={"amount": 10, "unit": "min"})
-    log.add_activity(**activity1.get_attributes())
+    log.add_activity(**activity1.attributes)
 
     activity2 = Activity("Running", duration={"amount": 15, "unit": "min"})
     # Expecting a warning when adding the same activity name again
     with caplog.at_level(logging.DEBUG):
-        res = log.add_activity(**activity2.get_attributes())
+        res = log.add_activity(**activity2.attributes)
     assert "already exists" in caplog.text
     assert res == "update"
 
