@@ -13,6 +13,21 @@ class Record:
 
     """
 
+    # Magic methods
+    def __str__(self):
+        parts = [self.name]
+        for k, v in self.get_attributes().items():
+            if k == "name" or not v:  # skip since initialized with this
+                continue
+
+            if isinstance(v, Measurement):
+                parts.append(v.__str__())
+            else:
+                parts.append(f"{v} {k}")
+
+        return ", ".join(parts)
+
+    # Initialization
     def __init__(self, name, **attributes):
         self.name = name
         for key, value in attributes.items():
@@ -21,6 +36,7 @@ class Record:
             f"Initialized Record '{self.name}' with {len(self.get_attributes())} attributes"  # noqa
         )
 
+    # Public Methods
     def get_attributes(self) -> dict:
         """Get a dictionary of all the Record attributes that we created.
         Necessary because these are dynamically created. This is different
@@ -38,19 +54,6 @@ class Record:
                 attrs[key] = value
 
         return attrs
-
-    def __str__(self):
-        parts = [self.name]
-        for k, v in self.get_attributes().items():
-            if k == "name" or not v:  # skip since initialized with this
-                continue
-
-            if isinstance(v, Measurement):
-                parts.append(v.__str__())
-            else:
-                parts.append(f"{v} {k}")
-
-        return ", ".join(parts)
 
     def to_dict(self, skip_empty=False) -> dict:
         """Get a fully converted dictionary representation of the record (even
