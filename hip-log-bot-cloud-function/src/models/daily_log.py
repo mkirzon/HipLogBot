@@ -1,5 +1,5 @@
+from typing import List
 import logging
-from typing import Dict
 from models.record import Activity, Pain
 
 logger = logging.getLogger(__name__)
@@ -29,7 +29,10 @@ class DailyLog:
     # Class Methods
     @classmethod
     def from_dict(cls, date: str, input_dict: dict):
-        """Initialize a DailyLog using a dict. This dict is what will come directly from the Firestore fetch"""
+        """Initialize a DailyLog using a dict.
+
+        This dict structure matches what comes from the Firestore fetch
+        """
         logger.debug("Building Log object using `from_dict()` method")
         daily_log = cls(date)
 
@@ -63,16 +66,22 @@ class DailyLog:
     def __init__(
         self,
         date,
-        activities: Dict[str, Activity] = {},
-        pains: Dict[str, Pain] = {},
+        activities: List[Activity] = [],
+        pains: List[Pain] = [],
         activity_notes="",
         pain_notes="",
     ):
         self._date = date
-        self._activities = activities
-        self._pains = pains
         self._activity_notes = activity_notes
         self._pain_notes = pain_notes
+        self._activities = {}
+        self._pains = {}
+
+        for a in activities:
+            self.add_activity(a, overwrite=False)
+
+        for p in pains:
+            self.add_pain(p)
 
     # Properties
     @property
