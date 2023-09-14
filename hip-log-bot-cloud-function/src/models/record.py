@@ -15,7 +15,15 @@ class Record:
     initialization, printing, properties
     """
 
-    # Magic methods
+    # Initialization & Magic methods
+    def __init__(self, name, **attributes):
+        self.name = name
+        for key, value in attributes.items():
+            setattr(self, f"{key}", value)
+        logger.debug(
+            f"Initialized Record '{self.name}' with {len(self.attributes)} attributes"  # noqa
+        )
+
     def __str__(self):
         parts = [self.name]
         for k, v in self.attributes.items():
@@ -44,15 +52,6 @@ class Record:
                 return False
 
         return True
-
-    # Initialization
-    def __init__(self, name, **attributes):
-        self.name = name
-        for key, value in attributes.items():
-            setattr(self, f"{key}", value)
-        logger.debug(
-            f"Initialized Record '{self.name}' with {len(self.attributes)} attributes"  # noqa
-        )
 
     # Properties
     @property
@@ -95,7 +94,22 @@ class Record:
 
 
 class Set:
-    # Magic methods
+    # Initialization and Magic methods
+    def __init__(
+        self, reps: int = None, duration: Measurement = None, weight: Measurement = None
+    ):
+        if reps and not isinstance(reps, int):
+            raise TypeError("reps must be int input")
+        self.reps = reps
+
+        if isinstance(duration, dict):
+            duration = Measurement(**duration)
+        if isinstance(weight, dict):
+            weight = Measurement(**weight)
+
+        self.duration = duration
+        self.weight = weight
+
     def __str__(self):
         parts = []
         if self.reps:
@@ -121,22 +135,6 @@ class Set:
                 return False
 
         return True
-
-    # Initialization
-    def __init__(
-        self, reps: int = None, duration: Measurement = None, weight: Measurement = None
-    ):
-        if reps and not isinstance(reps, int):
-            raise TypeError("reps must be int input")
-        self.reps = reps
-
-        if isinstance(duration, dict):
-            duration = Measurement(**duration)
-        if isinstance(weight, dict):
-            weight = Measurement(**weight)
-
-        self.duration = duration
-        self.weight = weight
 
     # Converters
     def to_dict(self):

@@ -8,7 +8,27 @@ logger.propagate = True
 
 
 class DailyLog:
-    # Magic Methods
+    # Initialization and Magic Methods
+    def __init__(
+        self,
+        date,
+        activities: List[Activity] = [],
+        pains: List[Pain] = [],
+        activity_notes="",
+        pain_notes="",
+    ):
+        self._date = date
+        self._activity_notes = activity_notes
+        self._pain_notes = pain_notes
+        self._activities = {}
+        self._pains = {}
+
+        for a in activities:
+            self.add_activity(a, overwrite=False)
+
+        for p in pains:
+            self.add_pain(p)
+
     def __str__(self):
         output = [f"--- Daily Log for {self._date} ---"]
 
@@ -61,27 +81,6 @@ class DailyLog:
         logger.debug("Finished creating a DailyLog instance")
 
         return daily_log
-
-    # Initialization
-    def __init__(
-        self,
-        date,
-        activities: List[Activity] = [],
-        pains: List[Pain] = [],
-        activity_notes="",
-        pain_notes="",
-    ):
-        self._date = date
-        self._activity_notes = activity_notes
-        self._pain_notes = pain_notes
-        self._activities = {}
-        self._pains = {}
-
-        for a in activities:
-            self.add_activity(a, overwrite=False)
-
-        for p in pains:
-            self.add_pain(p)
 
     # Properties
     @property
