@@ -51,6 +51,13 @@ def test_print_set():
     assert Set(weight={"amount": 5, "unit": "lb"}).__str__() == "5lb"
 
 
+def test_set_equality():
+    assert Set(1) == Set(1)
+    assert Set(1) != Set(2)
+    assert Set(duration=Measurement(1, "min")) == Set(duration=Measurement(1, "min"))
+    assert Set(duration=Measurement(1, "min")) != Set(weight=Measurement(1, "min"))
+
+
 # Tests for Activity class
 def test_activity_initialization():
     activity = Activity(
@@ -60,6 +67,11 @@ def test_activity_initialization():
     assert activity.name == "Shoulder Press" and [
         x.weight.amount for x in activity.sets
     ] == [10, 12]
+
+
+def test_activity_initialization_with_no_sets():
+    activity = Activity("Yoga")
+    assert activity.name == "Yoga" and activity.sets[0].reps == 1
 
 
 def test_activity_initialization_with_dict():
@@ -98,6 +110,13 @@ def test_activity_to_dict():
         ],
     }
 
+    assert activity.to_dict(include_name=False) == {
+        "sets": [
+            {"weight": {"amount": 10, "unit": "kg"}},
+            {"weight": {"amount": 12, "unit": "kg"}},
+        ],
+    }
+
 
 def test_print_activity():
     activity = Activity(
@@ -106,6 +125,34 @@ def test_print_activity():
     )
 
     assert activity.__str__() == "Shoulder Press, sets ['10kg', '12kg']"
+
+
+def test_activity_equality():
+    a1 = Activity(
+        "Yoga",
+        sets=[
+            Set(duration=Measurement(10, "min")),
+            Set(duration=Measurement(12, "min")),
+        ],
+    )
+    a2 = Activity(
+        "Yoga",
+        sets=[
+            Set(duration=Measurement(10, "min")),
+            Set(duration=Measurement(12, "min")),
+        ],
+    )
+    a3 = Activity(
+        "Yoga",
+        sets=[
+            Set(duration=Measurement(12, "min")),  # flipped order
+            Set(duration=Measurement(10, "min")),
+        ],
+    )
+    a4 = Activity("Yoga", sets=[Set(duration=Measurement(12, "min"))])
+    assert a1 == a2
+    assert a1 != a3
+    assert a1 != a4
 
 
 # Tests for Pain

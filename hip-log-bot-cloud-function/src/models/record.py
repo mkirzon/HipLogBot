@@ -22,18 +22,27 @@ class Record:
                 continue
 
             if isinstance(v, list):
-                # parts.append(
-                #     f"[{', '.join([x.__str__() if hasattr(x, '__str__') else x for x in v ])}]"
-                # )
                 v = [x.__str__() if hasattr(x, "__str__") else x for x in v]
 
-            # if isinstance(v, Measurement):
-            #     parts.append(v.__str__())
-            # else:
-            #     parts.append(f"{k} {v}")
             parts.append(f"{k} {v}")
 
         return ", ".join(parts)
+
+    def __eq__(self, other):
+        if not isinstance(other, Record):
+            # Don't attempt to compare against unrelated types
+            return NotImplemented
+        for attr in set(list(self.attributes.keys()) + list(other.attributes.keys())):
+            self_attr = getattr(self, attr)
+            other_attr = getattr(other, attr)
+
+            if (self_attr is None) != (other_attr is None):
+                return False
+
+            if self_attr != other_attr:
+                return False
+
+        return True
 
     # Initialization
     def __init__(self, name, **attributes):
@@ -85,6 +94,34 @@ class Record:
 
 
 class Set:
+    # Magic methods
+    def __str__(self):
+        parts = []
+        if self.reps:
+            parts.append(f"{self.reps}x")
+        if self.duration:
+            parts.append(f"{self.duration}")
+        if self.weight:
+            parts.append(f"{self.weight}")
+        return ":".join(parts)
+
+    def __eq__(self, other):
+        if not isinstance(other, Set):
+            # Don't attempt to compare against unrelated types
+            return NotImplemented
+        for attr in ["reps", "duration", "weight"]:
+            self_attr = getattr(self, attr)
+            other_attr = getattr(other, attr)
+
+            if (self_attr is None) != (other_attr is None):
+                return False
+
+            if self_attr != other_attr:
+                return False
+
+        return True
+
+    # Initialization
     def __init__(
         self, reps: int = None, duration: Measurement = None, weight: Measurement = None
     ):
@@ -98,7 +135,14 @@ class Set:
         self.duration = duration
         self.weight = weight
 
+    # Converters
     def to_dict(self):
+        """Convert a Set to dict, skipping empty attributes (eg if no duration set,
+        will not be included)
+
+        Returns:
+            dict: Dict
+        """
         res = {}
         for key, value in self.__dict__.items():
             if not key.startswith("__") and not callable(value) and value:
@@ -106,32 +150,33 @@ class Set:
 
         return res
 
-    def __str__(self):
-        parts = []
-        if self.reps:
-            parts.append(f"{self.reps}x")
-        if self.duration:
-            parts.append(f"{self.duration}")
-        if self.weight:
-            parts.append(f"{self.weight}")
-        return ":".join(parts)
-
 
 class Activity(Record):
     # Initialization
-    def __init__(self, name, sets: List[Set]):
+    def __init__(self, name, sets: List[Set] = None):
         super().__init__(name)
-        self.sets = sets
+        self.sets = sets if sets else [Set(reps=1)]
 
     # Public methods
     def add_set(self, set: Set):
         self.sets.append(set)
 
-    def to_dict(self):
-        return {
-            "name": self.name,
-            "sets": [s.to_dict() if hasattr(s, "to_dict") else s for s in self.sets],
+    def to_dict(self, include_name=True):
+        """Convert activity to a pure dict
+
+        Args:
+            include_name (bool, optional): Set to false to omit an entry for 'name'. Defaults to True. Not including name is
+            handy when converting for our firestore data model
+
+        Returns:
+            dict: Dict of activity
+        """
+        result = {
+            "sets": [s.to_dict() if hasattr(s, "to_dict") else s for s in self.sets]
         }
+        if include_name:
+            result["name"] = self.name
+        return result
 
 
 class Pain(Record):

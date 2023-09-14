@@ -28,6 +28,9 @@ class Measurement:
     def __str__(self):
         return f"{self.amount}{self.unit}"
 
+    def __eq__(self, other):
+        return self.amount == other.amount and self.unit == other.unit
+
     # Initialization
     def __init__(self, amount: float, unit: str):
         self.amount = amount
