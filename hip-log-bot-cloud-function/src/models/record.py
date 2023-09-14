@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import List
 import logging
 from models.measurement import Measurement
@@ -125,6 +126,8 @@ class Set:
     def __init__(
         self, reps: int = None, duration: Measurement = None, weight: Measurement = None
     ):
+        if reps and not isinstance(reps, int):
+            raise TypeError("reps must be int input")
         self.reps = reps
 
         if isinstance(duration, dict):
@@ -155,7 +158,16 @@ class Activity(Record):
     # Initialization
     def __init__(self, name, sets: List[Set] = None):
         super().__init__(name)
-        self.sets = sets if sets else [Set(reps=1)]
+        self.sets = sets if sets is not None else [Set(reps=1)]
+
+    # Class Methods
+    @classmethod
+    def from_dict(cls, name: str, activity_dict: dict) -> Activity:
+        activity = cls(name, [])
+        for s in activity_dict["sets"]:
+            activity.sets.append(Set(**s))
+
+        return activity
 
     # Public methods
     def add_set(self, set: Set):
@@ -165,8 +177,9 @@ class Activity(Record):
         """Convert activity to a pure dict
 
         Args:
-            include_name (bool, optional): Set to false to omit an entry for 'name'. Defaults to True. Not including name is
-            handy when converting for our firestore data model
+            include_name (bool, optional): Set to false to omit an entry for 'name'.
+            Defaults to True. Not including name is handy when converting for our
+            firestore data model
 
         Returns:
             dict: Dict of activity

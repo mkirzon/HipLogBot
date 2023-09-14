@@ -31,6 +31,9 @@ def test_set_initialization():
     s = Set(reps=10)
     assert s.reps == 10 and s.duration is None
 
+    s = Set(duration=Measurement(1, "kg"))
+    assert s.reps is None and s.duration.__str__() == "1kg"
+
 
 def test_set_initialization_with_dict():
     s = Set(reps=10, duration={"amount": 10, "unit": "min"})
@@ -58,6 +61,11 @@ def test_set_equality():
     assert Set(duration=Measurement(1, "min")) != Set(weight=Measurement(1, "min"))
 
 
+def test_record_reps_error():
+    with pytest.raises(TypeError):
+        Set(reps="5")
+
+
 # Tests for Activity class
 def test_activity_initialization():
     activity = Activity(
@@ -74,7 +82,8 @@ def test_activity_initialization_with_no_sets():
     assert activity.name == "Yoga" and activity.sets[0].reps == 1
 
 
-def test_activity_initialization_with_dict():
+def test_activity_initialization_with_set_dicts():
+    # This shows that the sets can be defined with dicts rather than Measurements
     activity = Activity(
         "Running",
         sets=[
@@ -86,6 +95,25 @@ def test_activity_initialization_with_dict():
     )
     assert (
         activity.sets[0].duration.amount == 10 and activity.sets[0].weight.amount == 50
+    )
+
+
+def test_activity_from_dict():
+    a1 = Activity.from_dict("Yoga", {"sets": [{"reps": 1}]})
+    assert a1 == Activity("Yoga", [Set(1)])
+
+    a2 = Activity.from_dict(
+        "Curls",
+        {
+            "sets": [
+                {"reps": 12, "weight": {"amount": 10, "unit": "kg"}},
+                {"reps": 10, "weight": {"amount": 8, "unit": "kg"}},
+            ]
+        },
+    )
+    assert a2 == Activity(
+        "Curls",
+        [Set(12, weight=Measurement(10, "kg")), Set(10, weight=Measurement(8, "kg"))],
     )
 
 

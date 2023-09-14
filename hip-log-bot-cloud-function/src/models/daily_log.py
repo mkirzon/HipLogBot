@@ -50,7 +50,7 @@ class DailyLog:
                 logger.debug(
                     f"Adding activity {activity_name} using input dict: {activity_dict}"
                 )
-                daily_log.add_activity(**activity_dict)
+                daily_log.add_activity(Activity.from_dict(activity_name, activity_dict))
 
         if input_dict.get("pain"):
             logger.debug("Setting 'pains'")

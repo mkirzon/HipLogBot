@@ -11,7 +11,7 @@ def test_dailylog_initialization():
 
 
 def test_dailylog_initialization_from_dict():
-    log = DailyLog(
+    log = DailyLog.from_dict(
         "2021-09-01",
         {
             "activities": {
