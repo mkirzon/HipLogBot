@@ -64,54 +64,7 @@ curl -X POST -H 'Content-Type: application/json' -d '{"responseId":"924e4b7e-57d
 
 
 
-# Deployment
 
-## Cloud functions
-
-Prereqs:
-* Must have gcloud cli installed (and PATH updated to include it)
-
-1. Start the gcloud cli: 
-```
-gcloud init
-```
-2. `cd` to the cloud function `src` folder 
-3. Deploy with these commands -
-
-For prod -
-```
-gcloud functions deploy hip-log-bot-cf \
---gen2 \
---runtime=python311 \
---region=us-central1 \
---source=. \
---entry-point=main \
---trigger-http \
---allow-unauthenticated \
---set-env-vars FIRESTORE_COLLECTION_NAME=activityLogs
-```
-
-For test - 
-```
-gcloud functions deploy hip-log-bot-cf-test \
---gen2 \
---runtime=python311 \
---region=us-central1 \
---source=. \
---entry-point=main \
---trigger-http \
---allow-unauthenticated \
---set-env-vars FIRESTORE_COLLECTION_NAME=activityLogs_test
-```
-
-Notes:
-1. Note that if you make a new hip log function (ie provide a new name besides `hip-log-bot-cf`), you'll have to make these changes: 
-    i. Manually enter permissions for the service agent principal
-    ii. Update the webhook url in Dialogflow
-1. We include the env var`FIRESTORE_COLLECTION_NAME` to configure the deployed instance with the database-collection (eg a prod vs test one)
-
-TODO: 
-1. Make a bash script for deploying (can have separate for prod/staging), but the trick is how to make it work with gcloud considering it needs login
 
 # Development
 

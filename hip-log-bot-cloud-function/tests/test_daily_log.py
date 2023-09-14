@@ -1,5 +1,5 @@
 import logging
-from models.record import Activity, Pain
+from models.record import Activity, Pain, Set, Measurement
 from models.daily_log import DailyLog
 
 
@@ -11,31 +11,46 @@ def test_dailylog_initialization():
     assert log._pains == {}
 
 
-def test_daily_log_initialize_with_activities():
-    a = Activity(name="Yoga")
-    log = DailyLog(date="2023-01-01", activities={"Yoga": a})
-    assert log.activities == {"Yoga": a}
+def test_dailylog_initialization_with_dict():
+    log = DailyLog(
+        "2021-09-01",
+        {
+            "activities": {
+                "Yoga": {"sets": [{"reps": 1}]},
+                "Curls": {
+                    "sets": [
+                        {"reps": 12, "weight": {"amount": 10, "unit": "kg"}},
+                        {"reps": 10, "weight": {"amount": 8, "unit": "kg"}},
+                    ]
+                },
+            },
+            "activity_notes": "bla bla",
+            "pains": {
+                "Left hip": 3,
+                "Right hip": 2,
+            },
+        },
+    )
+    assert log._date == "2021-09-01"
+    assert len(log.activities) == 2
+    assert len(log.activities["Curls"].sets) == 2
 
 
-def test_add_activity():
-    log = DailyLog("2021-09-01")
-    activity = Activity("Running", duration={"amount": 10, "unit": "min"})
-    log.add_activity(**activity.attributes)
-    assert "Running" in log._activities
-    assert isinstance(log.get_activity("Running"), Activity)
+def test_add_new_activity():
+    a1 = Activity(name="Yoga")
+    a2 = Activity(name="Running", sets=[Set(duration=Measurement(10, "min"))])
+    log = DailyLog("2021-09-01", activities={"Yoga": a1})
+    log.add_activity(a2)
+
+    assert all(x in log.activities.values() for x in [a1, a2])
 
 
-def test_add_existing_activity(caplog):
-    log = DailyLog("2021-09-01")
-    activity1 = Activity("Running", duration={"amount": 10, "unit": "min"})
-    log.add_activity(**activity1.attributes)
+def test_update_activity():
+    a1 = Activity(name="Yoga")
+    log = DailyLog("2021-09-01", activities={"Yoga": a1})
+    log.add_activity(a1)
 
-    activity2 = Activity("Running", duration={"amount": 15, "unit": "min"})
-    # Expecting a warning when adding the same activity name again
-    with caplog.at_level(logging.DEBUG):
-        res = log.add_activity(**activity2.attributes)
-    assert "already exists" in caplog.text
-    assert res == "update"
+    assert log.activities["Yoga"] == Activity("Yoga", [Set(reps=1)] * 2)
 
 
 def test_add_pain():

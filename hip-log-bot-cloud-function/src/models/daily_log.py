@@ -28,9 +28,10 @@ class DailyLog:
 
     # Class Methods
     @classmethod
-    def from_dict(cls, input_dict):
+    def from_dict(cls, date: str, input_dict: dict):
+        """Initialize a DailyLog using a dict. This dict is what will come directly from the Firestore fetch"""
         logger.debug("Building Log object using `from_dict()` method")
-        daily_log = cls(input_dict["date"])
+        daily_log = cls(date)
 
         if input_dict.get("activity_notes"):
             logger.debug("Setting 'activity_notes'")
@@ -42,11 +43,11 @@ class DailyLog:
 
         if input_dict.get("activities"):
             logger.debug("Setting 'activities'")
-            for activity_name, record in input_dict["activities"].items():
+            for activity_name, activity_dict in input_dict["activities"].items():
                 logger.debug(
-                    f"Adding activity {activity_name} using input dict: {record}"
+                    f"Adding activity {activity_name} using input dict: {activity_dict}"
                 )
-                daily_log.add_activity(**record)
+                daily_log.add_activity(**activity_dict)
 
         if input_dict.get("pain"):
             logger.debug("Setting 'pains'")
@@ -67,7 +68,7 @@ class DailyLog:
         activity_notes="",
         pain_notes="",
     ):
-        self.set_date(date)
+        self._date = date
         self._activities = activities
         self._pains = pains
         self._activity_notes = activity_notes
@@ -87,26 +88,28 @@ class DailyLog:
         return self._date
 
     # Public Methods related to Activities
-    def add_activity(self, name: str, **attributes):
+    def add_activity(self, activity: Activity, overwrite: bool = False):
+        """Add or update an activity to a DailyLog
+
+        Args:
+            activity (Activity): an Activity
+            overwrite (bool, optional): if True, will overwrite the full instance of
+            that activity. If False (default), will simply append the new activity's
+            sets
+        """
         # Check if the activity name already exists in the day's records
-        res = None
+        name = activity.name
         if name in self._activities:
-            logging.info(
-                f"Activity '{name}' already exists in this DailyLog.. Overwriting previous entry."  # noqa
-            )
-            res = "update"
+            logging.info(f"Activity '{name}' already exists in this DailyLog")
+            if overwrite:
+                logging.info("Overwriting activity's sets")
+                self._activities[name] = activity
+            else:
+                logging.info("Adding a new set to activity")
+                self._activities[name].sets.extend(activity.sets)
         else:
-            logging.info(
-                f"Activity '{name}' doesn't exist yet in this DailyLog... adding it as a new activity."  # noqa
-            )
-            res = "new"
-
-        # Create/update activity with the provided attributes and add it to
-        # the records
-        self._activities[name] = Activity(name, **attributes)
-
-        # TODO look into returning status t/f w notes
-        return res
+            logging.info(f"Adding activity '{name}' for the first time")  # noqa
+            self._activities[name] = activity
 
     def delete_activity(self, name: str):
         """Remove the activity if it exists, if not notify"""
@@ -160,16 +163,13 @@ class DailyLog:
     def set_pain_notes(self, notes: str):
         self._pain_notes = notes
 
-    # Other public methods
-    def set_date(self, date):
-        self._date = date
-
     # Converters/Serializers
     def to_dict(self):
         return {
             "date": self.date,
             "activities": {
-                name: activity.to_dict() for name, activity in self.activities.items()
+                name: activity.to_dict(include_name=False)
+                for name, activity in self.activities.items()
             },
             "pains": {name: pain.to_dict() for name, pain in self.pains.items()},
             "pain_notes": self._pain_notes,
