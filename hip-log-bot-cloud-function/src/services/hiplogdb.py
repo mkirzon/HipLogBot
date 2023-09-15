@@ -46,37 +46,47 @@ class HipLogDB:
         return self.__collection_name
 
     # Public Methods
-    def get_log(self, date: str) -> DailyLog:
-        """Get a log object by date
+    def get_daily_log(self, user, date: str, initialize_empty=False) -> DailyLog:
+        """Get a user's daily log document as a local DailyLog object
 
-        Query firestore collection by date and return it as a Log object.
+        Query firestore collection by user-date and return it as a DailyLog object.
         If date doesn't exist, it initializes the log object
 
+        Args:
+            user (str): 'user id' document name in 'users' collection
+            date (str): 'date' document name in dailyLogs
+            initialize_empty: if True, will return a new DailyLog instance for date
+
         Returns:
-            DailyLog: a populated or empty (just date) DailyLog object
+            DailyLog/None: a DailyLog object or None if record not found
         """
-        logger.info("Starting DailyLog fetch from database for '{date}'")
+        logger.info(f"Starting DailyLog fetch from database for '{date}'")
         # Input checking
         if not is_valid_date_format(date):
             raise ValueError("Invalid date provided. Must be a 'YYYY-MM-DD' string")
 
         # Download doc as json
-        x = self._fetch_document_by_id(date)
+        # x = self._fetch_document_by_id(date)
+        fetched_doc = (
+            self._collection.document(user).collection("DailyLogs").document(date).get()
+        )
 
-        if x.exists:
-            x = x.to_dict()
-            logger.info(f"Retrieved log as dict:\n{x}")  # noqa
+        if fetched_doc.exists:
+            fetched_dict = fetched_doc.to_dict()
+            logger.info(f"Retrieved log as dict:\n{fetched_dict}")  # noqa
 
             # Map the Firestore dict to the DailyLog object
-            log = DailyLog.from_dict(x)
+            log = DailyLog.from_dict(date, fetched_dict)
             logger.debug("Converted log dict to DailyLog")
 
         else:
-            # TODO: this shouldn't live here, but handle it upstream
-            logger.info(f"Didn't find log for '{date}'. Initiating empty DailyLog")
-            log = DailyLog(date)
-
-        logger.info("Finished DailyLog fetch from database for '{date}'")
+            logger.info(f"Didn't find log for '{date}'")
+            if initialize_empty:
+                logger.info(f"Initializing empty DailLog for '{date}'")
+                log = DailyLog(date)
+            else:
+                logger.info("Returning empty (None)")
+                log = None
 
         return log
 

@@ -34,6 +34,11 @@ def db():
         pass
 
 
+@pytest.fixture
+def sample_db():
+    return HipLogDB()
+
+
 # A "meta" test to make sure the other tests here will work. I haven't figured out how
 # to apply load_dotenv() yet to pytests (due to working directory funkyness). So
 # instead we're using pytest-env. This is also good since it will help split out
@@ -42,67 +47,72 @@ def test_pytest_ini_loads():
     assert os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
 
 
-def test_get_log(db):
-    db_log = HipLogDB()
-    assert isinstance(db_log.num_logs, int)
+def test_initialize_hiplogdb(db):
+    hiplogdb = HipLogDB()
+    assert isinstance(hiplogdb.num_logs, int)
+
+
+def test_get_daily_log(db, sample_db):
+    x = sample_db.get_daily_log("mark", "2023-09-15")
+    assert isinstance(x, DailyLog)
 
 
 def test_new_log_updates_num(db):
-    db_log = HipLogDB()
-    n1 = db_log.num_logs
-    db_log.upload_log(
+    hiplogdb = HipLogDB()
+    n1 = hiplogdb.num_logs
+    hiplogdb.upload_log(
         DailyLog(date="2024-01-01", activities={"Yoga": Activity(name="Yoga")})
     )
-    n2 = db_log.num_logs
+    n2 = hiplogdb.num_logs
     assert n2 == n1 + 1
 
 
 def test_existing_log_keeps_num(db):
-    db_log = HipLogDB()
+    hiplogdb = HipLogDB()
 
-    db_log.upload_log(
+    hiplogdb.upload_log(
         DailyLog(date="2024-01-01", activities={"Yoga": Activity(name="Yoga")})
     )
-    n1 = db_log.num_logs
+    n1 = hiplogdb.num_logs
 
-    db_log.upload_log(
+    hiplogdb.upload_log(
         DailyLog(date="2024-01-01", activities={"Handstand": Activity(name="Yoga")})
     )
-    n2 = db_log.num_logs
+    n2 = hiplogdb.num_logs
 
     assert n2 == n1
 
 
 def test_get_log_needs_valid_date(db):
-    db_log = HipLogDB()
+    hiplogdb = HipLogDB()
     with pytest.raises(ValueError, match="Invalid date provided"):
-        db_log.get_log("2023-11111-1")
+        hiplogdb.get_daily_log("2023-11111-1")
 
 
 def test_delete_log(db):
     # Create a log
     date = "2024-01-01"
-    db_log = HipLogDB()
-    db_log.upload_log(DailyLog(date=date, activities={"Yoga": Activity(name="Yoga")}))
-    status1 = db_log._collection.document(date).get().exists
+    hiplogdb = HipLogDB()
+    hiplogdb.upload_log(DailyLog(date=date, activities={"Yoga": Activity(name="Yoga")}))
+    status1 = hiplogdb._collection.document(date).get().exists
 
     # Delete it
-    db_log.delete_log(date)
+    hiplogdb.delete_log(date)
 
     # Test that it doesn't exist
-    status2 = db_log._collection.document(date).get().exists
+    status2 = hiplogdb._collection.document(date).get().exists
     assert status1 != status2
 
 
 # def test_get_activity_summary(db):
 def test_get_activity_summary(db, caplog):
     # For reference how to change logging (must use Run mode, not debug mode):
-    # caplog.set_level(logging.DEBUG, logger="services.db_logs")
+    # caplog.set_level(logging.DEBUG, logger="services.hiplogdb")
 
-    db_log = HipLogDB()
+    hiplogdb = HipLogDB()
     name = "Tennis"
     for d in ["2023-01-01", "2023-01-02", "2023-01-03"]:
-        db_log.upload_log(DailyLog(date=d, activities={name: Activity(name=name)}))
+        hiplogdb.upload_log(DailyLog(date=d, activities={name: Activity(name=name)}))
 
-    x = db_log.get_activity_summary(name)
+    x = hiplogdb.get_activity_summary(name)
     assert x["total_count"] == 3

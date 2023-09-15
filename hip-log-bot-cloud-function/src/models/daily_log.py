@@ -53,30 +53,29 @@ class DailyLog:
 
         This dict structure matches what comes from the Firestore fetch
         """
-        logger.debug("Building Log object using `from_dict()` method")
+        logger.debug("Building DailyLog instance with `from_dict()` method")
         daily_log = cls(date)
 
         if input_dict.get("activity_notes"):
-            logger.debug("Setting 'activity_notes'")
+            logger.debug("Parsing 'activity_notes'")
             daily_log.set_activity_notes(input_dict.get("activity_notes"))
 
         if input_dict.get("pain_notes"):
-            logger.debug("Setting 'pain_notes'")
+            logger.debug("Parsing 'pain_notes'")
             daily_log.set_pain_notes(input_dict.get("pain_notes"))
 
         if input_dict.get("activities"):
-            logger.debug("Setting 'activities'")
             for activity_name, activity_dict in input_dict["activities"].items():
                 logger.debug(
-                    f"Adding activity {activity_name} using input dict: {activity_dict}"
+                    f"Parsing activity {activity_name} with input dict: {activity_dict}"
                 )
                 daily_log.add_activity(Activity.from_dict(activity_name, activity_dict))
 
-        if input_dict.get("pain"):
-            logger.debug("Setting 'pains'")
-            for x in input_dict["pain"]:
-                logger.debug(f"Adding pain using input dict: {x}")
-                daily_log.add_pain(**x)
+        if input_dict.get("pains"):
+            logger.debug("Parsing 'pains'")
+            for pain_name, pain_level in input_dict["pains"].items():
+                logger.debug(f"Parsing pain {pain_name} with input dict: {pain_dict}")
+                daily_log.add_pain(**pain_level)
 
         logger.debug("Finished creating a DailyLog instance")
 
@@ -116,7 +115,9 @@ class DailyLog:
                 logging.info("Adding a new set to activity")
                 self._activities[name].sets.extend(activity.sets)
         else:
-            logging.info(f"Adding activity '{name}' for the first time")  # noqa
+            logging.info(
+                f"Adding activity '{name}' for the first time to the daily log's 'activities' dict"  # noqa
+            )  # noqa
             self._activities[name] = activity
 
     def delete_activity(self, name: str):
