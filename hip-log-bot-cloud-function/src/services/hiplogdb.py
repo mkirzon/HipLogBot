@@ -132,9 +132,7 @@ class HipLogDB:
 
     # Private methods
     def _get_num_logs(self) -> int:
-        documents = self._collection.stream()
-        doc_count = sum(1 for _ in documents)
-        return doc_count
+        return self._collection.count().get()[0][0].value
 
     def _fetch_document_by_id(self, document_id: str):
         """Download the document"""

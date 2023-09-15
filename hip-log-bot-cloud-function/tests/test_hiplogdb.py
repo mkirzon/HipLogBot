@@ -9,7 +9,7 @@ from models.record import Activity
 
 
 @pytest.fixture(scope="module")
-def db():
+def conn():
     # Open firebase
     try:
         fb_app = firebase_admin.get_app()
@@ -35,7 +35,7 @@ def db():
 
 
 @pytest.fixture
-def sample_db():
+def db():
     return HipLogDB()
 
 
@@ -47,27 +47,24 @@ def test_pytest_ini_loads():
     assert os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
 
 
-def test_initialize_hiplogdb(db):
+def test_initialize_hiplogdb(conn):
     hiplogdb = HipLogDB()
     assert isinstance(hiplogdb.num_logs, int)
 
 
-def test_get_daily_log(db, sample_db):
-    x = sample_db.get_daily_log("mark", "2023-09-15")
+def test_get_daily_log(conn, db):
+    x = db.get_daily_log("mark", "2023-09-15")
     assert isinstance(x, DailyLog)
 
 
-def test_new_log_updates_num(db):
-    hiplogdb = HipLogDB()
-    n1 = hiplogdb.num_logs
-    hiplogdb.upload_log(
-        DailyLog(date="2024-01-01", activities={"Yoga": Activity(name="Yoga")})
-    )
-    n2 = hiplogdb.num_logs
+def test_new_log_updates_num(conn, db):
+    n1 = db.num_logs
+    db.upload_log(DailyLog(date="2024-01-01", activities=[Activity(name="Yoga")]))
+    n2 = db.num_logs
     assert n2 == n1 + 1
 
 
-def test_existing_log_keeps_num(db):
+def test_existing_log_keeps_num(conn):
     hiplogdb = HipLogDB()
 
     hiplogdb.upload_log(
@@ -83,13 +80,13 @@ def test_existing_log_keeps_num(db):
     assert n2 == n1
 
 
-def test_get_log_needs_valid_date(db):
+def test_get_log_needs_valid_date(conn):
     hiplogdb = HipLogDB()
     with pytest.raises(ValueError, match="Invalid date provided"):
         hiplogdb.get_daily_log("2023-11111-1")
 
 
-def test_delete_log(db):
+def test_delete_log(conn):
     # Create a log
     date = "2024-01-01"
     hiplogdb = HipLogDB()
@@ -104,8 +101,8 @@ def test_delete_log(db):
     assert status1 != status2
 
 
-# def test_get_activity_summary(db):
-def test_get_activity_summary(db, caplog):
+# def test_get_activity_summary(conn):
+def test_get_activity_summary(conn, caplog):
     # For reference how to change logging (must use Run mode, not debug mode):
     # caplog.set_level(logging.DEBUG, logger="services.hiplogdb")
 
