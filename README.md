@@ -1,20 +1,4 @@
-# Authentication
-
-## Firebase
-This authentication is what allows the python code to read/write to Firebase. 
-
-1. Download the json key corresponding to the firebase service account "firebase-adminsdk"
-2. Update the path in `.env` for GOOGLE_APPLICATION_CREDENTIALS to point to this file 
-2. Update references to the environment variable GOOGLE_APPLICATION_CREDENTIALS (eg in main app files, in test files)
-
-## Cloud Functions
-Cloud functions have their own authentication that dictates what tools can _call_ them. In our case, Dialogflow must be able to send POST requests to the Cloud Function webhooks. 
-This is managed with IAM principals and roles.
-
-In our case, we had to manually create the appropriate service agent for Dialogflow and then grant it the appropriate permissions. Make sure the project IAM settings have an entry for the account  `service-425447198130@gcp-sa-dialogflow.iam.gserviceaccount.com` with these roles granted - 
-1. Cloud Functions Invoker
-2. Dialogflow Service Agent
-
+Documentation available on [Notion](https://www.notion.so/Tech-Spec-28c90edaa7234444bc9d728f9c13342e)
 
 # Architecture & Service Setup
 
@@ -66,13 +50,6 @@ curl -X POST -H 'Content-Type: application/json' -d '{"responseId":"924e4b7e-57d
 
 
 
-# Development
-
-Update local paths across this source repo: 
-1. `.vscode/launch.json`
-1. `hip-log-bot-cloud-function/.env`
-1. `hip-log-bot-cloud-function/tests/conftest.py`
-1. `hip-log-bot-cloud-function/tests/pytest.ini`
 
 ## Creating new Intents
 

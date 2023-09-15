@@ -2,7 +2,7 @@ import logging
 import traceback
 import firebase_admin
 import functions_framework
-from services.db_logs import DBLogs
+from services.hiplogdb import HipLogDB
 from models.intent import Intent
 from dotenv import load_dotenv
 
@@ -31,7 +31,7 @@ def main(request):
 
     try:
         # Initialize handlers
-        db_logs = DBLogs()
+        db_logs = HipLogDB()
 
         # Parse the intent
         intent = Intent(req)
@@ -71,7 +71,8 @@ def main(request):
         if intent.type in ["LogActivity", "LogPain", "GetDailyLog"]:
             # TODO add logic to bubble up new vs update status
 
-            # TODO: retrieve into here too but tbd how cuz also need to handle differently
+            # TODO: retrieve into here too but tbd how cuz also need to handle
+            # differently
 
             # Upload the new/modified log back
             logger.info("Uploading DailyLog")
@@ -84,7 +85,7 @@ def main(request):
         # Graceful message back if supported case
         # TODO: change
         if "Unsupported intent" in str(e):
-            res = f"The processing server doesn't support this yet (intent = {req['queryResult']['intent']['displayName']}))"
+            res = f"The processing server doesn't support this yet (intent = {req['queryResult']['intent']['displayName']}))"  # noqa
 
         else:
             # TODO: standardize this block cuz it's used twice

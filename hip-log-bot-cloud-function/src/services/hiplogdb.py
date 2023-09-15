@@ -10,14 +10,15 @@ logger = logging.getLogger(__name__)
 # print(__name__)
 
 
-class DBLogs:
+class HipLogDB:
     """A handler class for interacting with the Firestore Database for the Hip Log Bots
 
-    The database is a schema-less document store, where the collection will contain a set of documents.
-    Each document is a daily record (so it's name will be "2023-03-04")
+    The database is a schema-less document store, where the collection will contain a
+    set of documents. Each document is a daily record (eg key = "2023-03-04")
 
     Attributes:
-        num_logs (int): number of daily logs for current user in the database (assuming a single user)
+        num_logs (int): number of daily logs for current user in the database (assuming
+        a single user)
         collection_name (str): the selected collection name we'll be writing to
 
     """
@@ -25,8 +26,10 @@ class DBLogs:
     # Initialization
     def __init__(self):
         """Initialize a handler for my Firestore database.
-        This assumes you have the firebase app already started outside of this context
-        with `firebase_admin.initialize_app()`
+
+        The "database" instance (eg prod vs test) is by the `FIRESTORE_COLLECTION_NAME`
+        env var. This assumes you have the firebase app already started outside of this
+        context with `firebase_admin.initialize_app()`.
         """
         self._db = firestore.client()
         self._collection_name = os.environ["FIRESTORE_COLLECTION_NAME"]
@@ -107,8 +110,6 @@ class DBLogs:
 
         # Stat 1: total num
         # TODO need to filte ron the contents of the keys of thea ctiviteis
-        # query = self._collection.where(filter=FieldFilter("name", "==", activity_name))
-        # query = self._collection.whereEqualTo(f"activities.{activity_name}.exists", true)
         query = self._collection.where(
             filter=FieldFilter(f"activities.{activity_name}.name", "==", activity_name)
         )
@@ -129,6 +130,6 @@ class DBLogs:
         """Download the document"""
         x = self._collection.document(document_id).get()
         logger.debug(
-            f"Downloaded document '{self._collection_name}.{document_id}'. Created at '{x.create_time}' and last updated at {x.update_time}'"
+            f"Downloaded document '{self._collection_name}.{document_id}'. Created at '{x.create_time}' and last updated at {x.update_time}'"  # noqa
         )
         return x
