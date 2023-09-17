@@ -34,19 +34,9 @@ class HipLogDB:
         self._db = firestore.client()
         self._collection_name = os.environ["FIRESTORE_COLLECTION_NAME"]
         self._collection = self._db.collection(self._collection_name)
-        self._num_logs = self._get_num_logs()
-
-    # Properties
-    @property
-    def num_logs(self):
-        return self._num_logs
-
-    @property
-    def collection_name(self):
-        return self.__collection_name
 
     # Public Methods
-    def get_daily_log(self, user, date: str, initialize_empty=False) -> DailyLog:
+    def get_log(self, user: str, date: str, initialize_empty=False) -> DailyLog:
         """Get a user's daily log document as a local DailyLog object
 
         Query firestore collection by user-date and return it as a DailyLog object.
@@ -66,10 +56,7 @@ class HipLogDB:
             raise ValueError("Invalid date provided. Must be a 'YYYY-MM-DD' string")
 
         # Download doc as json
-        # x = self._fetch_document_by_id(date)
-        fetched_doc = (
-            self._collection.document(user).collection("DailyLogs").document(date).get()
-        )
+        fetched_doc = self._get_user_log_ref(user, date).get()
 
         if fetched_doc.exists:
             fetched_dict = fetched_doc.to_dict()
@@ -90,25 +77,25 @@ class HipLogDB:
 
         return log
 
-    def upload_log(self, log: DailyLog):
+    def upload_log(self, user: str, log: DailyLog):
         log_dict = log.to_dict()
 
-        logger.info(f"Will upload this dict:\n{log_dict}")
-        self._collection.document(log.date).set(log_dict)
+        logger.info(f"Uploading '{log.date}' log; dict:\n{log_dict}")
+        self._get_user_log_ref(user, log.date).set(log_dict)
 
         # In case this was a new one, update the count
         # TODO: optimization - run this only if log was new
-        self._num_logs = self._get_num_logs()
+        self._num_logs = self._get_num_logs_by_user(user)
 
-    def delete_log(self, date: str) -> None:
+    def delete_log(self, user: str, date: str) -> None:
         # pass
         try:
-            self._collection.document(date).delete()
+            self._get_user_log_ref(user, date).delete()
             logger.info(f"Document with ID {date} deleted successfully!")
         except Exception as e:
             logger.error(f"An error occurred: {e}")
 
-    def get_activity_summary(self, activity_name: str) -> dict:
+    def get_activity_summary(self, user: str, activity_name: str) -> dict:
         """Get summary statistics for an activity
 
         Fetch stats with a collection query and format them into a nice summary
@@ -120,24 +107,23 @@ class HipLogDB:
 
         # Stat 1: total num
         # TODO need to filte ron the contents of the keys of thea ctiviteis
-        query = self._collection.where(
-            filter=FieldFilter(f"activities.{activity_name}.name", "==", activity_name)
+        query = self._get_user_dailylogs_ref(user).where(
+            filter=FieldFilter(f"activities", "==", activity_name)
         )
         aggregate_query = aggregation.AggregationQuery(query)
         aggregate_query.count(alias="all")
         results = aggregate_query.get()
+        logger.debug(f"Returned result: {results}")
         stats["total_count"] = results[0][0].value
 
         return stats
 
     # Private methods
-    def _get_num_logs(self) -> int:
-        return self._collection.count().get()[0][0].value
+    def _get_num_logs_by_user(self, user: str) -> int:
+        return self._get_user_dailylogs_ref(user).count().get()[0][0].value
 
-    def _fetch_document_by_id(self, document_id: str):
-        """Download the document"""
-        x = self._collection.document(document_id).get()
-        logger.debug(
-            f"Downloaded document '{self._collection_name}.{document_id}'. Created at '{x.create_time}' and last updated at {x.update_time}'"  # noqa
-        )
-        return x
+    def _get_user_log_ref(self, user: str, date: str):
+        return self._get_user_dailylogs_ref(user).document(date)
+
+    def _get_user_dailylogs_ref(self, user: str):
+        return self._collection.document(user).collection("DailyLogs")

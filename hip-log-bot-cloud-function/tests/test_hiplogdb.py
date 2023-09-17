@@ -6,6 +6,7 @@ from firebase_admin import firestore
 from services.hiplogdb import HipLogDB
 from models.daily_log import DailyLog
 from models.record import Activity
+from google.cloud.firestore_v1.collection import CollectionReference
 
 
 @pytest.fixture(scope="module")
@@ -23,9 +24,9 @@ def conn():
     db = firestore.client()
     collection_ref = db.collection(os.environ["FIRESTORE_COLLECTION_NAME"])
     docs = collection_ref.stream()
-    for doc in docs:
-        print(f"Deleting doc {doc.id} => {doc.to_dict()}")
-        doc.reference.delete()
+    # for doc in docs:
+    #     print(f"Deleting doc {doc.id} => {doc.to_dict()}")
+    #     doc.reference.delete()
 
     # Close fireabse
     try:
@@ -49,55 +50,52 @@ def test_pytest_ini_loads():
 
 def test_initialize_hiplogdb(conn):
     hiplogdb = HipLogDB()
-    assert isinstance(hiplogdb.num_logs, int)
+    assert isinstance(hiplogdb._collection, CollectionReference)
 
 
-def test_get_daily_log(conn, db):
-    x = db.get_daily_log("mark", "2023-09-15")
-    assert isinstance(x, DailyLog)
+def test_get_log(conn, db):
+    x = db.get_log("mark", "2023-09-15")
+    assert isinstance(x, DailyLog) and x.date == "2023-09-15"
 
 
-def test_new_log_updates_num(conn, db):
-    n1 = db.num_logs
-    db.upload_log(DailyLog(date="2024-01-01", activities=[Activity(name="Yoga")]))
-    n2 = db.num_logs
+def test_upload_log(conn, db):
+    user = "mark"
+    date = "2024-01-01"
+    db.delete_log(user, date)
+    n1 = db._get_num_logs_by_user(user)
+    db.upload_log(user, DailyLog(date=date, activities=[Activity(name="Yoga")]))
+    n2 = db._get_num_logs_by_user(user)
     assert n2 == n1 + 1
 
 
-def test_existing_log_keeps_num(conn):
-    hiplogdb = HipLogDB()
+def test_existing_log_keeps_num(conn, db):
+    user = "mark"
+    db.upload_log(user, DailyLog(date="2024-01-01", activities=[Activity(name="Yoga")]))
+    n1 = db._get_num_logs_by_user("mark")
 
-    hiplogdb.upload_log(
-        DailyLog(date="2024-01-01", activities={"Yoga": Activity(name="Yoga")})
-    )
-    n1 = hiplogdb.num_logs
-
-    hiplogdb.upload_log(
-        DailyLog(date="2024-01-01", activities={"Handstand": Activity(name="Yoga")})
-    )
-    n2 = hiplogdb.num_logs
+    db.upload_log(user, DailyLog(date="2024-01-01", activities=[Activity(name="Yoga")]))
+    n2 = db._get_num_logs_by_user("mark")
 
     assert n2 == n1
 
 
-def test_get_log_needs_valid_date(conn):
-    hiplogdb = HipLogDB()
+def test_get_log_needs_valid_date(conn, db):
     with pytest.raises(ValueError, match="Invalid date provided"):
-        hiplogdb.get_daily_log("2023-11111-1")
+        db.get_log("mark", "2023-11111-1")
 
 
-def test_delete_log(conn):
+def test_delete_log(conn, db):
     # Create a log
     date = "2024-01-01"
-    hiplogdb = HipLogDB()
-    hiplogdb.upload_log(DailyLog(date=date, activities={"Yoga": Activity(name="Yoga")}))
-    status1 = hiplogdb._collection.document(date).get().exists
+    user = "mark"
+    db.upload_log(user, DailyLog(date=date, activities=[Activity(name="Yoga")]))
+    status1 = db._get_user_log_ref(user, date).get().exists
 
     # Delete it
-    hiplogdb.delete_log(date)
+    db.delete_log(user, date)
 
     # Test that it doesn't exist
-    status2 = hiplogdb._collection.document(date).get().exists
+    status2 = db._collection.document(date).get().exists
     assert status1 != status2
 
 
@@ -108,8 +106,9 @@ def test_get_activity_summary(conn, caplog):
 
     hiplogdb = HipLogDB()
     name = "Tennis"
+    user = "mark"
     for d in ["2023-01-01", "2023-01-02", "2023-01-03"]:
-        hiplogdb.upload_log(DailyLog(date=d, activities={name: Activity(name=name)}))
+        hiplogdb.upload_log(user, DailyLog(date=d, activities=[Activity(name)]))
 
-    x = hiplogdb.get_activity_summary(name)
+    x = hiplogdb.get_activity_summary(user, name)
     assert x["total_count"] == 3
