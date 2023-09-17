@@ -107,8 +107,8 @@ class HipLogDB:
 
         # Stat 1: total num
         # TODO need to filte ron the contents of the keys of thea ctiviteis
-        query = self._get_user_dailylogs_ref(user).where(
-            filter=FieldFilter(f"activities", "==", activity_name)
+        query = self._get_user_dailylogs_ref(user).order_by(
+            f"activities.{activity_name}"
         )
         aggregate_query = aggregation.AggregationQuery(query)
         aggregate_query.count(alias="all")

@@ -74,7 +74,7 @@ class DailyLog:
         if input_dict.get("pains"):
             logger.debug("Parsing 'pains'")
             for pain_name, pain_level in input_dict["pains"].items():
-                logger.debug(f"Parsing pain {pain_name} with input dict: {pain_dict}")
+                logger.debug(f"Parsing pain {pain_name} with input: pain_level")
                 daily_log.add_pain(**pain_level)
 
         logger.debug("Finished creating a DailyLog instance")

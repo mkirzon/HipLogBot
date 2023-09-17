@@ -100,15 +100,14 @@ def test_delete_log(conn, db):
 
 
 # def test_get_activity_summary(conn):
-def test_get_activity_summary(conn, caplog):
+def test_get_activity_summary(conn, caplog, db):
     # For reference how to change logging (must use Run mode, not debug mode):
     # caplog.set_level(logging.DEBUG, logger="services.hiplogdb")
 
-    hiplogdb = HipLogDB()
     name = "Tennis"
     user = "mark"
     for d in ["2023-01-01", "2023-01-02", "2023-01-03"]:
-        hiplogdb.upload_log(user, DailyLog(date=d, activities=[Activity(name)]))
+        db.upload_log(user, DailyLog(date=d, activities=[Activity(name)]))
 
-    x = hiplogdb.get_activity_summary(user, name)
+    x = db.get_activity_summary(user, name)
     assert x["total_count"] == 3
