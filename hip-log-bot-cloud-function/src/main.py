@@ -43,16 +43,16 @@ def main(request):
             res = f"There are {num_logs} logs"
 
         elif intent.type == "GetDailyLog":
-            log = db_logs.get_users_daily_log(USER, intent.date)
+            log = db_logs.get_users_daily_log(intent._user, intent.date)
             logger.info(f"Retrieved DailyLog (local object) generated:\n{log}")
 
         elif intent.type == "LogActivity":
-            log = db_logs.get_users_daily_log(USER, intent.date)
+            log = db_logs.get_users_daily_log(intent._user, intent.date)
             log.add_activity(**intent.log_input)
             logger.info(f"DailyLog (local object) generated:\n{log}")
 
         elif intent.type == "LogPain":
-            log = db_logs.get_users_daily_log(USER, intent.date)
+            log = db_logs.get_users_daily_log(intent._user, intent.date)
             log.add_pain(**intent.log_input)
             logger.info(f"DailyLog (local object) generated:\n{log}")
 

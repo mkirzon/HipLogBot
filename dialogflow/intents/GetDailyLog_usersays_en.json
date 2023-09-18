@@ -1,5 +1,66 @@
 [
   {
+    "id": "7b066831-386e-4ab8-a2ad-dc08999fccbc",
+    "data": [
+      {
+        "text": "Show me ",
+        "userDefined": false
+      },
+      {
+        "text": "yesterday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "ab140f25-67fe-48ed-b0ae-706d61e780a5",
+    "data": [
+      {
+        "text": "Show me ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "248b84bb-28d6-4093-92f6-c330842d0d81",
+    "data": [
+      {
+        "text": "Show me ",
+        "userDefined": false
+      },
+      {
+        "text": "today\u0027s",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      },
+      {
+        "text": " progress",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
     "id": "dc00c264-394c-41d1-9220-cfa7558d3526",
     "data": [
       {

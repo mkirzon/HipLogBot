@@ -1,6 +1,6 @@
 {
-  "id": "271082f7-fd76-4d3d-af54-a052a9a4b42b",
-  "name": "GetDailyLog",
+  "id": "0a2df690-4073-45f6-8a55-6111a98bda0d",
+  "name": "GetActivitySummary",
   "auto": true,
   "contexts": [],
   "responses": [
@@ -10,11 +10,11 @@
       "affectedContexts": [],
       "parameters": [
         {
-          "id": "aaae7958-a4cb-4137-8643-4b278e824a10",
-          "name": "date",
+          "id": "ce6174d9-b674-4a6d-a26b-1ec94ce37075",
+          "name": "activity",
           "required": false,
-          "dataType": "@sys.date",
-          "value": "$date",
+          "dataType": "@Activity",
+          "value": "$activity",
           "defaultValue": "",
           "isList": false,
           "prompts": [],
