@@ -17,7 +17,7 @@ def get_runtime_config():
     # Determine the logging level based on the environment
     if runtime_env == "local":
         log_level = logging.DEBUG
-    elif runtime_env == "staging":
+    elif runtime_env == "test":
         log_level = logging.DEBUG
     elif runtime_env == "production":
         log_level = logging.INFO

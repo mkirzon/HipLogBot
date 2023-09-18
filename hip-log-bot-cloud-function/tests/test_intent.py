@@ -1,3 +1,4 @@
+import logging
 import pytest
 
 from models.intent import Intent
@@ -79,7 +80,51 @@ def test_intent_initialization_for_activity(sample_requests):
         "activity": "Yoga",
     }
     assert intent._date == "2023-07-24"
-    assert intent.user == "23970740102517391"
+    assert intent._user == "23970740102517391"
+
+
+def test_intent_initialization_originalDetectIntentRequest_missing(caplog):
+    caplog.set_level(logging.DEBUG, logger="models.intent")
+
+    req = {
+        "queryResult": {
+            "parameters": {"date": "2023-07-24T12:00:00+01:00", "activity": "Yoga"},
+            "intent": {
+                "displayName": "LogActivity",
+            },
+        },
+    }
+
+    Intent(req)
+    assert (
+        "originalDetectIntentRequest not found so assuming called by Dialogflow directly. Defaulting user=MarkTheTester"  # noqa
+        in caplog.text
+    )
+
+
+def test_intent_initialization_user_info_missing():
+    req = {
+        "queryResult": {
+            "parameters": {"date": "2023-07-24T12:00:00+01:00", "activity": "Yoga"},
+            "intent": {
+                "displayName": "LogActivity",
+            },
+        },
+        "originalDetectIntentRequest": {
+            "source": "facebook",
+            "payload": {
+                "data": {
+                    "senderNAME2": {"id": "23970740102517391"},
+                }
+            },
+        },
+    }
+
+    with pytest.raises(
+        ValueError,
+        match="User info not found as expected in originalDetectIntentRequest from Dialogflow",
+    ):
+        Intent(req)
 
 
 def test_intent_initialization_with_weight(sample_requests):

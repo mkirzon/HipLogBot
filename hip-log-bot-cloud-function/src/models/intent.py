@@ -40,13 +40,12 @@ class Intent:
         self._raw_entity = req["queryResult"]["parameters"]
         self._log_input = None
         self._date = None
-        self.user = req["originalDetectIntentRequest"]["payload"]["data"]["sender"][
-            "id"
-        ]
+        self._user = None
 
         if self.type not in self.ALLOWED_TYPES:
             raise ValueError("Unsupported intent passed")
 
+        self._set_user(req)
         self._extract_log_input()
 
         logger.info(f"Parsed Dialogflow request into a {self.type} intent")
@@ -142,3 +141,27 @@ class Intent:
             #       Maybe activity_name is more of a Intent class attribute?
             self._log_input["name"] = self._log_input.pop("activity").title()
             pass
+
+    def _set_user(self, req):
+        if not req.get("originalDetectIntentRequest"):
+            logger.warn(
+                "originalDetectIntentRequest not found so assuming called by Dialogflow directly. Defaulting user=MarkTheTester"
+            )
+            user = "MarkTheTester"
+
+        else:
+            user = (
+                req.get("originalDetectIntentRequest", {})
+                .get("payload", {})
+                .get("data", {})
+                .get("sender", {})
+                .get("id")
+                or "default_value"
+            )
+
+            if user == "default_value":
+                raise ValueError(
+                    "User info not found as expected in originalDetectIntentRequest from Dialogflow"
+                )
+
+        self._user = user
