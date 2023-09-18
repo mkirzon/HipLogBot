@@ -5,10 +5,9 @@ import functions_framework
 from services.hiplogdb import HipLogDB
 from models.intent import Intent
 from dotenv import load_dotenv
+from utils import get_runtime_config
 
-
-logging.basicConfig(level=logging.INFO)
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=get_runtime_config()["log_level"])
 logger = logging.getLogger(__name__)
 
 # Get env variables for auth
@@ -44,16 +43,16 @@ def main(request):
             res = f"There are {num_logs} logs"
 
         elif intent.type == "GetDailyLog":
-            log = db_logs.get_daily_log(intent.date)
+            log = db_logs.get_users_daily_log(USER, intent.date)
             logger.info(f"Retrieved DailyLog (local object) generated:\n{log}")
 
         elif intent.type == "LogActivity":
-            log = db_logs.get_daily_log(intent.date)
+            log = db_logs.get_users_daily_log(USER, intent.date)
             log.add_activity(**intent.log_input)
             logger.info(f"DailyLog (local object) generated:\n{log}")
 
         elif intent.type == "LogPain":
-            log = db_logs.get_daily_log(intent.date)
+            log = db_logs.get_users_daily_log(USER, intent.date)
             log.add_pain(**intent.log_input)
             logger.info(f"DailyLog (local object) generated:\n{log}")
 
