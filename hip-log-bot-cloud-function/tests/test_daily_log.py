@@ -31,8 +31,11 @@ def test_dailylog_initialization_from_dict():
         },
     )
     assert log._date == "2021-09-01"
-    assert len(log.activities) == 2
+    assert set(log.activities.keys()) == set(["Yoga", "Curls"])
     assert len(log.activities["Curls"].sets) == 2
+    assert all(
+        x in log.pains.values() for x in [Pain("Left hip", 3), Pain("Right hip", 2)]
+    )
 
 
 def test_add_new_activity():
