@@ -40,6 +40,9 @@ class Intent:
         self._raw_entity = req["queryResult"]["parameters"]
         self._log_input = None
         self._date = None
+        self.user = req["originalDetectIntentRequest"]["payload"]["data"]["sender"][
+            "id"
+        ]
 
         if self.type not in self.ALLOWED_TYPES:
             raise ValueError("Unsupported intent passed")

@@ -6,15 +6,23 @@ from models.intent import Intent
 @pytest.fixture
 def sample_requests():
     x = {
-        "activity_basic": {
+        "LogActivity_1": {
             "queryResult": {
                 "parameters": {"date": "2023-07-24T12:00:00+01:00", "activity": "Yoga"},
                 "intent": {
                     "displayName": "LogActivity",
                 },
-            }
+            },
+            "originalDetectIntentRequest": {
+                "source": "facebook",
+                "payload": {
+                    "data": {
+                        "sender": {"id": "23970740102517391"},
+                    }
+                },
+            },
         },
-        "activity_with_weight": {
+        "LogActivity_with_weight": {
             "queryResult": {
                 "queryText": "yesterday",
                 "parameters": {
@@ -27,7 +35,7 @@ def sample_requests():
                 "intent": {"displayName": "LogActivity"},
             }
         },
-        "pain_basic": {
+        "LogPain_1": {
             "queryResult": {
                 "parameters": {
                     "pain_level": "2",
@@ -39,7 +47,7 @@ def sample_requests():
                 },
             }
         },
-        "get_daily_log": {
+        "GetDailyLog_1": {
             "queryResult": {
                 "queryText": "What have I done today?",
                 "parameters": {"date": "2023-09-05T12:00:00+01:00"},
@@ -52,7 +60,7 @@ def sample_requests():
             "queryResult": {
                 "parameters": {"activity": "Yoga"},
                 "intent": {
-                    "name": "projects/hip-log-bot/agent/intents/0a2df690-4073-45f6-8a55-6111a98bda0d",
+                    "name": "projects/hip-log-bot/agent/intents/0a2df690-4073-45f6-8a55-6111a98bda0d",  # noqa
                     "displayName": "GetActivitySummary",
                 },
             }
@@ -64,17 +72,18 @@ def sample_requests():
 
 # Tests for DailyLog class
 def test_intent_initialization_for_activity(sample_requests):
-    intent = Intent(sample_requests["activity_basic"])
+    intent = Intent(sample_requests["LogActivity_1"])
     assert intent._type == "LogActivity"
     assert intent._raw_entity == {
         "date": "2023-07-24T12:00:00+01:00",
         "activity": "Yoga",
     }
     assert intent._date == "2023-07-24"
+    assert intent.user == "23970740102517391"
 
 
 def test_intent_initialization_with_weight(sample_requests):
-    intent = Intent(sample_requests["activity_with_weight"])
+    intent = Intent(sample_requests["LogActivity_with_weight"])
     assert intent.log_input == {
         "name": "Hip Adductions",
         "weight": {"amount": 10, "unit": "kg"},
@@ -82,15 +91,16 @@ def test_intent_initialization_with_weight(sample_requests):
 
 
 def test_intent_initialization_for_pain(sample_requests):
-    intent = Intent(sample_requests["pain_basic"])
+    intent = Intent(sample_requests["LogPain_1"])
     assert intent._date == "2023-08-31"
     assert intent._log_input == {"name": "Left Hip", "level": 2}
 
 
 def test_intent_initialization_for_get_daily_log(sample_requests):
-    intent = Intent(sample_requests["get_daily_log"])
+    intent = Intent(sample_requests["GetDailyLog_1"])
     assert intent.type == "GetDailyLog"
     assert intent.date == "2023-09-05"
+    assert intent.name == "mark"
 
 
 def test_intent_initialization_for_get_activity_summary(sample_requests):
@@ -126,7 +136,7 @@ def test_missing_date_for_activity():
 
 
 def test_intent_properties(sample_requests):
-    intent = Intent(sample_requests["activity_basic"])
+    intent = Intent(sample_requests["LogActivity_1"])
     assert intent.type == "LogActivity"
     assert intent.entity == {"date": "2023-07-24T12:00:00+01:00", "activity": "Yoga"}
     assert intent.log_input == {"name": "Yoga"}
@@ -144,5 +154,5 @@ def test_missing_attributes_skipped():
 
 # TODO
 def test_new_attributes_are_tbd():
-    # What happens at the intent level if eg an activity has some new parameter we didn't expect (eg location=park)
+    # What happens at the intent level if eg an activity has some new parameter we didn't expect (eg location=park) # noqa
     pass
