@@ -106,7 +106,7 @@ class Intent:
         }
 
         logger.debug(
-            "Starting parsing raw intent response based on '{self.type}' logic"
+            f"Starting parsing raw intent response based on '{self._type}' logic"
         )
 
         # Extract date for date-based activities
@@ -164,4 +164,5 @@ class Intent:
                     "User info not found as expected in originalDetectIntentRequest from Dialogflow"
                 )
 
+        logger.debug(f"Set user = '{user}'")
         self._user = user

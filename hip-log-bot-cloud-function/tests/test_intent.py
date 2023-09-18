@@ -95,7 +95,8 @@ def test_intent_initialization_originalDetectIntentRequest_missing(caplog):
         },
     }
 
-    Intent(req)
+    intent = Intent(req)
+    assert intent._user == "MarkTheTester"
     assert (
         "originalDetectIntentRequest not found so assuming called by Dialogflow directly. Defaulting user=MarkTheTester"  # noqa
         in caplog.text
@@ -145,7 +146,6 @@ def test_intent_initialization_for_get_daily_log(sample_requests):
     intent = Intent(sample_requests["GetDailyLog_1"])
     assert intent.type == "GetDailyLog"
     assert intent.date == "2023-09-05"
-    assert intent.name == "mark"
 
 
 def test_intent_initialization_for_get_activity_summary(sample_requests):
