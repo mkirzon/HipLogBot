@@ -37,10 +37,10 @@ class HipLogDB:
 
     # Public Methods
     def get_log(self, user: str, date: str, initialize_empty=False) -> DailyLog:
-        """Get a user's daily log document as a local DailyLog object
+        """Download a user's daily log document
 
         Query firestore collection by user-date and return it as a DailyLog object.
-        If date doesn't exist, it initializes the log object
+        If date doesn't exist, it can initialize a DailyLog
 
         Args:
             user (str): 'user id' document name in 'users' collection

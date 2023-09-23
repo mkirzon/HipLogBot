@@ -23,6 +23,23 @@ def sample_requests():
                 },
             },
         },
+        "LogActivity_with_sets": {
+            "queryResult": {
+                "intent": {
+                    "displayName": "LogActivity",
+                },
+                "parameters": {
+                    "activity": "curls",
+                    "date": "today",
+                    "reps": [3, 10],
+                    "weight": [
+                        {"amount": 12, "unit": "kg"},
+                        {"amount": 10, "unit": "kg"},
+                    ],
+                    "duration": "",
+                },
+            },
+        },
         "LogActivity_with_weight": {
             "queryResult": {
                 "queryText": "yesterday",
@@ -79,8 +96,25 @@ def test_intent_initialization_for_activity(sample_requests):
         "date": "2023-07-24T12:00:00+01:00",
         "activity": "Yoga",
     }
+    assert intent._log_input == {"name": "Yoga", "sets": []}
     assert intent._date == "2023-07-24"
     assert intent._user == "23970740102517391"
+
+
+def test_intent_initialization_for_activity_with_sets(sample_requests):
+    intent = Intent(sample_requests["LogActivity_with_sets"])
+    assert intent._log_input == {
+        "name": "Curls",
+        "sets": [
+            {"reps": 3, "weight": {"amount": 12, "unit": "kg"}},
+            {"reps": 10, "weight": {"amount": 10, "unit": "kg"}},
+        ],
+    }
+
+
+def test_intent_initialization_for_activity_with_badsets(sample_requests):
+    # TODO
+    pass
 
 
 def test_intent_initialization_originalDetectIntentRequest_missing(caplog):
@@ -123,7 +157,7 @@ def test_intent_initialization_user_info_missing():
 
     with pytest.raises(
         ValueError,
-        match="User info not found as expected in originalDetectIntentRequest from Dialogflow",
+        match="User info not found as expected in originalDetectIntentRequest from Dialogflow",  # noqa
     ):
         Intent(req)
 

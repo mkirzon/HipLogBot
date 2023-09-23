@@ -96,7 +96,8 @@ class DailyLog:
 
     # Public Methods related to Activities
     def add_activity(self, activity: Activity, overwrite: bool = False):
-        """Add or update an activity to a DailyLog
+        """Add or update an activity to a DailyLog. When updating, by default will
+        append as a new set
 
         Args:
             activity (Activity): an Activity

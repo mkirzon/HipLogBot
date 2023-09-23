@@ -2,6 +2,7 @@ import logging
 import traceback
 import firebase_admin
 import functions_framework
+from models.record import Activity
 from services.hiplogdb import HipLogDB
 from models.intent import Intent
 from dotenv import load_dotenv
@@ -30,7 +31,7 @@ def main(request):
 
     try:
         # Initialize handlers
-        db_logs = HipLogDB()
+        hiplogdb = HipLogDB()
 
         # Parse the intent
         intent = Intent(req)
@@ -39,30 +40,32 @@ def main(request):
         # First handle generic requests, that don't require specific log queries.
         # Otherwise do log-based actions
         if intent.type == "GetNumLogs":
-            num_logs = db_logs.num_logs
+            num_logs = hiplogdb.num_logs
             res = f"There are {num_logs} logs"
 
         elif intent.type == "GetDailyLog":
-            log = db_logs.get_users_daily_log(intent._user, intent.date)
+            log = hiplogdb.get_log(intent.user, intent.date)
             logger.info(f"Retrieved DailyLog (local object) generated:\n{log}")
 
         elif intent.type == "LogActivity":
-            log = db_logs.get_users_daily_log(intent._user, intent.date)
-            log.add_activity(**intent.log_input)
+            log = hiplogdb.get_log(intent.user, intent.date)
+            # activities = getActivitesFromIntent(intent)
+            # for a in activities:
+            #     log.add_activity(Activity(intent.name))
             logger.info(f"DailyLog (local object) generated:\n{log}")
 
         elif intent.type == "LogPain":
-            log = db_logs.get_users_daily_log(intent._user, intent.date)
+            log = hiplogdb.get_log(intent.user, intent.date)
             log.add_pain(**intent.log_input)
             logger.info(f"DailyLog (local object) generated:\n{log}")
 
         elif intent.type == "DeleteDailyLog":
-            db_logs.delete_log(intent.date)
+            hiplogdb.delete_log(intent.user, intent.date)
             res = f"Your entry '{intent.date}' was deleted"
 
         elif intent.type == "GetActivitySummary":
             activity_name = intent.log_input["name"]
-            stats = db_logs.get_activity_summary(activity_name)
+            stats = hiplogdb.get_activity_summary(activity_name)
             output = [f"**Summary Stats for '{activity_name}'**\n"]
             output += [f"{k}: {v}" for k, v in stats.items()]
             res = "\n".join(output)
@@ -75,7 +78,7 @@ def main(request):
 
             # Upload the new/modified log back
             logger.info("Uploading DailyLog")
-            db_logs.upload_log(log)
+            hiplogdb.upload_log(log)
             logger.info("Completed upload")
 
             res = log.__str__()

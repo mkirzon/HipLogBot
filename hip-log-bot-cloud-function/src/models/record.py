@@ -155,13 +155,18 @@ class Set:
 class Activity(Record):
     # Initialization
     def __init__(self, name, sets: List[Set] = None):
+        """Initialize Activity
+
+        Supports a basic activity or with set info. If no set info provided, defaults
+        to a single set with reps=1
+        """
         super().__init__(name)
         self.sets = sets if sets is not None else [Set(reps=1)]
 
     # Class Methods
     @classmethod
-    def from_dict(cls, name: str, activity_dict: dict) -> Activity:
-        activity = cls(name, [])
+    def from_dict(cls, activity_dict: dict) -> Activity:
+        activity = cls(activity_dict["name"], [])
         for s in activity_dict["sets"]:
             activity.sets.append(Set(**s))
 

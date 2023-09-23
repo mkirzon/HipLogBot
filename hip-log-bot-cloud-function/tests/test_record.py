@@ -99,16 +99,16 @@ def test_activity_initialization_with_set_dicts():
 
 
 def test_activity_from_dict():
-    a1 = Activity.from_dict("Yoga", {"sets": [{"reps": 1}]})
+    a1 = Activity.from_dict({"name": "Yoga", "sets": [{"reps": 1}]})
     assert a1 == Activity("Yoga", [Set(1)])
 
     a2 = Activity.from_dict(
-        "Curls",
         {
+            "name": "Curls",
             "sets": [
                 {"reps": 12, "weight": {"amount": 10, "unit": "kg"}},
                 {"reps": 10, "weight": {"amount": 8, "unit": "kg"}},
-            ]
+            ],
         },
     )
     assert a2 == Activity(
