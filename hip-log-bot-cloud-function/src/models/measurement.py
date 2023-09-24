@@ -24,11 +24,7 @@ class Measurement:
         "century",
     ]
 
-    # Magic methods
-    def __str__(self):
-        return f"{self.amount}{self.unit}"
-
-    # Initialization
+    # Initialization and Magic methods
     def __init__(self, amount: float, unit: str):
         self.amount = amount
 
@@ -38,6 +34,12 @@ class Measurement:
             raise ValueError("unit is not an allowed unit")
 
         self.unit = unit
+
+    def __str__(self):
+        return f"{self.amount}{self.unit}"
+
+    def __eq__(self, other):
+        return self.amount == other.amount and self.unit == other.unit
 
     # Public methods
     def to_kilograms(self):

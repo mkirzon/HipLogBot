@@ -1,0 +1,40 @@
+[
+  {
+    "id": "07f9c580-a9de-4183-b9ad-a7d5891d2251",
+    "data": [
+      {
+        "text": "Summarize my ",
+        "userDefined": false
+      },
+      {
+        "text": "yoga",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "77fe81f6-93d2-4712-bd50-8451e49e1c80",
+    "data": [
+      {
+        "text": "Show me my summary for ",
+        "userDefined": false
+      },
+      {
+        "text": "pushups",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  }
+]

@@ -9,7 +9,7 @@
   "disableStackdriverLogs": true,
   "defaultTimezone": "Europe/Madrid",
   "webhook": {
-    "url": "https://us-central1-hip-log-bot.cloudfunctions.net/hip-log-bot-cf",
+    "url": "https://us-central1-hip-log-bot.cloudfunctions.net/hip-log-bot-cf-test",
     "username": "",
     "headers": {},
     "available": true,

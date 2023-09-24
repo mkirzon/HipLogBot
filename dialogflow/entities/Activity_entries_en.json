@@ -119,5 +119,21 @@
     "synonyms": [
       "Yoga"
     ]
+  },
+  {
+    "value": "Park workout",
+    "synonyms": [
+      "Park workout",
+      "park session"
+    ]
+  },
+  {
+    "value": "Swimming",
+    "synonyms": [
+      "Swimming",
+      "swim",
+      "pool",
+      "pool laps"
+    ]
   }
 ]

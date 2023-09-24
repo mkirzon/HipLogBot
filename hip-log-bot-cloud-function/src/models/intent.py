@@ -1,11 +1,21 @@
 import json
 import logging
+import datetime
 
 logger = logging.getLogger(__name__)
 
 
 class Intent:
-    ALLOWED_TYPES = [
+    """This class is the translation layer between DialogFlow's format to inputs
+    expected by the python API (eg to initialize logs and Activities).
+
+    Some of the transformations it may do are:
+    * Capitalize activity/pain names
+    * others?
+
+    """
+
+    SUPPORTED_INTENTS = [
         "LogPain",
         "LogActivity",
         "GetNumLogs",
@@ -13,6 +23,22 @@ class Intent:
         "DeleteDailyLog",
         "GetActivitySummary",
     ]
+
+    # Initialization
+    def __init__(self, req):
+        self._type = req["queryResult"]["intent"]["displayName"]
+        self._raw_entity = req["queryResult"]["parameters"]
+        self._log_input = {}
+        self._date = None
+        self._user = None
+
+        if self._type not in self.SUPPORTED_INTENTS:
+            raise ValueError("Unsupported intent passed")
+
+        self._set_user(req)
+        self._extract_log_input()
+
+        logger.info(f"Parsed Dialogflow request into a {self.type} intent")
 
     # Magic methods
     def __str__(self):
@@ -32,21 +58,10 @@ class Intent:
         str: a date string in the '%Y-%m-%d' format
         """
 
-        return date.split("T")[0]
-
-    # Initialization
-    def __init__(self, req):
-        self._type = req["queryResult"]["intent"]["displayName"]
-        self._raw_entity = req["queryResult"]["parameters"]
-        self._log_input = None
-        self._date = None
-
-        if self.type not in self.ALLOWED_TYPES:
-            raise ValueError("Unsupported intent passed")
-
-        self._extract_log_input()
-
-        logger.info(f"Parsed Dialogflow request into a {self.type} intent")
+        if date == "today":
+            return str(datetime.date.today())
+        else:
+            return date.split("T")[0]
 
     # Properties
     @property
@@ -60,12 +75,20 @@ class Intent:
 
     @property
     def log_input(self):
-        """Get the log input that the entity was parsed into."""
+        """Get the log input that the entity was parsed into
+
+        For LogActivity: {name, sets}
+
+        """
         return self._log_input
 
     @property
     def date(self):
         return self._date
+
+    @property
+    def user(self):
+        return self._user
 
     # Public Methods
 
@@ -99,12 +122,12 @@ class Intent:
             include a date
         """
         # Initialize the copy since we'll just modifying the parsed entitites
-        self._log_input = {
-            k: v for k, v in self._raw_entity.items() if v != "" and k != "date"
-        }
+        # self._log_input = {
+        #     k: v for k, v in self._raw_entity.items() if v != "" and k != "date"
+        # }
 
         logger.debug(
-            "Starting parsing raw intent response based on '{self.type}' logic"
+            f"Starting parsing raw intent response based on '{self._type}' logic"
         )
 
         # Extract date for date-based activities
@@ -118,18 +141,44 @@ class Intent:
             self._set_date()
             logger.debug(f"Set intent date as {self._date}")
 
-        # Now do the processing. In some cases, the keys/names in the intent need to be renamed
+        # Now do the processing. In some cases, intent keys/vals need to be renamed
         if self.type == "GetNumLogs":
             pass
 
         elif self.type == "LogActivity":
-            # For now, the only difference is that some of the names mismatch from the
-            # request to my OO model
-            self._log_input["name"] = self._log_input.pop("activity").title()
+            self._log_input["name"] = self._raw_entity["activity"].title()
+
+            # Prepare the set dicts from the individaul arrays of reps/durations/weights
+            self._log_input["sets"] = []
+
+            # Check that all attributes have values for each set
+            attribute_lengths = set(
+                [
+                    len(v)
+                    for k, v in self._raw_entity.items()
+                    if k not in ["activity", "date"] and v != []
+                ]
+            )
+            if len(attribute_lengths) > 1:
+                raise ValueError("Mismatched number of reps/weights/durations")
+            # If no reps/duration/weights provided, skip
+            elif attribute_lengths:
+                n_sets = len(self._raw_entity["reps"])
+                for i in range(n_sets):
+                    s = {}  # {"reps": 3, weight: {"amount": 12, "unit": "kg"}}
+                    if self._raw_entity["reps"]:
+                        s["reps"] = int(self._raw_entity["reps"][i])
+                    if self._raw_entity["weight"]:
+                        s["weight"] = self._raw_entity["weight"][i]
+                    if self._raw_entity["duration"]:
+                        s["duration"] = self._raw_entity["duration"][i]
+                    self._log_input["sets"].append(s)
+            else:
+                self._log_input["sets"].append({"reps": 1})
 
         elif self.type == "LogPain":
-            self._log_input["name"] = self._log_input.pop("body_part").title()
-            self._log_input["level"] = int(self._log_input.pop("pain_level"))
+            self._log_input["name"] = self._raw_entity["body_part"].title()
+            self._log_input["level"] = int(self._raw_entity["pain_level"])
 
         elif self.type == "DeleteDailyLog":
             pass
@@ -137,5 +186,48 @@ class Intent:
         elif self.type == "GetActivitySummary":
             # TODO: log_input no longer makes sense in the context of this intent.
             #       Maybe activity_name is more of a Intent class attribute?
-            self._log_input["name"] = self._log_input.pop("activity").title()
+            self._log_input["name"] = self._raw_entity["activity"].title()
             pass
+
+    def _set_user(self, req):
+        """Set the user property, with default handling
+
+        Handles 2 situations:
+        1) a test call, can be local or from DialogFlow directly (missing
+        `originalDetectIntentRequest`). In this case, defaults to a fake
+        username (eg MarkTheTester)
+        2) a production call (eg Facebook messenger trigger). This has an expected
+        format
+
+        Args:
+            req (_type_): request object from DialogFlow
+        """
+        if not req.get("originalDetectIntentRequest"):
+            logger.debug(
+                "originalDetectIntentRequest not found so assuming called by Dialogflow directly. Defaulting user=MarkTheTester"  # noqa
+            )
+            user = "MarkTheTester"
+
+        elif req.get("originalDetectIntentRequest")["source"] == "DIALOGFLOW_CONSOLE":
+            logger.debug(
+                "originalDetectIntentRequest source is 'DIALOGFLOW_CONSOLE'.  Defaulting user=MarkTheTester"  # noqa
+            )
+            user = "MarkTheTester"
+
+        else:
+            user = (
+                req.get("originalDetectIntentRequest", {})
+                .get("payload", {})
+                .get("data", {})
+                .get("sender", {})
+                .get("id")
+                or "default_value"
+            )
+
+            if user == "default_value":
+                raise ValueError(
+                    "User info not found as expected in originalDetectIntentRequest from Dialogflow. Maybe it's not a FB call"  # noqa
+                )
+
+        logger.debug(f"Set user = '{user}'")
+        self._user = user

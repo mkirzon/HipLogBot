@@ -46,3 +46,8 @@ def test_invalid_conversion_to_kilograms():
     m = Measurement(10, "mg")
     with pytest.raises(ValueError):
         m.to_kilograms()
+
+
+def test_measurement_equality():
+    assert Measurement(10, "mg") != Measurement(10, "kg")
+    assert Measurement(10, "mg") == Measurement(10, "mg")
