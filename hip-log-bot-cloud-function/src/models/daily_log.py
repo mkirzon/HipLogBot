@@ -4,7 +4,7 @@ from models.record import Activity, Pain
 
 logger = logging.getLogger(__name__)
 logger.propagate = True
-# logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.DEBUG)
 
 
 class DailyLog:
@@ -51,7 +51,8 @@ class DailyLog:
     def from_dict(cls, date: str, input_dict: dict):
         """Initialize a DailyLog using a dict.
 
-        This dict structure matches what comes from the Firestore fetch
+        The input dict structure matches what comes from the Firestore fetch so this will be used when downloading a log from Firestore rather
+        than when initializing activities from new intents.
         """
         logger.debug("Building DailyLog instance with `from_dict()` method")
         daily_log = cls(date)
@@ -69,7 +70,8 @@ class DailyLog:
                 logger.debug(
                     f"Parsing activity {activity_name} with input dict: {activity_dict}"
                 )
-                daily_log.add_activity(Activity.from_dict(activity_name, activity_dict))
+                activity_dict["name"] = activity_name
+                daily_log.add_activity(Activity.from_dict(activity_dict))
 
         if input_dict.get("pains"):
             logger.debug("Parsing 'pains'")
