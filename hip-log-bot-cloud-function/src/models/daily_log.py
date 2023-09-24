@@ -51,8 +51,9 @@ class DailyLog:
     def from_dict(cls, date: str, input_dict: dict):
         """Initialize a DailyLog using a dict.
 
-        The input dict structure matches what comes from the Firestore fetch so this will be used when downloading a log from Firestore rather
-        than when initializing activities from new intents.
+        The input dict structure matches what comes from the Firestore fetch so this
+        will be used when downloading a log from Firestore rather than when
+        initializing activities from new intents.
         """
         logger.debug("Building DailyLog instance with `from_dict()` method")
         daily_log = cls(date)

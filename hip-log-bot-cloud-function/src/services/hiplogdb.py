@@ -4,7 +4,6 @@ from firebase_admin import firestore
 from models.daily_log import DailyLog
 from utils import is_valid_date_format
 from google.cloud.firestore_v1 import aggregation
-from google.cloud.firestore_v1.base_query import FieldFilter
 
 logger = logging.getLogger(__name__)
 # print(__name__)
