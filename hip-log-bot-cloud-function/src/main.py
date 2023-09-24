@@ -48,10 +48,11 @@ def main(request):
             logger.info(f"Retrieved DailyLog (local object) generated:\n{log}")
 
         elif intent.type == "LogActivity":
-            log = hiplogdb.get_log(intent.user, intent.date)
-            # activities = getActivitesFromIntent(intent)
-            # for a in activities:
-            #     log.add_activity(Activity(intent.name))
+            log = hiplogdb.get_log(intent.user, intent.date, initialize_empty=True)
+            for s in intent.log_input["sets"]:
+                log.add_activity(
+                    Activity(intent.log_input["name"], intent.log_input["sets"])
+                )
             logger.info(f"DailyLog (local object) generated:\n{log}")
 
         elif intent.type == "LogPain":
@@ -78,7 +79,7 @@ def main(request):
 
             # Upload the new/modified log back
             logger.info("Uploading DailyLog")
-            hiplogdb.upload_log(log)
+            hiplogdb.upload_log(intent.user, log)
             logger.info("Completed upload")
 
             res = log.__str__()

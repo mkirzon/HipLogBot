@@ -2,6 +2,7 @@ import logging
 import pytest
 
 from models.intent import Intent
+from datetime import date
 
 
 @pytest.fixture
@@ -242,6 +243,10 @@ def test_intent_properties(sample_requests):
 
 def test_extract_date():
     assert Intent.extract_date("2023-07-24T12:00:00+01:00") == "2023-07-24"
+
+
+def test_date_as_today():
+    assert Intent.extract_date("today") == str(date.today())
 
 
 # TODO: test that empty attributes are removed (tbd if this should live here or record)

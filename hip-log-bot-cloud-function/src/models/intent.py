@@ -1,5 +1,6 @@
 import json
 import logging
+import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +58,10 @@ class Intent:
         str: a date string in the '%Y-%m-%d' format
         """
 
-        return date.split("T")[0]
+        if date == "today":
+            return str(datetime.date.today())
+        else:
+            return date.split("T")[0]
 
     # Properties
     @property
@@ -71,7 +75,11 @@ class Intent:
 
     @property
     def log_input(self):
-        """Get the log input that the entity was parsed into."""
+        """Get the log input that the entity was parsed into
+
+        For LogActivity: {name, sets}
+
+        """
         return self._log_input
 
     @property
