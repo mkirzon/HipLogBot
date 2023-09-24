@@ -148,7 +148,7 @@ class Intent:
                 [
                     len(v)
                     for k, v in self._raw_entity.items()
-                    if k not in ["activity", "date"] and v != ""
+                    if k not in ["activity", "date"] and v != []
                 ]
             )
             if len(attribute_lengths) > 1:
@@ -165,6 +165,8 @@ class Intent:
                     if self._raw_entity["duration"]:
                         s["duration"] = self._raw_entity["duration"][i]
                     self._log_input["sets"].append(s)
+            else:
+                self._log_input["sets"].append({"reps": 1})
 
         elif self.type == "LogPain":
             self._log_input["name"] = self._raw_entity["body_part"].title()

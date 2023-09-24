@@ -31,12 +31,12 @@ def sample_requests():
                 "parameters": {
                     "activity": "curls",
                     "date": "today",
-                    "reps": ["3", "10"],
+                    "reps": [3, 10],
                     "weight": [
                         {"amount": 12, "unit": "kg"},
                         {"amount": 10, "unit": "kg"},
                     ],
-                    "duration": [""],
+                    "duration": [],
                 },
             },
         },
@@ -96,7 +96,7 @@ def test_intent_initialization_for_activity_name_only(sample_requests):
         "date": "2023-07-24T12:00:00+01:00",
         "activity": "Yoga",
     }
-    assert intent._log_input == {"name": "Yoga", "sets": []}
+    assert intent._log_input == {"name": "Yoga", "sets": [{"reps": 1}]}
     assert intent._date == "2023-07-24"
     assert intent._user == "23970740102517391"
 
@@ -236,7 +236,7 @@ def test_intent_properties(sample_requests):
     intent = Intent(sample_requests["LogActivity_1"])
     assert intent.type == "LogActivity"
     assert intent.entity == {"date": "2023-07-24T12:00:00+01:00", "activity": "Yoga"}
-    assert intent.log_input == {"name": "Yoga"}
+    assert intent.log_input == {"name": "Yoga", "sets": [{"reps": 1}]}
     assert intent.date == "2023-07-24"
 
 
