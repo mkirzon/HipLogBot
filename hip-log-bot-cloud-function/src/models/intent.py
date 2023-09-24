@@ -121,10 +121,6 @@ class Intent:
             ValueError: raises errors if date is missing for intent types that should
             include a date
         """
-        # Initialize the copy since we'll just modifying the parsed entitites
-        # self._log_input = {
-        #     k: v for k, v in self._raw_entity.items() if v != "" and k != "date"
-        # }
 
         logger.debug(
             f"Starting parsing raw intent response based on '{self._type}' logic"
@@ -184,8 +180,6 @@ class Intent:
             pass
 
         elif self.type == "GetActivitySummary":
-            # TODO: log_input no longer makes sense in the context of this intent.
-            #       Maybe activity_name is more of a Intent class attribute?
             self._log_input["name"] = self._raw_entity["activity"].title()
             pass
 
