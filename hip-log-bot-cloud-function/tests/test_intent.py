@@ -31,12 +31,12 @@ def sample_requests():
                 "parameters": {
                     "activity": "curls",
                     "date": "today",
-                    "reps": [3, 10],
+                    "reps": ["3", "10"],
                     "weight": [
                         {"amount": 12, "unit": "kg"},
                         {"amount": 10, "unit": "kg"},
                     ],
-                    "duration": "",
+                    "duration": [""],
                 },
             },
         },
@@ -45,10 +45,10 @@ def sample_requests():
                 "queryText": "yesterday",
                 "parameters": {
                     "activity": "Hip Adductions",
-                    "weight": {"amount": 10, "unit": "kg"},
+                    "weight": [{"amount": 10, "unit": "kg"}],
                     "date": "2023-08-30T12:00:00+01:00",
-                    "duration": "",
-                    "reps": "",
+                    "duration": [""],
+                    "reps": ["1"],
                 },
                 "intent": {"displayName": "LogActivity"},
             }
@@ -89,7 +89,7 @@ def sample_requests():
 
 
 # Tests for DailyLog class
-def test_intent_initialization_for_activity(sample_requests):
+def test_intent_initialization_for_activity_name_only(sample_requests):
     intent = Intent(sample_requests["LogActivity_1"])
     assert intent._type == "LogActivity"
     assert intent._raw_entity == {
@@ -113,8 +113,26 @@ def test_intent_initialization_for_activity_with_sets(sample_requests):
 
 
 def test_intent_initialization_for_activity_with_badsets(sample_requests):
-    # TODO
-    pass
+    req = {
+        "queryResult": {
+            "intent": {
+                "displayName": "LogActivity",
+            },
+            "parameters": {
+                "activity": "curls",
+                "date": "today",
+                "reps": [3, 10, 12],
+                "weight": [
+                    {"amount": 12, "unit": "kg"},
+                    {"amount": 10, "unit": "kg"},
+                ],
+                "duration": "",
+            },
+        },
+    }
+
+    with pytest.raises(ValueError, match="Mismatched number of reps/weights/durations"):
+        Intent(req)
 
 
 def test_intent_initialization_originalDetectIntentRequest_missing(caplog):
@@ -166,7 +184,7 @@ def test_intent_initialization_with_weight(sample_requests):
     intent = Intent(sample_requests["LogActivity_with_weight"])
     assert intent.log_input == {
         "name": "Hip Adductions",
-        "weight": {"amount": 10, "unit": "kg"},
+        "sets": [{"reps": 1, "weight": {"amount": 10, "unit": "kg"}, "duration": ""}],
     }
 
 

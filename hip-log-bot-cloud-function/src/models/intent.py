@@ -142,17 +142,29 @@ class Intent:
 
             # Prepare the set dicts from the individaul arrays of reps/durations/weights
             self._log_input["sets"] = []
-            if self._raw_entity.get("reps"):
+
+            # Check that all attributes have values for each set
+            attribute_lengths = set(
+                [
+                    len(v)
+                    for k, v in self._raw_entity.items()
+                    if k not in ["activity", "date"] and v != ""
+                ]
+            )
+            if len(attribute_lengths) > 1:
+                raise ValueError("Mismatched number of reps/weights/durations")
+            # If no reps/duration/weights provided, skip
+            elif attribute_lengths:
                 n_sets = len(self._raw_entity["reps"])
                 for i in range(n_sets):
-                    set = {}  # {"reps": 3, weight: {"amount": 12, "unit": "kg"}}
+                    s = {}  # {"reps": 3, weight: {"amount": 12, "unit": "kg"}}
                     if self._raw_entity["reps"]:
-                        set["reps"] = self._raw_entity["reps"][i]
+                        s["reps"] = int(self._raw_entity["reps"][i])
                     if self._raw_entity["weight"]:
-                        set["weight"] = self._raw_entity["weight"][i]
+                        s["weight"] = self._raw_entity["weight"][i]
                     if self._raw_entity["duration"]:
-                        set["duration"] = self._raw_entity["duration"][i]
-                    self._log_input["sets"].append(set)
+                        s["duration"] = self._raw_entity["duration"][i]
+                    self._log_input["sets"].append(s)
 
         elif self.type == "LogPain":
             self._log_input["name"] = self._raw_entity["body_part"].title()
