@@ -195,8 +195,14 @@ class Intent:
             req (_type_): request object from DialogFlow
         """
         if not req.get("originalDetectIntentRequest"):
-            logger.warn(
+            logger.debug(
                 "originalDetectIntentRequest not found so assuming called by Dialogflow directly. Defaulting user=MarkTheTester"  # noqa
+            )
+            user = "MarkTheTester"
+
+        elif req.get("originalDetectIntentRequest")["source"] == "DIALOGFLOW_CONSOLE":
+            logger.debug(
+                "originalDetectIntentRequest source is 'DIALOGFLOW_CONSOLE'.  Defaulting user=MarkTheTester"  # noqa
             )
             user = "MarkTheTester"
 
