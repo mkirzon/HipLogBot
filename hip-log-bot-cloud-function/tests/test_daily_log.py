@@ -1,4 +1,4 @@
-from models.record import Activity, Pain, Set, Measurement
+from models.record import Activity, Pain, Set, Measurement as M
 from models.daily_log import DailyLog
 
 
@@ -40,7 +40,7 @@ def test_dailylog_initialization_from_dict():
 
 def test_add_new_activity():
     a1 = Activity(name="Yoga")
-    a2 = Activity(name="Running", sets=[Set(duration=Measurement(10, "min"))])
+    a2 = Activity(name="Running", sets=[Set(duration=M(10, "min"))])
     log = DailyLog("2021-09-01", activities=[a1])
     log.add_activity(a2)
 
@@ -57,10 +57,32 @@ def test_update_activity():
 
 def test_add_pain():
     log = DailyLog("2021-09-01")
-    pain = Pain("Headache", 2)
-    log.add_pain(pain.name, pain.level)
+    log.add_pain(Pain("Headache", 2))
     assert "Headache" in log.pains
     assert log.pains["Headache"].level == 2
 
 
-# More tests can be added as required, for example, testing other methods, edge cases
+def test_daily_log_print():
+    log = DailyLog(
+        "2023-09-24",
+        activities=[
+            Activity(
+                "Curls",
+                [Set(reps=10, weight=M(10, "kg")), Set(reps=8, weight=M(8, "kg"))],
+            ),
+            Activity("Yoga", [Set(duration=M(3, "min"))]),
+        ],
+        pains=[Pain("Left hip", 3)],
+    )
+
+    assert (
+        log.__str__()
+        == """Sep. 24, 2023 Log:
+
+2x activities:
+* Curls 2 sets: 10x 10kg, 8x 8kg
+* Yoga 1 sets: 3min
+
+1x pain records:
+* Left hip pain: 3"""
+    )

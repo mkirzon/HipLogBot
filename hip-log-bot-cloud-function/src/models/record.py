@@ -25,7 +25,12 @@ class Record:
         )
 
     def __str__(self):
-        parts = [self.name]
+        """Print method for a Record
+
+        Sample to demonstrate format:
+        "Name: reps 10, other_attribute 5"
+        """
+        parts = []
         for k, v in self.attributes.items():
             if k == "name" or not v:  # skip since initialized with this
                 continue
@@ -35,7 +40,7 @@ class Record:
 
             parts.append(f"{k} {v}")
 
-        return ", ".join(parts)
+        return f"{self.name}: " + ", ".join(parts)
 
     def __eq__(self, other):
         if not isinstance(other, Record):
@@ -111,6 +116,11 @@ class Set:
         self.weight = weight
 
     def __str__(self):
+        """Print method for a Set
+
+        Sample to show format:
+        "10x 10min 5kg"
+        """
         parts = []
         if self.reps:
             parts.append(f"{self.reps}x")
@@ -118,7 +128,7 @@ class Set:
             parts.append(f"{self.duration}")
         if self.weight:
             parts.append(f"{self.weight}")
-        return ":".join(parts)
+        return " ".join(parts)
 
     def __eq__(self, other):
         if not isinstance(other, Set):
@@ -163,6 +173,18 @@ class Activity(Record):
         super().__init__(name)
         self.sets = sets if sets is not None else [Set(reps=1)]
 
+    # Magic methods
+    def __str__(self):
+        """Print method for a Actvitivy
+
+        Sample to demonstrate format:
+        "Shoulder press 2 sets: 10x 12kg, 8x 10kg"
+        """
+
+        return f"{self.name} {len(self.sets)} sets: " + ", ".join(
+            [s.__str__() for s in self.sets]
+        )
+
     # Class Methods
     @classmethod
     def from_dict(cls, activity_dict: dict) -> Activity:
@@ -206,3 +228,13 @@ class Pain(Record):
                 f"Invalid pain level: {level}. Allowed levels are: {', '.join(map(str, self.ALLOWED_LEVELS))}"  # noqa
             )
         self.level = level
+
+    # Magic methods
+    def __str__(self):
+        """Print method for a Pain
+
+        Sample to demonstrate format:
+        "Left hip pain: 3"
+        """
+
+        return f"{self.name} pain: {self.level}"

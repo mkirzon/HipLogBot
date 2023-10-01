@@ -1,4 +1,5 @@
 from typing import List
+from datetime import datetime
 import logging
 from models.record import Activity, Pain
 
@@ -13,8 +14,8 @@ class DailyLog:
         date,
         activities: List[Activity] = [],
         pains: List[Pain] = [],
-        activity_notes="",
-        pain_notes="",
+        activity_notes=None,
+        pain_notes=None,
     ):
         self._date = date
         self._activity_notes = activity_notes
@@ -29,19 +30,25 @@ class DailyLog:
             self.add_pain(p)
 
     def __str__(self):
-        output = [f"--- Daily Log for {self._date} ---"]
+        formatted_date = datetime.strptime(self._date, "%Y-%m-%d").strftime(
+            "%b. %-d, %Y"
+        )
+        header = f"{formatted_date} Log:"
 
-        output.append("\n[Activities]")
+        output = [header, ""]
+        output.append(f"{len(self.activities)}x activities:")
         for idx, activity in enumerate(self._activities):
-            output.append(f"{idx+1}) {self._activities[activity].__str__()}")
+            output.append(f"* {self._activities[activity].__str__()}")
 
-        output.append(self._activity_notes)
+        if self._activity_notes:
+            output.append(self._activity_notes)
 
-        output.append("\n[Pain]")
+        output.extend(["", f"{len(self.pains)}x pain records:"])
         for idx, pain in enumerate(self._pains):
-            output.append(f"{idx+1}) {self._pains[pain].__str__()}")
+            output.append(f"* {self._pains[pain].__str__()}")
 
-        output.append(self._pain_notes)
+        if self._pain_notes:
+            output.append(self._pain_notes)
 
         return "\n".join(output)
 
@@ -77,7 +84,7 @@ class DailyLog:
             logger.debug("Parsing 'pains'")
             for pain_name, pain_level in input_dict["pains"].items():
                 logger.debug(f"Parsing pain {pain_name} with input: pain_level")
-                daily_log.add_pain(pain_name, pain_level)
+                daily_log.add_pain(Pain(pain_name, pain_level))
 
         logger.debug("Finished creating a DailyLog instance")
 
@@ -149,15 +156,15 @@ class DailyLog:
             print(activity_name)
 
     # Public Methods related to Pains
-    def add_pain(self, name: str, level):
+    def add_pain(self, pain: Pain):
         # Check if the activity name already exists in the day's records
-        if name in self._pains:
+        if pain.name in self._pains:
             print(
-                f"Pain record '{name}' already exists for {self._date}. Overwriting previous entry."  # noqa
+                f"Pain record '{pain.name}' already exists for {self._date}. Overwriting previous entry."  # noqa
             )
 
         # Create a new activity with the provided attributes and add it to the records # noqa
-        self._pains[name] = Pain(name, level)
+        self._pains[pain.name] = pain
 
     def delete_pain(self, name: str):
         # Remove the activity if it exists, if not notify
