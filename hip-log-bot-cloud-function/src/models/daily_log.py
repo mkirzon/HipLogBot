@@ -4,7 +4,6 @@ from models.record import Activity, Pain
 
 logger = logging.getLogger(__name__)
 logger.propagate = True
-logger.setLevel(logging.DEBUG)
 
 
 class DailyLog:

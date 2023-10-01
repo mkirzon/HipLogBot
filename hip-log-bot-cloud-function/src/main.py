@@ -84,17 +84,16 @@ def main(request):
 
             res = log.__str__()
 
+    # For errors that we provide back to user via chatbot
     except ValueError as e:  # noqa
-        # Graceful message back if supported case
         # TODO: change
         if "Unsupported intent" in str(e):
-            res = f"The processing server doesn't support this yet (intent = {req['queryResult']['intent']['displayName']}))"  # noqa
+            res = f"We don't support this yet (intent = {req['queryResult']['intent']['displayName']}))"  # noqa
 
+        elif "Mismatched number of reps/weights/durations" in str(e):
+            res = "It looks like you provided unmatched entries for reps/weights/durations (eg specified 2 sets of reps but only 1 weight). Check your log and try again"  # noqa
         else:
-            # TODO: standardize this block cuz it's used twice
-            logger.error(f"Failed logging, here's the input request:\n{req}\n")
-            traceback.print_exc()
-            res = "FAILED"
+            raise
 
     except Exception:
         logger.error(f"Failed logging, here's the input request:\n{req}\n")
