@@ -31,6 +31,9 @@ class HipLogDB:
         context with `firebase_admin.initialize_app()`.
         """
         self._db = firestore.client()
+        logger.debug(
+            f"Initializing HipLogDB() instance with collection '{os.environ['FIRESTORE_COLLECTION_NAME']}'"  # noqa
+        )
         self._collection_name = os.environ["FIRESTORE_COLLECTION_NAME"]
         self._collection = self._db.collection(self._collection_name)
 
