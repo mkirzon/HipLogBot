@@ -123,6 +123,7 @@ class DailyLog:
                 self._activities[name] = activity
             else:
                 logger.info("Adding a new set to activity")
+                # TODO: somewhere here
                 self._activities[name].sets.extend(activity.sets)
         else:
             logger.info(
