@@ -71,7 +71,7 @@ class HipLogDB:
         else:
             logger.info(f"Didn't find log for '{date}'")
             if initialize_empty:
-                logger.info(f"Initializing empty DailLog for '{date}'")
+                logger.info(f"Initializing empty DailyLog for '{date}'")
                 log = DailyLog(date)
             else:
                 logger.info("Returning empty (None)")

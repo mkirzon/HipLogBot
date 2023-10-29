@@ -117,15 +117,16 @@ class DailyLog:
         # Check if the activity name already exists in the day's records
         name = activity.name
         if name in self._activities:
-            logging.info(f"Activity '{name}' already exists in this DailyLog")
+            logger.info(f"Activity '{name}' already exists in this DailyLog")
             if overwrite:
-                logging.info("Overwriting activity's sets")
+                logger.info("Overwriting activity's sets")
                 self._activities[name] = activity
             else:
-                logging.info("Adding a new set to activity")
+                logger.info("Adding a new set to activity")
+                # TODO: somewhere here
                 self._activities[name].sets.extend(activity.sets)
         else:
-            logging.info(
+            logger.info(
                 f"Adding activity '{name}' for the first time to the daily log's 'activities' dict"  # noqa
             )  # noqa
             self._activities[name] = activity
@@ -136,7 +137,7 @@ class DailyLog:
             del self._activities[name]
             return True
         else:
-            logging.info(
+            logger.info(
                 f"Activity '{name}' doesn't exist for {self._date}. Nothing to delete."  # noqa
             )
             return False
@@ -147,7 +148,7 @@ class DailyLog:
         if activity:
             return activity
         else:
-            logging.info(f"No activity named {name} found.")
+            logger.info(f"No activity named {name} found.")
             return None
 
     def list_activities(self):

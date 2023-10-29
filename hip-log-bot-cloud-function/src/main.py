@@ -50,9 +50,7 @@ def main(request):
         elif intent.type == "LogActivity":
             log = hiplogdb.get_log(intent.user, intent.date, initialize_empty=True)
             for s in intent.log_input["sets"]:
-                log.add_activity(
-                    Activity(intent.log_input["name"], intent.log_input["sets"])
-                )
+                log.add_activity(Activity(intent.log_input["name"], s))
             logger.info(f"DailyLog (local object) generated:\n{log}")
 
         elif intent.type == "LogPain":
