@@ -82,6 +82,11 @@ def test_activity_initialization_with_no_sets():
     assert activity.name == "Yoga" and activity.sets[0].reps == 1
 
 
+def test_activity_init_with_invalid_types():
+    with pytest.raises(TypeError):
+        Activity("bla", {"reps": 3})
+
+
 def test_activity_initialization_with_set_dicts():
     # This shows that the sets can be defined with dicts rather than Measurements
     activity = Activity(

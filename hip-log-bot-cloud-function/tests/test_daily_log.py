@@ -86,3 +86,20 @@ def test_daily_log_print():
 1x pain records:
 * Left hip pain: 3"""
     )
+
+
+def test_add_activity_to_existing_log():
+    log = DailyLog(
+        "2023-11-04",
+        activities=[
+            Activity(
+                "Yoga",
+                [Set(reps=1)],
+            ),
+            Activity("Handstands", [Set(reps=5), Set(reps=10)]),
+        ],
+    )
+
+    log.add_activity(Activity("Handstands", [Set(reps=4)]))
+
+    print("helo")
