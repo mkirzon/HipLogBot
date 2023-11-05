@@ -1,12 +1,9 @@
-import logging
 import pytest
 import os
 import firebase_admin
 import utils
 from firebase_admin import firestore
-from models.intent import Intent
 from services.executor import Executor
-from services.hiplogdb import HipLogDB
 
 
 @pytest.fixture(scope="module")
@@ -40,11 +37,6 @@ def conn():
         pass
 
 
-@pytest.fixture
-def db():
-    return HipLogDB()
-
-
 # def test_executor_get_log_doesnt_upload(conn, db, caplog):
 #     req = {
 #         "queryResult": {
@@ -65,7 +57,7 @@ def db():
 #     assert "Uploading" not in caplog.text
 
 
-def test_two_uploads(conn, db, caplog):
+def test_two_uploads(conn):
     request = {
         "queryResult": {
             "parameters": {
@@ -101,4 +93,22 @@ def test_two_uploads(conn, db, caplog):
 * Handstands 2 sets: 3x, 5x
 
 0x pain records:"""
+    )
+
+
+def test_get_commands(conn):
+    request = {
+        "queryResult": {
+            "parameters": {},
+            "intent": {
+                "displayName": "GetCommandList",
+            },
+        }
+    }
+
+    executor = Executor(request)
+    res = executor.run()
+    assert (
+        "* **Log an activity**: I did yoga today, I did 10 pullups, I held plank for 30 seconds"  # noqa
+        in res
     )

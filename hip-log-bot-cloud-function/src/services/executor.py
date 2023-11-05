@@ -1,7 +1,7 @@
 import logging
 import traceback
 from models.intent import Intent
-
+from models.supported_intents import SupportedIntents
 from models.record import Activity
 from services.hiplogdb import HipLogDB
 
@@ -54,38 +54,41 @@ class Executor:
 
         # First handle generic requests, that don't require specific log queries.
         # Otherwise do log-based actions
-        if self._intent.type == "GetNumLogs":
+        if self._intent.type == SupportedIntents.GetNumLogs:
             num_logs = self._hiplogdb.num_logs
             res = f"There are {num_logs} logs"
 
-        elif self._intent.type == "GetDailyLog":
+        elif self._intent.type == SupportedIntents.GetDailyLog:
             log = self._hiplogdb.get_log(self._intent.user, self._intent.date)
             logger.info(f"Retrieved DailyLog (local object) generated:\n{log}")
 
-        elif self._intent.type == "LogActivity":
+        elif self._intent.type == SupportedIntents.LogActivity:
             log = self._hiplogdb.get_log(
                 self._intent.user, self._intent.date, initialize_empty=True
             )
             log.add_activity(Activity.from_dict(self._intent._log_input))
             logger.info(f"DailyLog (local object) generated:\n{log}")
 
-        elif self._intent.type == "LogPain":
+        elif self._intent.type == SupportedIntents.LogPain:
             log = self._hiplogdb.get_log(self._intent.user, self._intent.date)
             log.add_pain(**self._intent.log_input)
             logger.info(f"DailyLog (local object) generated:\n{log}")
 
-        elif self._intent.type == "DeleteDailyLog":
+        elif self._intent.type == SupportedIntents.DeleteDailyLog:
             self._hiplogdb.delete_log(self._intent.user, self._intent.date)
             res = f"Your entry '{self._intent.date}' was deleted"
 
-        elif self._intent.type == "GetActivitySummary":
+        elif self._intent.type == SupportedIntents.GetActivitySummary:
             activity_name = self._intent.log_input["name"]
             stats = self._hiplogdb.get_activity_summary(activity_name)
             output = [f"**Summary Stats for '{activity_name}'**\n"]
             output += [f"{k}: {v}" for k, v in stats.items()]
             res = "\n".join(output)
 
-        if self._intent.type in ["LogActivity", "LogPain"]:
+        if self._intent.type in [
+            SupportedIntents.LogActivity,
+            SupportedIntents.LogPain,
+        ]:
             # TODO add logic to bubble up new vs update status
 
             # TODO: retrieve into here too but tbd how cuz also need to handle
@@ -96,7 +99,14 @@ class Executor:
             self._hiplogdb.upload_log(self._intent.user, log)
             logger.info("Completed upload")
 
-        if self._intent.type in ["LogActivity", "LogPain", "GetDailyLog"]:
+        if self._intent.type in [
+            SupportedIntents.LogActivity,
+            SupportedIntents.LogPain,
+            SupportedIntents.GetDailyLog,
+        ]:
             res = log.__str__()
+
+        if self._intent.type == SupportedIntents.GetCommandList:
+            res = SupportedIntents.summarize()
 
         return res

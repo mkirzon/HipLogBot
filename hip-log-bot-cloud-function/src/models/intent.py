@@ -2,6 +2,7 @@ import json
 import logging
 import datetime
 import utils
+from models.supported_intents import SupportedIntents
 
 logger = logging.getLogger(__name__)
 
@@ -16,15 +17,6 @@ class Intent:
 
     """
 
-    SUPPORTED_INTENTS = [
-        "LogPain",
-        "LogActivity",
-        "GetNumLogs",
-        "GetDailyLog",
-        "DeleteDailyLog",
-        "GetActivitySummary",
-    ]
-
     # Initialization
     def __init__(self, req):
         self._type = req["queryResult"]["intent"]["displayName"]
@@ -33,7 +25,7 @@ class Intent:
         self._date = None
         self._user = None
 
-        if self._type not in self.SUPPORTED_INTENTS:
+        if self._type not in SupportedIntents.all():
             raise ValueError("Unsupported intent passed")
 
         self._set_user(req)
@@ -129,7 +121,12 @@ class Intent:
         )
 
         # Extract date for date-based activities
-        if self.type in ["LogActivity", "LogPain", "GetDailyLog", "DeleteDailyLog"]:
+        if self.type in [
+            SupportedIntents.LogActivity,
+            SupportedIntents.LogPain,
+            SupportedIntents.GetDailyLog,
+            SupportedIntents.DeleteDailyLog,
+        ]:
             # Expecting a date parameter for these intents
             if not self._raw_entity.get("date"):
                 raise ValueError("Input entity is missing a date among the attributes")
@@ -140,10 +137,10 @@ class Intent:
             logger.debug(f"Set intent date as {self._date}")
 
         # Now do the processing. In some cases, intent keys/vals need to be renamed
-        if self.type == "GetNumLogs":
+        if self.type == SupportedIntents.GetNumLogs:
             pass
 
-        elif self.type == "LogActivity":
+        elif self.type == SupportedIntents.LogActivity:
             self._log_input["name"] = self._raw_entity["activity"].title()
 
             # Prepare the set dicts from the individaul arrays of reps/durations/weights
@@ -174,14 +171,17 @@ class Intent:
             else:
                 self._log_input["sets"].append({"reps": 1})
 
-        elif self.type == "LogPain":
+        elif self.type == SupportedIntents.LogPain:
             self._log_input["name"] = self._raw_entity["body_part"].title()
             self._log_input["level"] = int(self._raw_entity["pain_level"])
 
-        elif self.type == "DeleteDailyLog":
+        elif self.type == SupportedIntents.DeleteDailyLog:
             pass
 
-        elif self.type == "GetActivitySummary":
+        elif self.type == SupportedIntents.GetCommandList:
+            pass
+
+        elif self.type == SupportedIntents.GetActivitySummary:
             self._log_input["name"] = self._raw_entity["activity"].title()
             pass
 

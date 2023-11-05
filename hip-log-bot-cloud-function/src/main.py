@@ -29,9 +29,7 @@ def main(request):
     # Initialize handlers
     request = request.get_json(force=True)
     logger.debug(f"Input request:\n{request}")
-    intent = Intent(request)
-    executor = Executor(intent)
-    res = executor.run()
+    res = Executor(request).run()
 
     # Close fireabse
     try:
