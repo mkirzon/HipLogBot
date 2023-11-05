@@ -25,3 +25,7 @@ def get_runtime_config():
         log_level = logging.WARNING  # default
 
     return {"log_level": log_level}
+
+
+# Constants
+test_username = "MarkTheTester"

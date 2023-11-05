@@ -171,7 +171,14 @@ class Activity(Record):
         to a single set with reps=1
         """
         super().__init__(name)
-        self.sets = sets if sets is not None else [Set(reps=1)]
+        if sets is None:
+            self.sets = [Set(reps=1)]
+        elif isinstance(sets, Set):
+            self.sets = [sets]
+        elif isinstance(sets, list) and all(isinstance(s, Set) for s in sets):
+            self.sets = sets
+        else:
+            raise TypeError("Invalid argument for `sets` provided")
 
     # Magic methods
     def __str__(self):

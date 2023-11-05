@@ -1,7 +1,7 @@
 import os
 import pytest
 import firebase_admin
-
+import utils
 from firebase_admin import firestore
 from services.hiplogdb import HipLogDB
 from models.daily_log import DailyLog
@@ -21,12 +21,17 @@ def conn():
     yield fb_app
 
     # Delete all docs in the test collection
+    print("Starting Cleanup")
     db = firestore.client()
-    collection_ref = db.collection(os.environ["FIRESTORE_COLLECTION_NAME"])
+    collection_ref = (
+        db.collection(os.environ["FIRESTORE_COLLECTION_NAME"])
+        .document(utils.test_username)
+        .collection("DailyLogs")
+    )
     docs = collection_ref.stream()
-    # for doc in docs:
-    #     print(f"Deleting doc {doc.id} => {doc.to_dict()}")
-    #     doc.reference.delete()
+    for doc in docs:
+        print(f"Deleting doc {doc.id} => {doc.to_dict()}")
+        doc.reference.delete()
 
     # Close fireabse
     try:
@@ -54,27 +59,38 @@ def test_initialize_hiplogdb(conn):
 
 
 def test_get_log(conn, db):
-    x = db.get_log("mark", "2023-09-15")
-    assert isinstance(x, DailyLog) and x.date == "2023-09-15"
+    # First initialize
+    date = "1999-1-1"
+    db._collection.document(utils.test_username).collection("DailyLogs").document(
+        date
+    ).set({"activities": {"Yoga": {"sets": [{"reps": 1}]}}})
+    x = db.get_log(utils.test_username, date)
+    assert isinstance(x, DailyLog) and x.date == date
 
 
 def test_upload_log(conn, db):
-    user = "mark"
     date = "2024-01-01"
-    db.delete_log(user, date)
-    n1 = db._get_num_logs_by_user(user)
-    db.upload_log(user, DailyLog(date=date, activities=[Activity(name="Yoga")]))
-    n2 = db._get_num_logs_by_user(user)
+    db.delete_log(utils.test_username, date)
+    n1 = db._get_num_logs_by_user(utils.test_username)
+    db.upload_log(
+        utils.test_username, DailyLog(date=date, activities=[Activity(name="Yoga")])
+    )
+    n2 = db._get_num_logs_by_user(utils.test_username)
     assert n2 == n1 + 1
 
 
 def test_existing_log_keeps_num(conn, db):
-    user = "mark"
-    db.upload_log(user, DailyLog(date="2024-01-01", activities=[Activity(name="Yoga")]))
-    n1 = db._get_num_logs_by_user("mark")
+    db.upload_log(
+        utils.test_username,
+        DailyLog(date="2024-01-01", activities=[Activity(name="Yoga")]),
+    )
+    n1 = db._get_num_logs_by_user(utils.test_username)
 
-    db.upload_log(user, DailyLog(date="2024-01-01", activities=[Activity(name="Yoga")]))
-    n2 = db._get_num_logs_by_user("mark")
+    db.upload_log(
+        utils.test_username,
+        DailyLog(date="2024-01-01", activities=[Activity(name="Yoga")]),
+    )
+    n2 = db._get_num_logs_by_user(utils.test_username)
 
     assert n2 == n1
 

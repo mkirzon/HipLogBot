@@ -1,6 +1,7 @@
 import json
 import logging
 import datetime
+import utils
 
 logger = logging.getLogger(__name__)
 
@@ -77,7 +78,8 @@ class Intent:
     def log_input(self):
         """Get the log input that the entity was parsed into
 
-        For LogActivity: {name, sets}
+        For example -
+        * LogActivity: {name, sets}
 
         """
         return self._log_input
@@ -198,15 +200,15 @@ class Intent:
         """
         if not req.get("originalDetectIntentRequest"):
             logger.debug(
-                "originalDetectIntentRequest not found so assuming called by Dialogflow directly. Defaulting user=MarkTheTester"  # noqa
+                f"originalDetectIntentRequest not found so assuming called by Dialogflow directly. Defaulting user={utils.test_username}"  # noqa
             )
-            user = "MarkTheTester"
+            user = utils.test_username
 
         elif req.get("originalDetectIntentRequest")["source"] == "DIALOGFLOW_CONSOLE":
             logger.debug(
-                "originalDetectIntentRequest source is 'DIALOGFLOW_CONSOLE'.  Defaulting user=MarkTheTester"  # noqa
+                f"originalDetectIntentRequest source is 'DIALOGFLOW_CONSOLE'.  Defaulting user={utils.test_username}"  # noqa
             )
-            user = "MarkTheTester"
+            user = utils.test_username
 
         else:
             user = (

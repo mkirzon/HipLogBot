@@ -1,9 +1,7 @@
 import logging
-import traceback
 import firebase_admin
 import functions_framework
-from models.record import Activity
-from services.hiplogdb import HipLogDB
+from services.executor import Executor
 from models.intent import Intent
 from dotenv import load_dotenv
 from utils import get_runtime_config
@@ -19,7 +17,6 @@ if not load_dotenv():
 @functions_framework.http
 def main(request):
     logger.debug("Starting main()")
-    req = request.get_json(force=True)
 
     # Initialize the firebase components
     try:
@@ -29,74 +26,12 @@ def main(request):
         fb_app = firebase_admin.initialize_app()
         logger.info("Opened new Firestore app")
 
-    try:
-        # Initialize handlers
-        hiplogdb = HipLogDB()
-
-        # Parse the intent
-        intent = Intent(req)
-        logger.info(f"Parsed intent request: {intent}")
-
-        # First handle generic requests, that don't require specific log queries.
-        # Otherwise do log-based actions
-        if intent.type == "GetNumLogs":
-            num_logs = hiplogdb.num_logs
-            res = f"There are {num_logs} logs"
-
-        elif intent.type == "GetDailyLog":
-            log = hiplogdb.get_log(intent.user, intent.date)
-            logger.info(f"Retrieved DailyLog (local object) generated:\n{log}")
-
-        elif intent.type == "LogActivity":
-            log = hiplogdb.get_log(intent.user, intent.date, initialize_empty=True)
-            for s in intent.log_input["sets"]:
-                log.add_activity(Activity(intent.log_input["name"], s))
-            logger.info(f"DailyLog (local object) generated:\n{log}")
-
-        elif intent.type == "LogPain":
-            log = hiplogdb.get_log(intent.user, intent.date)
-            log.add_pain(**intent.log_input)
-            logger.info(f"DailyLog (local object) generated:\n{log}")
-
-        elif intent.type == "DeleteDailyLog":
-            hiplogdb.delete_log(intent.user, intent.date)
-            res = f"Your entry '{intent.date}' was deleted"
-
-        elif intent.type == "GetActivitySummary":
-            activity_name = intent.log_input["name"]
-            stats = hiplogdb.get_activity_summary(activity_name)
-            output = [f"**Summary Stats for '{activity_name}'**\n"]
-            output += [f"{k}: {v}" for k, v in stats.items()]
-            res = "\n".join(output)
-
-        if intent.type in ["LogActivity", "LogPain", "GetDailyLog"]:
-            # TODO add logic to bubble up new vs update status
-
-            # TODO: retrieve into here too but tbd how cuz also need to handle
-            # differently
-
-            # Upload the new/modified log back
-            logger.info("Uploading DailyLog")
-            hiplogdb.upload_log(intent.user, log)
-            logger.info("Completed upload")
-
-            res = log.__str__()
-
-    # For errors that we provide back to user via chatbot
-    except ValueError as e:  # noqa
-        # TODO: change
-        if "Unsupported intent" in str(e):
-            res = f"We don't support this yet (intent = {req['queryResult']['intent']['displayName']}))"  # noqa
-
-        elif "Mismatched number of reps/weights/durations" in str(e):
-            res = "It looks like you provided unmatched entries for reps/weights/durations (eg specified 2 sets of reps but only 1 weight). Check your log and try again"  # noqa
-        else:
-            raise
-
-    except Exception:
-        logger.error(f"Failed logging, here's the input request:\n{req}\n")
-        traceback.print_exc()
-        res = "FAILED"
+    # Initialize handlers
+    request = request.get_json(force=True)
+    logger.debug(f"Input request:\n{request}")
+    intent = Intent(request)
+    executor = Executor(intent)
+    res = executor.run()
 
     # Close fireabse
     try:
