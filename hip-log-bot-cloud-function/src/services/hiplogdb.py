@@ -87,10 +87,9 @@ class HipLogDB:
 
         # In case this was a new one, update the count
         # TODO: optimization - run this only if log was new
-        self._num_logs = self._get_num_logs_by_user(user)
+        # self._num_logs = self.get_num_logs_by_user(user)
 
     def delete_log(self, user: str, date: str) -> None:
-        # pass
         try:
             self._get_user_log_ref(user, date).delete()
             logger.info(f"Document with ID {date} deleted successfully!")
@@ -120,10 +119,10 @@ class HipLogDB:
 
         return stats
 
-    # Private methods
-    def _get_num_logs_by_user(self, user: str) -> int:
+    def get_num_logs_by_user(self, user: str) -> int:
         return self._get_user_dailylogs_ref(user).count().get()[0][0].value
 
+    # Private methods
     def _get_user_log_ref(self, user: str, date: str):
         return self._get_user_dailylogs_ref(user).document(date)
 

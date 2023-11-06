@@ -137,10 +137,7 @@ class Intent:
             logger.debug(f"Set intent date as {self._date}")
 
         # Now do the processing. In some cases, intent keys/vals need to be renamed
-        if self.type == SupportedIntents.GetNumLogs:
-            pass
-
-        elif self.type == SupportedIntents.LogActivity:
+        if self.type == SupportedIntents.LogActivity:
             self._log_input["name"] = self._raw_entity["activity"].title()
 
             # Prepare the set dicts from the individaul arrays of reps/durations/weights
@@ -175,14 +172,15 @@ class Intent:
             self._log_input["name"] = self._raw_entity["body_part"].title()
             self._log_input["level"] = int(self._raw_entity["pain_level"])
 
-        elif self.type == SupportedIntents.DeleteDailyLog:
-            pass
-
-        elif self.type == SupportedIntents.GetCommandList:
-            pass
-
         elif self.type == SupportedIntents.GetActivitySummary:
             self._log_input["name"] = self._raw_entity["activity"].title()
+
+        elif self.type in [
+            SupportedIntents.DeleteDailyLog,
+            SupportedIntents.GetNumLogs,
+            SupportedIntents.GetCommandList,
+        ]:
+            logger.debug("Skipping any log input parsing for this intent")
             pass
 
     def _set_user(self, req):

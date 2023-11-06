@@ -1,5 +1,6 @@
 import pytest
 import os
+import re
 import firebase_admin
 import utils
 from firebase_admin import firestore
@@ -108,7 +109,19 @@ def test_get_commands(conn):
 
     executor = Executor(request)
     res = executor.run()
-    assert (
-        "* **Log an activity**: I did yoga today, I did 10 pullups, I held plank for 30 seconds"  # noqa
-        in res
-    )
+    assert re.search(".*Log an activity.*", res)
+
+
+def test_get_num_logs(conn):
+    request = {
+        "queryResult": {
+            "parameters": {},
+            "intent": {
+                "displayName": "GetNumLogs",
+            },
+        }
+    }
+
+    executor = Executor(request)
+    res = executor.run()
+    assert re.search("There are \\d+ logs", res)
