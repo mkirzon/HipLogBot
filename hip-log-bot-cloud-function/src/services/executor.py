@@ -55,7 +55,7 @@ class Executor:
         # First handle generic requests, that don't require specific log queries.
         # Otherwise do log-based actions
         if self._intent.type == SupportedIntents.GetNumLogs:
-            num_logs = self._hiplogdb.num_logs
+            num_logs = self._hiplogdb.get_num_logs_by_user(self._intent.user)
             res = f"There are {num_logs} logs"
 
         elif self._intent.type == SupportedIntents.GetDailyLog:

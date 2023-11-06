@@ -71,12 +71,17 @@ def test_get_log(conn, db):
 def test_upload_log(conn, db):
     date = "2024-01-01"
     db.delete_log(utils.test_username, date)
-    n1 = db._get_num_logs_by_user(utils.test_username)
+    n1 = db.get_num_logs_by_user(utils.test_username)
     db.upload_log(
         utils.test_username, DailyLog(date=date, activities=[Activity(name="Yoga")])
     )
-    n2 = db._get_num_logs_by_user(utils.test_username)
+    n2 = db.get_num_logs_by_user(utils.test_username)
     assert n2 == n1 + 1
+
+
+def test_get_num_logs_by_user(conn, db):
+    # This test doesn't actually test accuracy but tests functionality. The test is hard to run b/c other tests affect this count, so we'll use the implicit tests for accuracy in the other test
+    assert isinstance(db.get_num_logs_by_user(utils.test_username), int)
 
 
 def test_existing_log_keeps_num(conn, db):
@@ -84,26 +89,26 @@ def test_existing_log_keeps_num(conn, db):
         utils.test_username,
         DailyLog(date="2024-01-01", activities=[Activity(name="Yoga")]),
     )
-    n1 = db._get_num_logs_by_user(utils.test_username)
+    n1 = db.get_num_logs_by_user(utils.test_username)
 
     db.upload_log(
         utils.test_username,
         DailyLog(date="2024-01-01", activities=[Activity(name="Yoga")]),
     )
-    n2 = db._get_num_logs_by_user(utils.test_username)
+    n2 = db.get_num_logs_by_user(utils.test_username)
 
     assert n2 == n1
 
 
 def test_get_log_needs_valid_date(conn, db):
     with pytest.raises(ValueError, match="Invalid date provided"):
-        db.get_log("mark", "2023-11111-1")
+        db.get_log(utils.test_username, "2023-11111-1")
 
 
 def test_delete_log(conn, db):
     # Create a log
     date = "2024-01-01"
-    user = "mark"
+    user = utils.test_username
     db.upload_log(user, DailyLog(date=date, activities=[Activity(name="Yoga")]))
     status1 = db._get_user_log_ref(user, date).get().exists
 
@@ -121,7 +126,7 @@ def test_get_activity_summary(conn, caplog, db):
     # caplog.set_level(logging.DEBUG, logger="services.hiplogdb")
 
     name = "Tennis"
-    user = "mark"
+    user = utils.test_username
     for d in ["2023-01-01", "2023-01-02", "2023-01-03"]:
         db.upload_log(user, DailyLog(date=d, activities=[Activity(name)]))
 

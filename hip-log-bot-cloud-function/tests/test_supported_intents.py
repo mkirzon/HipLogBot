@@ -9,6 +9,6 @@ def test_summarize():
     a = SupportedIntents.summarize()
     assert isinstance(a, str)
     assert (
-        "* **Log an activity**: I did yoga today, I did 10 pullups, I held plank for 30 seconds"  # noqa
+        "- *Log an activity*: I did yoga today, I did 10 pullups, I held plank for 30 seconds"  # noqa
         in a
     )

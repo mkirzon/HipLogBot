@@ -2,7 +2,6 @@ import logging
 import firebase_admin
 import functions_framework
 from services.executor import Executor
-from models.intent import Intent
 from dotenv import load_dotenv
 from utils import get_runtime_config
 

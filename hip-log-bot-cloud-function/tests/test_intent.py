@@ -1,6 +1,5 @@
 import logging
 import pytest
-
 from models.intent import Intent
 from datetime import date
 
@@ -90,7 +89,7 @@ def sample_requests():
 
 
 # Tests for DailyLog class
-def test_intent_initialization_for_activity_name_only(sample_requests):
+def test_intent_init_for_activity_name_only(sample_requests):
     intent = Intent(sample_requests["LogActivity_1"])
     assert intent._type == "LogActivity"
     assert intent._raw_entity == {
@@ -102,7 +101,7 @@ def test_intent_initialization_for_activity_name_only(sample_requests):
     assert intent._user == "23970740102517391"
 
 
-def test_intent_initialization_for_activity_with_sets(sample_requests):
+def test_intent_init_for_activity_with_sets(sample_requests):
     intent = Intent(sample_requests["LogActivity_with_sets"])
     assert intent._log_input == {
         "name": "Curls",
@@ -113,7 +112,7 @@ def test_intent_initialization_for_activity_with_sets(sample_requests):
     }
 
 
-def test_intent_initialization_for_activity_with_badsets(sample_requests):
+def test_intent_init_for_activity_with_badsets(sample_requests):
     req = {
         "queryResult": {
             "intent": {
@@ -136,7 +135,7 @@ def test_intent_initialization_for_activity_with_badsets(sample_requests):
         Intent(req)
 
 
-def test_intent_initialization_originalDetectIntentRequest_missing(caplog):
+def test_intent_init_originalDetectIntentRequest_missing(caplog):
     caplog.set_level(logging.DEBUG, logger="models.intent")
 
     req = {
@@ -156,7 +155,7 @@ def test_intent_initialization_originalDetectIntentRequest_missing(caplog):
     )
 
 
-def test_intent_initialization_user_info_missing():
+def test_intent_init_user_info_missing():
     req = {
         "queryResult": {
             "parameters": {"date": "2023-07-24T12:00:00+01:00", "activity": "Yoga"},
@@ -181,7 +180,7 @@ def test_intent_initialization_user_info_missing():
         Intent(req)
 
 
-def test_intent_initialization_with_weight(sample_requests):
+def test_intent_init_with_weight(sample_requests):
     intent = Intent(sample_requests["LogActivity_with_weight"])
     assert intent.log_input == {
         "name": "Hip Adductions",
@@ -189,21 +188,35 @@ def test_intent_initialization_with_weight(sample_requests):
     }
 
 
-def test_intent_initialization_for_pain(sample_requests):
+def test_intent_init_for_pain(sample_requests):
     intent = Intent(sample_requests["LogPain_1"])
     assert intent._date == "2023-08-31"
     assert intent._log_input == {"name": "Left Hip", "level": 2}
 
 
-def test_intent_initialization_for_get_daily_log(sample_requests):
+def test_intent_init_for_get_daily_log(sample_requests):
     intent = Intent(sample_requests["GetDailyLog_1"])
     assert intent.type == "GetDailyLog"
     assert intent.date == "2023-09-05"
 
 
-def test_intent_initialization_for_get_activity_summary(sample_requests):
+def test_intent_init_for_get_activity_summary(sample_requests):
     intent = Intent(sample_requests["get_activity_summary"])
     assert intent.type == "GetActivitySummary"
+
+
+def test_intent_init_for_get_num_logs():
+    req = {
+        "queryResult": {
+            "parameters": {"date": "2023-07-24T12:00:00+01:00", "activity": "Yoga"},
+            "intent": {
+                "displayName": "GetNumLogs",
+            },
+        }
+    }
+
+    intent = Intent(req)
+    assert intent.type == "GetNumLogs" and not intent.log_input
 
 
 def test_invalid_intent_type():
