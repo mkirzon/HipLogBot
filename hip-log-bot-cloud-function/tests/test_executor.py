@@ -125,3 +125,67 @@ def test_get_num_logs(conn):
     executor = Executor(request)
     res = executor.run()
     assert re.search("There are \\d+ logs", res)
+
+
+def test_multiple_multisets(conn):
+    request = {
+        "queryResult": {
+            "parameters": {
+                "activity": "Pullups",
+                "duration": [],
+                "reps": [1, 2, 3],
+                "date": "2023-11-03T12:00:00+01:00",
+                "weight": [],
+            },
+            "intent": {
+                "displayName": "LogActivity",
+            },
+        }
+    }
+
+    # NOTE: don't forget to delete in the db directly if running adhoc .
+
+    # First run
+    executor = Executor(request)
+    executor.run()
+
+    # Tweak the request and rerun
+    request["queryResult"]["parameters"]["reps"] = [4, 5, 6]
+    executor = Executor(request)
+    r2 = executor.run()
+
+    assert (
+        r2
+        == """Nov. 3, 2023 Log:
+
+1x activities:
+* Pullups 6 sets: 1x, 2x, 3x, 4x, 5x, 6x
+
+0x pain records:"""
+    )
+
+
+def test_simple_pain_log(conn):
+    request = {
+        "queryResult": {
+            "parameters": {
+                "body_part": "Left hip",
+                "pain_level": "1",
+                "date": "2023-11-06T12:00:00Z",
+            },
+            "intent": {"displayName": "LogPain"},
+        }
+    }
+
+    executor = Executor(request)
+    res = executor.run()
+
+    assert (
+        res
+        == """Nov. 6, 2023 Log:
+
+0x activities:
+
+1x pain records:
+Left hip: 1"""
+    )
