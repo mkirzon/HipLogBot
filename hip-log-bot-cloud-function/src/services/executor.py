@@ -2,7 +2,7 @@ import logging
 import traceback
 from models.intent import Intent
 from models.supported_intents import SupportedIntents
-from models.record import Activity
+from models.record import Activity, Pain
 from services.hiplogdb import HipLogDB
 
 logger = logging.getLogger(__name__)
@@ -70,8 +70,10 @@ class Executor:
             logger.info(f"DailyLog (local object) generated:\n{log}")
 
         elif self._intent.type == SupportedIntents.LogPain:
-            log = self._hiplogdb.get_log(self._intent.user, self._intent.date)
-            log.add_pain(**self._intent.log_input)
+            log = self._hiplogdb.get_log(
+                self._intent.user, self._intent.date, initialize_empty=True
+            )
+            log.add_pain(Pain(**self._intent.log_input))
             logger.info(f"DailyLog (local object) generated:\n{log}")
 
         elif self._intent.type == SupportedIntents.DeleteDailyLog:
