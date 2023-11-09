@@ -134,7 +134,7 @@ def test_multiple_multisets(conn):
                 "activity": "Pullups",
                 "duration": [],
                 "reps": [1, 2, 3],
-                "date": "2023-11-03T12:00:00+01:00",
+                "date": "2023-11-01T12:00:00+01:00",
                 "weight": [],
             },
             "intent": {
@@ -156,7 +156,7 @@ def test_multiple_multisets(conn):
 
     assert (
         r2
-        == """Nov. 3, 2023 Log:
+        == """Nov. 1, 2023 Log:
 
 1x activities:
 * Pullups 6 sets: 1x, 2x, 3x, 4x, 5x, 6x
@@ -187,5 +187,5 @@ def test_simple_pain_log(conn):
 0x activities:
 
 1x pain records:
-Left hip: 1"""
+* Left Hip: 1"""
     )

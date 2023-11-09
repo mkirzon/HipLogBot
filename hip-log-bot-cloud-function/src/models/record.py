@@ -241,7 +241,7 @@ class Pain(Record):
         """Print method for a Pain
 
         Sample to demonstrate format:
-        "Left hip pain: 3"
+        "Left hip: 3"
         """
 
-        return f"{self.name} pain: {self.level}"
+        return f"{self.name}: {self.level}"

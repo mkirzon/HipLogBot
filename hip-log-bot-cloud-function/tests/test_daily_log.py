@@ -84,7 +84,7 @@ def test_daily_log_print():
 * Yoga 1 sets: 3min
 
 1x pain records:
-* Left hip pain: 3"""
+* Left hip: 3"""
     )
 
 
