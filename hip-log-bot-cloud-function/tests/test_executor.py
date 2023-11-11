@@ -204,4 +204,4 @@ def test_get_activity_summary(conn):
     executor = Executor(request)
     res = executor.run()
 
-    assert res != "FAILED"
+    assert "Summary Stats" in res
