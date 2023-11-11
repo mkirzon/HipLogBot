@@ -82,7 +82,9 @@ class Executor:
 
         elif self._intent.type == SupportedIntents.GetActivitySummary:
             activity_name = self._intent.log_input["name"]
-            stats = self._hiplogdb.get_activity_summary(activity_name)
+            stats = self._hiplogdb.get_activity_summary(
+                self._intent.user, activity_name
+            )
             output = [f"**Summary Stats for '{activity_name}'**\n"]
             output += [f"{k}: {v}" for k, v in stats.items()]
             res = "\n".join(output)
