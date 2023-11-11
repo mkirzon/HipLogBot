@@ -189,3 +189,19 @@ def test_simple_pain_log(conn):
 1x pain records:
 * Left Hip: 1"""
     )
+
+
+def test_get_activity_summary(conn):
+    request = {
+        "queryResult": {
+            "parameters": {"activity": "Yoga"},
+            "intent": {
+                "displayName": "GetActivitySummary",
+            },
+        }
+    }
+
+    executor = Executor(request)
+    res = executor.run()
+
+    assert res != "FAILED"
