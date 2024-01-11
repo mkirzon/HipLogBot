@@ -1,1 +1,1 @@
-Documentation available on [Notion](https://www.notion.so/Tech-Spec-28c90edaa7234444bc9d728f9c13342e)
+Documentation available on [Notion](https://mkirzon.notion.site/mkirzon/HipLogBot-a8c3cc6fa16d43eb9e01d83a0c52ee0b)
