@@ -25,6 +25,8 @@ class Executor:
 
         # Known errors: return a polished error message for handled error types
         except ValueError as e:  # noqa
+            logger.error(f"Caught error: {e}")
+            traceback.print_exc()
             # TODO: change
             if "Unsupported intent" in str(e):
                 res = f"We don't support this yet (intent = {self._request['queryResult']['intent']['displayName']}))"  # noqa
@@ -36,6 +38,7 @@ class Executor:
 
         # Entirely unknown errors
         except Exception:
+            traceback.print_exc()
             res = "Something went wrong. Try a different way or type 'help'"
 
         # Include trace and error in logs
@@ -43,8 +46,7 @@ class Executor:
             logger.error(
                 f"Failed logging, here's the input request:\n{self._request}\n"
             )
-            traceback.print_exc()  # TODO: confirm this is printed to GCloud logs
-            logger.error(f"Setting response value to: {res}")
+            logger.error(f'Setting response value to:\n"{res}"')
 
         return res
 
