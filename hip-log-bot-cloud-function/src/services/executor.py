@@ -10,9 +10,21 @@ logger = logging.getLogger(__name__)
 
 class Executor:
     def __init__(self, request):
-        self._intent = Intent(request)
         self._hiplogdb = HipLogDB()
         self._request = request
+
+        try:
+            self._intent = Intent(request)
+
+        except ValueError as e:  # noqa
+            # TODO: change
+            if "Unsupported intent" in str(e):
+                res = f"We don't support this yet (intent = {self._request['queryResult']['intent']['displayName']}))"  # noqa
+
+            elif "Mismatched number of reps/weights/durations" in str(e):
+                res = "It looks like you provided unmatched entries for reps/weights/durations (eg specified 2 sets of reps but only 1 weight). Check your log and try again"  # noqa
+            else:
+                raise
 
     def run(self) -> str:
         """Run the
@@ -25,14 +37,7 @@ class Executor:
 
         # Known errors: return a polished error message for handled error types
         except ValueError as e:  # noqa
-            # TODO: change
-            if "Unsupported intent" in str(e):
-                res = f"We don't support this yet (intent = {self._request['queryResult']['intent']['displayName']}))"  # noqa
-
-            elif "Mismatched number of reps/weights/durations" in str(e):
-                res = "It looks like you provided unmatched entries for reps/weights/durations (eg specified 2 sets of reps but only 1 weight). Check your log and try again"  # noqa
-            else:
-                raise
+            raise
 
         # Unknown errors: Log full trace
         except Exception:
@@ -40,7 +45,7 @@ class Executor:
                 f"Failed logging, here's the input request:\n{self._request}\n"
             )
             traceback.print_exc()  # TODO: confirm this is printed to GCloud logs
-            res = "FAILED"
+            res = "Something went wrong. Reach out to the developer"
 
         return res
 

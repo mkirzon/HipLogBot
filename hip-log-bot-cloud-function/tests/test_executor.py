@@ -221,3 +221,27 @@ def test_get_activity_summary(conn):
     res = executor.run()
 
     assert "Summary Stats" in res
+
+
+def test_error_on_executor_init(conn):
+    request = {
+        "queryResult": {
+            "intent": {
+                "displayName": "LogActivity",
+            },
+            "parameters": {
+                "duration": [],
+                "reps": ["1"],
+                "weight": [
+                    {"amount": "45.0", "unit": "kg"},
+                    {"amount": "20.0", "unit": "kg"},
+                ],
+                "activity": "Hip Adductions",
+                "date": "2024-01-10T12:00:00+01:00",
+                "number": [],
+            },
+        }
+    }
+
+    res = Executor(request).run()
+    assert res == "FAILED"

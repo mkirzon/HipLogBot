@@ -28,7 +28,11 @@ def main(request):
     # Initialize handlers
     request = request.get_json(force=True)
     logger.debug(f"Input request:\n{request}")
-    res = Executor(request).run()
+
+    try:
+        res = Executor(request).run()
+    except:
+        res = "Something went wrong. Reach out to the developer"
 
     # Close fireabse
     try:
