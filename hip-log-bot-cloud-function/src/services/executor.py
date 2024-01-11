@@ -13,9 +13,17 @@ class Executor:
         self._hiplogdb = HipLogDB()
         self._request = request
 
-        try:
-            self._intent = Intent(request)
+    def run(self) -> str:
+        """Run the
 
+        Returns:
+            str: Returns the message passed back to users, or an error message as needed
+        """
+        try:
+            self._intent = Intent(self._request)
+            res = self._decision_flow()
+
+        # Known errors: return a polished error message for handled error types
         except ValueError as e:  # noqa
             # TODO: change
             if "Unsupported intent" in str(e):
@@ -26,26 +34,17 @@ class Executor:
             else:
                 raise
 
-    def run(self) -> str:
-        """Run the
-
-        Returns:
-            str: Returns the message passed back to users, or an error message as needed
-        """
-        try:
-            res = self._decision_flow()
-
-        # Known errors: return a polished error message for handled error types
-        except ValueError as e:  # noqa
-            raise
-
-        # Unknown errors: Log full trace
+        # Entirely unknown errors
         except Exception:
+            res = "Something went wrong. Try a different way or type 'help'"
+
+        # Include trace and error in logs
+        finally:
             logger.error(
                 f"Failed logging, here's the input request:\n{self._request}\n"
             )
             traceback.print_exc()  # TODO: confirm this is printed to GCloud logs
-            res = "Something went wrong. Reach out to the developer"
+            logger.error(f"Setting response value to: {res}")
 
         return res
 

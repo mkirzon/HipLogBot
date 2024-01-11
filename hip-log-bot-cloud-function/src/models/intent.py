@@ -152,6 +152,7 @@ class Intent:
                 ]
             )
             if len(attribute_lengths) > 1:
+                logger.error("Mismatched number of reps/weights/durations")
                 raise ValueError("Mismatched number of reps/weights/durations")
             # If no reps/duration/weights provided, skip
             elif attribute_lengths:
