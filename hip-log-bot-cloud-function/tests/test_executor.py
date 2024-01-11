@@ -58,6 +58,22 @@ def conn():
 #     assert "Uploading" not in caplog.text
 
 
+def test_executor_get_log(conn):
+    request = {
+        "queryResult": {
+            "queryText": "What have I done today?",
+            "parameters": {"date": "today"},
+            "intent": {
+                "displayName": "GetDailyLog",
+            },
+        }
+    }
+
+    executor = Executor(request)
+    res = executor.run()
+    assert re.search("Log", res)
+
+
 def test_two_uploads(conn):
     request = {
         "queryResult": {

@@ -149,10 +149,7 @@ def test_intent_init_originalDetectIntentRequest_missing(caplog):
 
     intent = Intent(req)
     assert intent._user == "MarkTheTester"
-    assert (
-        "originalDetectIntentRequest not found so assuming called by Dialogflow directly. Defaulting user=MarkTheTester"  # noqa
-        in caplog.text
-    )
+    assert "originalDetectIntentRequest not found" in caplog.text  # noqa
 
 
 def test_intent_init_user_info_missing():

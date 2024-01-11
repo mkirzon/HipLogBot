@@ -198,7 +198,7 @@ class Intent:
         """
         if not req.get("originalDetectIntentRequest"):
             logger.debug(
-                f"originalDetectIntentRequest not found so assuming called by Dialogflow directly. Defaulting user={utils.test_username}"  # noqa
+                f"originalDetectIntentRequest not found so assuming called locally directly. Defaulting user={utils.test_username}"  # noqa
             )
             user = utils.test_username
 

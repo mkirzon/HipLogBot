@@ -82,9 +82,9 @@ class DailyLog:
 
         if input_dict.get("pains"):
             logger.debug("Parsing 'pains'")
-            for pain_name, pain_level in input_dict["pains"].items():
-                logger.debug(f"Parsing pain {pain_name} with input: pain_level")
-                daily_log.add_pain(Pain(pain_name, pain_level))
+            for pain_name, pain_dict in input_dict["pains"].items():
+                logger.debug(f"Parsing pain {pain_name} with input: {pain_dict}")
+                daily_log.add_pain(Pain(pain_name, pain_dict["level"]))
 
         logger.debug("Finished creating a DailyLog instance")
 
@@ -191,7 +191,10 @@ class DailyLog:
                 name: activity.to_dict(include_name=False)
                 for name, activity in self.activities.items()
             },
-            "pains": {name: pain.to_dict() for name, pain in self.pains.items()},
+            "pains": {
+                name: pain.to_dict(include_name=False)
+                for name, pain in self.pains.items()
+            },
             "pain_notes": self._pain_notes,
             "activity_notes": self._activity_notes,
         }
