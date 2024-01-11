@@ -36,7 +36,7 @@ class Executor:
             else:
                 raise
 
-        # Entirely unknown errors
+        # Entirely unknown errors but "caught" within executor (as oppose to even broader error from main.py)
         except Exception:
             traceback.print_exc()
             res = "Something went wrong. Try a different way or type 'help'"
