@@ -62,7 +62,7 @@ def test_executor_get_log(conn):
     request = {
         "queryResult": {
             "queryText": "What have I done today?",
-            "parameters": {"date": ""},
+            "parameters": {"date": "today"},
             "intent": {
                 "displayName": "GetDailyLog",
             },

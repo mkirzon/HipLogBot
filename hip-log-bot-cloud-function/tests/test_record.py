@@ -212,4 +212,10 @@ def test_invalid_pain_level():
         Pain("Headache", 5)
 
 
+def test_pain_to_dict():
+    pain = Pain("Headache", 2)
+    assert pain.to_dict() == {"level": 2, "name": "Headache"}
+    assert pain.to_dict(include_name=False) == {"level": 2}
+
+
 # Tests for outward conversions

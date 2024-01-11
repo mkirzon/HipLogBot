@@ -76,7 +76,7 @@ class Record:
         return attrs
 
     # Public Methods
-    def to_dict(self, skip_empty=False) -> dict:
+    def to_dict(self, skip_empty=False, include_name=True) -> dict:
         """Get a fully converted dictionary representation of the record (even
         nested objects will be standard dicts)
 
@@ -88,6 +88,8 @@ class Record:
         """
         x = {}
         for k, v in self.attributes.items():
+            if not include_name and k == "name":
+                continue
             if isinstance(v, Measurement):
                 v = v.to_dict()
 

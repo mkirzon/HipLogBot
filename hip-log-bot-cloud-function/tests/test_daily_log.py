@@ -25,8 +25,8 @@ def test_dailylog_initialization_from_dict():
             },
             "activity_notes": "bla bla",
             "pains": {
-                "Left hip": 3,
-                "Right hip": 2,
+                "Left hip": {"level": 3},
+                "Right hip": {"level": 2},
             },
         },
     )
@@ -86,6 +86,22 @@ def test_daily_log_print():
 1x pain records:
 * Left hip: 3"""
     )
+
+
+def test_log_to_dict():
+    """
+    Motivation for test:
+    * Found that I was unintentionally uploading Pains with the 'name' attribute
+    """
+    log = DailyLog("2021-09-01")
+    log.add_pain(Pain("Headache", 2))
+    log.to_dict() == {
+        "date": "2021-09-01",
+        "activities": [],
+        "pains": {"Headache": {"level": 2}},
+        "pain_notes": "",
+        "activity_notes": "",
+    }
 
 
 def test_add_activity_to_existing_log():
