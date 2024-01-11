@@ -59,7 +59,9 @@ class Executor:
             res = f"There are {num_logs} logs"
 
         elif self._intent.type == SupportedIntents.GetDailyLog:
-            log = self._hiplogdb.get_log(self._intent.user, self._intent.date)
+            log = self._hiplogdb.get_log(
+                self._intent.user, self._intent.date, initialize_empty=True
+            )
             logger.info(f"Retrieved DailyLog (local object) generated:\n{log}")
 
         elif self._intent.type == SupportedIntents.LogActivity:
