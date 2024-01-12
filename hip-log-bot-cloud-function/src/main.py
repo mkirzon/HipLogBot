@@ -31,7 +31,7 @@ def main(request):
 
     try:
         res = Executor(request).run()
-    except:
+    except:  # noqa
         res = "Something went wrong. Reach out to the developer"
 
     # Close fireabse
