@@ -10,7 +10,6 @@ logger = logging.getLogger(__name__)
 
 class Executor:
     def __init__(self, request):
-        self._intent = Intent(request)
         self._hiplogdb = HipLogDB()
         self._request = request
 
@@ -21,10 +20,13 @@ class Executor:
             str: Returns the message passed back to users, or an error message as needed
         """
         try:
+            self._intent = Intent(self._request)
             res = self._decision_flow()
 
         # Known errors: return a polished error message for handled error types
         except ValueError as e:  # noqa
+            logger.error(f"Caught error: {e}")
+            traceback.print_exc()
             # TODO: change
             if "Unsupported intent" in str(e):
                 res = f"We don't support this yet (intent = {self._request['queryResult']['intent']['displayName']}))"  # noqa
@@ -34,13 +36,17 @@ class Executor:
             else:
                 raise
 
-        # Unknown errors: Log full trace
+        # Entirely unknown errors but "caught" within executor (as oppose to even broader error from main.py)
         except Exception:
+            traceback.print_exc()
+            res = "Something went wrong. Try a different way or type 'help'"
+
+        # Include trace and error in logs
+        finally:
             logger.error(
                 f"Failed logging, here's the input request:\n{self._request}\n"
             )
-            traceback.print_exc()  # TODO: confirm this is printed to GCloud logs
-            res = "FAILED"
+            logger.error(f'Setting response value to:\n"{res}"')
 
         return res
 

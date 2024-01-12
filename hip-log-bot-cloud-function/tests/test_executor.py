@@ -1,3 +1,4 @@
+import logging
 import pytest
 import os
 import re
@@ -221,3 +222,31 @@ def test_get_activity_summary(conn):
     res = executor.run()
 
     assert "Summary Stats" in res
+
+
+def test_catch_mismatch_error_on_run(conn, caplog):
+    request = {
+        "queryResult": {
+            "intent": {
+                "displayName": "LogActivity",
+            },
+            "parameters": {
+                "duration": [],
+                "reps": ["1"],
+                "weight": [
+                    {"amount": "45.0", "unit": "kg"},
+                    {"amount": "20.0", "unit": "kg"},
+                ],
+                "activity": "Hip Adductions",
+                "date": "2024-01-10T12:00:00+01:00",
+            },
+        }
+    }
+
+    caplog.set_level(logging.DEBUG, logger="services.executor")
+
+    res = Executor(request).run()
+    # Test that it's both in logs and the response
+    assert "Mismatched number of reps/weights/durations" in caplog.text
+    assert "Setting response" in caplog.text
+    assert re.search("It looks like you provided", res)
