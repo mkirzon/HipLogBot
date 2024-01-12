@@ -148,7 +148,7 @@ class Intent:
                 [
                     len(v)
                     for k, v in self._raw_entity.items()
-                    if k not in ["activity", "date"] and v != []
+                    if k in ["reps", "weight", "duration"] and v != []
                 ]
             )
             if len(attribute_lengths) > 1:

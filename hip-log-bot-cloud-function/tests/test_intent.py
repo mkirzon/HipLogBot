@@ -40,6 +40,24 @@ def sample_requests():
                 },
             },
         },
+        "LogActivity_with_sets_and_new_attribute": {
+            "queryResult": {
+                "intent": {
+                    "displayName": "LogActivity",
+                },
+                "parameters": {
+                    "activity": "curls",
+                    "date": "today",
+                    "reps": [8.0, 8.0],
+                    "weight": [
+                        {"amount": 45.0, "unit": "kg"},
+                        {"amount": 20.0, "unit": "kg"},
+                    ],
+                    "NEWATTRIBUTE": [2.0],
+                    "duration": [],
+                },
+            },
+        },
         "LogActivity_with_weight": {
             "queryResult": {
                 "queryText": "yesterday",
@@ -110,6 +128,11 @@ def test_intent_init_for_activity_with_sets(sample_requests):
             {"reps": 10, "weight": {"amount": 10, "unit": "kg"}},
         ],
     }
+
+
+def test_intent_init_for_activity_with_sets_and_new_attr(sample_requests):
+    intent = Intent(sample_requests["LogActivity_with_sets_and_new_attribute"])
+    assert len(intent._log_input["sets"]) > 0
 
 
 def test_intent_init_for_activity_with_badsets(sample_requests):
