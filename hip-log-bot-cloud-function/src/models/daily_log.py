@@ -158,7 +158,7 @@ class DailyLog:
         for activity_name in self._activities.keys():
             print(activity_name)
 
-    # Public Methods related to symptoms
+    # Public Methods related to Symptoms
     def add_symptom(self, symptom: Symptom):
         # Check if the activity name already exists in the day's records
         if symptom.name in self._symptoms:

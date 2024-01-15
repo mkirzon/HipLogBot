@@ -200,17 +200,6 @@ def test_simple_symptom_log(conn):
     assert re.search("1x symptom records", res)
 
 
-#     assert (
-#         res
-#         == """Nov. 6, 2023 Log:
-
-# 0x activities:
-
-# 1x symptom records:
-# * Left Ankle: 1"""
-#     )
-
-
 def test_get_activity_summary(conn):
     request = {
         "queryResult": {
