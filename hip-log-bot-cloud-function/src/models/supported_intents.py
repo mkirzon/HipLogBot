@@ -23,6 +23,11 @@ class SupportedIntents(Enum):
         "See how many days you’ve logged",
         "How many days have I logged",
     )
+    GetActivityList = (
+        "GetActivityList",
+        "Get a list of previously created activities",
+        "List my activities. What activities have I logged?",
+    )
     GetActivitySummary = (
         "GetActivitySummary",
         "Get an activity's summary",

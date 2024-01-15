@@ -141,7 +141,9 @@ class HipLogDB:
             # Add activities to the set
             unique_activities_set.update(activities_map.keys())
 
-        return list(unique_activities_set)
+        res = list(unique_activities_set)
+        res.sort()
+        return res
 
     def get_num_logs_by_user(self, user: str) -> int:
         return self._get_user_dailylogs_ref(user).count().get()[0][0].value

@@ -136,13 +136,22 @@ def test_get_activity_summary(conn, caplog, db):
 
 
 def test_get_activity_list_by_user(conn, db):
-    # Initialize a few
-    db.upload_log(
-        utils.test_username,
-        DailyLog(date="2023-01-01", activities=[Activity("Tennis")]),
-    )
-    db.upload_log(
-        utils.test_username, DailyLog(date="2023-01-02", activities=[Activity("Yoga")])
-    )
+    # Initialize a few, in reverse chrono order to test for sorting
+    log_data = [
+        ("2023-01-01", "Tennis"),
+        ("2023-01-02", "Yoga"),
+        ("2023-01-06", "C"),
+    ]
 
-    assert set(db.get_activity_list_by_user(utils.test_username)) == {"Tennis", "Yoga"}
+    for date, activity_name in log_data:
+        db.upload_log(
+            utils.test_username,
+            DailyLog(date=date, activities=[Activity(activity_name)]),
+        )
+
+    # TODO: bad test, b/c kinda polluted by the other tests that upload tennis/yoga
+    assert set(db.get_activity_list_by_user(utils.test_username)) == {
+        "C",
+        "Tennis",
+        "Yoga",
+    }

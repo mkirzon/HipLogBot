@@ -3,6 +3,9 @@ import pytest
 import os
 import re
 import firebase_admin
+from models.daily_log import DailyLog
+from models.record import Activity
+from services.hiplogdb import HipLogDB
 import utils
 from firebase_admin import firestore
 from services.executor import Executor
@@ -214,6 +217,35 @@ def test_get_activity_summary(conn):
     res = executor.run()
 
     assert "Summary Stats" in res
+
+
+def test_get_activity_list_by_user(conn):
+    # TODO: replace this with a dummy user upload at the beginning of all tests
+    log_data = [
+        ("2023-01-01", "A"),
+        ("2023-01-02", "C"),
+        ("2023-01-06", "B"),
+    ]
+
+    for date, activity_name in log_data:
+        HipLogDB().upload_log(
+            utils.test_username,
+            DailyLog(date=date, activities=[Activity(activity_name)]),
+        )
+
+    request = {
+        "queryResult": {
+            "parameters": {},
+            "intent": {
+                "displayName": "GetActivityList",
+            },
+        }
+    }
+
+    executor = Executor(request)
+    res = executor.run()
+
+    assert "Here are the activities you've previously logged:\nA,\nB,\nC" == res
 
 
 def test_catch_mismatch_error_on_run(conn, caplog):

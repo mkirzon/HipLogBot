@@ -176,10 +176,12 @@ class Intent:
         elif self.type == SupportedIntents.GetActivitySummary:
             self._log_input["name"] = self._raw_entity["activity"].lower()
 
+        # Explicitly handle the simpler activities (can't be in a catch all Else)
         elif self.type in [
             SupportedIntents.DeleteDailyLog,
             SupportedIntents.GetNumLogs,
             SupportedIntents.GetCommandList,
+            SupportedIntents.GetActivityList,
         ]:
             logger.debug("Skipping any log input parsing for this intent")
             pass
