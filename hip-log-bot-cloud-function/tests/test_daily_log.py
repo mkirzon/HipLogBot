@@ -1,4 +1,4 @@
-from models.record import Activity, Pain, Set, Measurement as M
+from models.record import Activity, Symptom, Set, Measurement as M
 from models.daily_log import DailyLog
 
 
@@ -7,7 +7,7 @@ def test_dailylog_initialization():
     log = DailyLog("2021-09-01", activities=[Activity(name="Yoga")])
     assert log._date == "2021-09-01"
     assert "Yoga" in log._activities.keys()
-    assert log._pains == {}
+    assert log._symptoms == {}
 
 
 def test_dailylog_initialization_from_dict():
@@ -24,9 +24,9 @@ def test_dailylog_initialization_from_dict():
                 },
             },
             "activity_notes": "bla bla",
-            "pains": {
-                "Left hip": {"level": 3},
-                "Right hip": {"level": 2},
+            "symptoms": {
+                "Left hip": {"severity": 3},
+                "Right hip": {"severity": 2},
             },
         },
     )
@@ -34,7 +34,8 @@ def test_dailylog_initialization_from_dict():
     assert set(log.activities.keys()) == set(["Yoga", "Curls"])
     assert len(log.activities["Curls"].sets) == 2
     assert all(
-        x in log.pains.values() for x in [Pain("Left hip", 3), Pain("Right hip", 2)]
+        x in log.symptoms.values()
+        for x in [Symptom("Left hip", 3), Symptom("Right hip", 2)]
     )
 
 
@@ -55,11 +56,11 @@ def test_update_activity():
     assert log.activities["Yoga"] == Activity("Yoga", [Set(reps=1)] * 2)
 
 
-def test_add_pain():
+def test_add_symptom():
     log = DailyLog("2021-09-01")
-    log.add_pain(Pain("Headache", 2))
-    assert "Headache" in log.pains
-    assert log.pains["Headache"].level == 2
+    log.add_symptom(Symptom("Headache", 2))
+    assert "Headache" in log.symptoms
+    assert log.symptoms["Headache"].severity == 2
 
 
 def test_daily_log_print():
@@ -67,12 +68,12 @@ def test_daily_log_print():
         "2023-09-24",
         activities=[
             Activity(
-                "Curls",
+                "curls",  # intentionally testing lower case
                 [Set(reps=10, weight=M(10, "kg")), Set(reps=8, weight=M(8, "kg"))],
             ),
             Activity("Yoga", [Set(duration=M(3, "min"))]),
         ],
-        pains=[Pain("Left hip", 3)],
+        symptoms=[Symptom("left hip", 3)],
     )
 
     assert (
@@ -83,23 +84,23 @@ def test_daily_log_print():
 * Curls 2 sets: 10x 10kg, 8x 8kg
 * Yoga 1 sets: 3min
 
-1x pain records:
-* Left hip: 3"""
+1x symptom records:
+* Left Hip: 3"""
     )
 
 
 def test_log_to_dict():
     """
     Motivation for test:
-    * Found that I was unintentionally uploading Pains with the 'name' attribute
+    * Found that I was unintentionally uploading symptoms with the 'name' attribute
     """
     log = DailyLog("2021-09-01")
-    log.add_pain(Pain("Headache", 2))
+    log.add_symptom(Symptom("Headache", 2))
     log.to_dict() == {
         "date": "2021-09-01",
         "activities": [],
-        "pains": {"Headache": {"level": 2}},
-        "pain_notes": "",
+        "symptoms": {"Headache": {"severity": 2}},
+        "symptom_notes": "",
         "activity_notes": "",
     }
 

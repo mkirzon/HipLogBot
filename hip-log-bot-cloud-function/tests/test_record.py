@@ -1,5 +1,5 @@
 import pytest
-from models.record import Record, Activity, Pain, Set
+from models.record import Record, Activity, Symptom, Set
 from models.measurement import Measurement as M
 
 # Tests for Record class
@@ -198,24 +198,24 @@ def test_activity_equality():
     assert a1 != a4
 
 
-# Tests for Pain
+# Tests for Symptom
 
 
-def test_pain_initialization():
-    pain = Pain("Headache", 2)
-    assert pain.name == "Headache"
-    assert pain.level == 2
+def test_symptom_initialization():
+    symptom = Symptom("Headache", 2)
+    assert symptom.name == "Headache"
+    assert symptom.severity == 2
 
 
-def test_invalid_pain_level():
+def test_invalid_severity():
     with pytest.raises(ValueError):
-        Pain("Headache", 5)
+        Symptom("Headache", 5)
 
 
-def test_pain_to_dict():
-    pain = Pain("Headache", 2)
-    assert pain.to_dict() == {"level": 2, "name": "Headache"}
-    assert pain.to_dict(include_name=False) == {"level": 2}
+def test_symptom_to_dict():
+    symptom = Symptom("Headache", 2)
+    assert symptom.to_dict() == {"severity": 2, "name": "Headache"}
+    assert symptom.to_dict(include_name=False) == {"severity": 2}
 
 
 # Tests for outward conversions

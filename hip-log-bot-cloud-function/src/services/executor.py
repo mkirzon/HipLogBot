@@ -2,7 +2,7 @@ import logging
 import traceback
 from models.intent import Intent
 from models.supported_intents import SupportedIntents
-from models.record import Activity, Pain
+from models.record import Activity, Symptom
 from services.hiplogdb import HipLogDB
 
 logger = logging.getLogger(__name__)
@@ -19,6 +19,7 @@ class Executor:
         Returns:
             str: Returns the message passed back to users, or an error message as needed
         """
+        error_occurred = False
         try:
             self._intent = Intent(self._request)
             res = self._decision_flow()
@@ -36,18 +37,23 @@ class Executor:
             else:
                 raise
 
+                error_occurred = True
+
         # Entirely unknown errors but "caught" within executor (as oppose to even
         # broader error from main.py)
         except Exception:
             traceback.print_exc()
             res = "Something went wrong. Try a different way or type 'help'"
 
+            error_occurred = True
+
         # Include trace and error in logs
         finally:
-            logger.error(
-                f"Failed logging, here's the input request:\n{self._request}\n"
-            )
-            logger.error(f'Setting response value to:\n"{res}"')
+            if error_occurred:
+                logger.error(
+                    f"Failed logging, here's the input request:\n{self._request}\n"
+                )
+                logger.error(f'Setting response value to:\n"{res}"')
 
         return res
 
@@ -78,11 +84,11 @@ class Executor:
             log.add_activity(Activity.from_dict(self._intent._log_input))
             logger.info(f"DailyLog (local object) generated:\n{log}")
 
-        elif self._intent.type == SupportedIntents.LogPain:
+        elif self._intent.type == SupportedIntents.LogSymptom:
             log = self._hiplogdb.get_log(
                 self._intent.user, self._intent.date, initialize_empty=True
             )
-            log.add_pain(Pain(**self._intent.log_input))
+            log.add_symptom(Symptom(**self._intent.log_input))
             logger.info(f"DailyLog (local object) generated:\n{log}")
 
         elif self._intent.type == SupportedIntents.DeleteDailyLog:
@@ -100,7 +106,7 @@ class Executor:
 
         if self._intent.type in [
             SupportedIntents.LogActivity,
-            SupportedIntents.LogPain,
+            SupportedIntents.LogSymptom,
         ]:
             # TODO add logic to bubble up new vs update status
 
@@ -114,7 +120,7 @@ class Executor:
 
         if self._intent.type in [
             SupportedIntents.LogActivity,
-            SupportedIntents.LogPain,
+            SupportedIntents.LogSymptom,
             SupportedIntents.GetDailyLog,
         ]:
             res = log.__str__()

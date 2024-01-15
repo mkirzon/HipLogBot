@@ -1,7 +1,7 @@
 from typing import List
 from datetime import datetime
 import logging
-from models.record import Activity, Pain
+from models.record import Activity, Symptom
 
 logger = logging.getLogger(__name__)
 logger.propagate = True
@@ -13,21 +13,21 @@ class DailyLog:
         self,
         date,
         activities: List[Activity] = [],
-        pains: List[Pain] = [],
+        symptoms: List[Symptom] = [],
         activity_notes=None,
-        pain_notes=None,
+        symptom_notes=None,
     ):
         self._date = date
         self._activity_notes = activity_notes
-        self._pain_notes = pain_notes
+        self._symptom_notes = symptom_notes
         self._activities = {}
-        self._pains = {}
+        self._symptoms = {}
 
         for a in activities:
             self.add_activity(a, overwrite=False)
 
-        for p in pains:
-            self.add_pain(p)
+        for p in symptoms:
+            self.add_symptom(p)
 
     def __str__(self):
         formatted_date = datetime.strptime(self._date, "%Y-%m-%d").strftime(
@@ -43,12 +43,12 @@ class DailyLog:
         if self._activity_notes:
             output.append(self._activity_notes)
 
-        output.extend(["", f"{len(self.pains)}x pain records:"])
-        for idx, pain in enumerate(self._pains):
-            output.append(f"* {self._pains[pain].__str__()}")
+        output.extend(["", f"{len(self.symptoms)}x symptom records:"])
+        for idx, symptom in enumerate(self._symptoms):
+            output.append(f"* {self._symptoms[symptom].__str__()}")
 
-        if self._pain_notes:
-            output.append(self._pain_notes)
+        if self._symptom_notes:
+            output.append(self._symptom_notes)
 
         return "\n".join(output)
 
@@ -68,9 +68,9 @@ class DailyLog:
             logger.debug("Parsing 'activity_notes'")
             daily_log.set_activity_notes(input_dict.get("activity_notes"))
 
-        if input_dict.get("pain_notes"):
-            logger.debug("Parsing 'pain_notes'")
-            daily_log.set_pain_notes(input_dict.get("pain_notes"))
+        if input_dict.get("symptom_notes"):
+            logger.debug("Parsing 'symptom_notes'")
+            daily_log.set_symptom_notes(input_dict.get("symptom_notes"))
 
         if input_dict.get("activities"):
             for activity_name, activity_dict in input_dict["activities"].items():
@@ -80,11 +80,13 @@ class DailyLog:
                 activity_dict["name"] = activity_name
                 daily_log.add_activity(Activity.from_dict(activity_dict))
 
-        if input_dict.get("pains"):
-            logger.debug("Parsing 'pains'")
-            for pain_name, pain_dict in input_dict["pains"].items():
-                logger.debug(f"Parsing pain {pain_name} with input: {pain_dict}")
-                daily_log.add_pain(Pain(pain_name, pain_dict["level"]))
+        if input_dict.get("symptoms"):
+            logger.debug("Parsing 'symptoms'")
+            for symptom_name, symptom_dict in input_dict["symptoms"].items():
+                logger.debug(
+                    f"Parsing symptom {symptom_name} with input: {symptom_dict}"
+                )
+                daily_log.add_symptom(Symptom(symptom_name, symptom_dict["severity"]))
 
         logger.debug("Finished creating a DailyLog instance")
 
@@ -96,8 +98,8 @@ class DailyLog:
         return self._activities
 
     @property
-    def pains(self):
-        return self._pains
+    def symptoms(self):
+        return self._symptoms
 
     @property
     def date(self):
@@ -156,32 +158,32 @@ class DailyLog:
         for activity_name in self._activities.keys():
             print(activity_name)
 
-    # Public Methods related to Pains
-    def add_pain(self, pain: Pain):
+    # Public Methods related to Symptoms
+    def add_symptom(self, symptom: Symptom):
         # Check if the activity name already exists in the day's records
-        if pain.name in self._pains:
+        if symptom.name in self._symptoms:
             print(
-                f"Pain record '{pain.name}' already exists for {self._date}. Overwriting previous entry."  # noqa
+                f"Symptom record '{symptom.name}' already exists for {self._date}. Overwriting previous entry."  # noqa
             )
 
         # Create a new activity with the provided attributes and add it to the records # noqa
-        self._pains[pain.name] = pain
+        self._symptoms[symptom.name] = symptom
 
-    def delete_pain(self, name: str):
+    def delete_Symptom(self, name: str):
         # Remove the activity if it exists, if not notify
-        if name in self._pains:
-            del self._pains[name]
+        if name in self._symptoms:
+            del self._symptoms[name]
         else:
             print(
-                f"Pain record '{name}' doesn't exist for {self._date}. Nothing to delete."  # noqa
+                f"Symptom record '{name}' doesn't exist for {self._date}. Nothing to delete."  # noqa
             )
 
     # Public Methods related to Notes
     def set_activity_notes(self, notes: str):
         self._activity_notes = notes
 
-    def set_pain_notes(self, notes: str):
-        self._pain_notes = notes
+    def set_symptom_notes(self, notes: str):
+        self._symptom_notes = notes
 
     # Converters/Serializers
     def to_dict(self):
@@ -191,10 +193,10 @@ class DailyLog:
                 name: activity.to_dict(include_name=False)
                 for name, activity in self.activities.items()
             },
-            "pains": {
-                name: pain.to_dict(include_name=False)
-                for name, pain in self.pains.items()
+            "symptoms": {
+                name: symptom.to_dict(include_name=False)
+                for name, symptom in self.symptoms.items()
             },
-            "pain_notes": self._pain_notes,
+            "symptom_notes": self._symptom_notes,
             "activity_notes": self._activity_notes,
         }
