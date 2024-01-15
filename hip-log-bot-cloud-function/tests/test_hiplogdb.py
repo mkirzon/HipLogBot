@@ -186,3 +186,9 @@ def test_get_symptom_list_by_user(conn, reset_testuser, db):
         "headache",
         "groin",
     }
+
+
+@pytest.mark.skip(reason="TODO")
+def test_get_symptom_list_by_user_missing_symptom(conn, reset_testuser, db):
+    # Upload an item directly that is missing 'symptoms' among its attributes.
+    pass
