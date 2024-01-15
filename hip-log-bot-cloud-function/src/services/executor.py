@@ -26,7 +26,9 @@ class Executor:
 
         # Known errors: return a polished error message for handled error types
         except ValueError as e:  # noqa
-            logger.error(f"Caught error: {e}")
+            logger.error(f"Caught ValueError: {e}")
+            error_occurred = True
+
             traceback.print_exc()
             # TODO: change
             if "Unsupported intent" in str(e):
@@ -37,15 +39,13 @@ class Executor:
             else:
                 raise
 
-                error_occurred = True
-
         # Entirely unknown errors but "caught" within executor (as oppose to even
         # broader error from main.py)
         except Exception:
+            logger.error("Caught unknown exception")
+            error_occurred = True
             traceback.print_exc()
             res = "Something went wrong. Try a different way or type 'help'"
-
-            error_occurred = True
 
         # Include trace and error in logs
         finally:
@@ -70,6 +70,11 @@ class Executor:
         if self._intent.type == SupportedIntents.GetNumLogs:
             num_logs = self._hiplogdb.get_num_logs_by_user(self._intent.user)
             res = f"There are {num_logs} logs"
+
+        elif self._intent.type == SupportedIntents.GetActivityList:
+            activity_list = self._hiplogdb.get_activity_list_by_user(self._intent.user)
+            activity_str = ",\n".join(activity_list)
+            res = f"Here are the activities you've previously logged:\n{activity_str}"
 
         elif self._intent.type == SupportedIntents.GetDailyLog:
             log = self._hiplogdb.get_log(

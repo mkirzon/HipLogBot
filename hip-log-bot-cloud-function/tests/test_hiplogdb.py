@@ -80,7 +80,9 @@ def test_upload_log(conn, db):
 
 
 def test_get_num_logs_by_user(conn, db):
-    # This test doesn't actually test accuracy but tests functionality. The test is hard to run b/c other tests affect this count, so we'll use the implicit tests for accuracy in the other test
+    # This test doesn't actually test accuracy but tests functionality. The test is
+    # hard to run b/c other tests affect this count, so we'll use the implicit tests
+    # for accuracy in the other test
     assert isinstance(db.get_num_logs_by_user(utils.test_username), int)
 
 
@@ -120,7 +122,6 @@ def test_delete_log(conn, db):
     assert status1 != status2
 
 
-# def test_get_activity_summary(conn):
 def test_get_activity_summary(conn, caplog, db):
     # For reference how to change logging (must use Run mode, not debug mode):
     # caplog.set_level(logging.DEBUG, logger="services.hiplogdb")
@@ -132,3 +133,25 @@ def test_get_activity_summary(conn, caplog, db):
 
     x = db.get_activity_summary(user, name)
     assert x["total_count"] == 3
+
+
+def test_get_activity_list_by_user(conn, db):
+    # Initialize a few, in reverse chrono order to test for sorting
+    log_data = [
+        ("2023-01-01", "Tennis"),
+        ("2023-01-02", "Yoga"),
+        ("2023-01-06", "C"),
+    ]
+
+    for date, activity_name in log_data:
+        db.upload_log(
+            utils.test_username,
+            DailyLog(date=date, activities=[Activity(activity_name)]),
+        )
+
+    # TODO: bad test, b/c kinda polluted by the other tests that upload tennis/yoga
+    assert set(db.get_activity_list_by_user(utils.test_username)) == {
+        "C",
+        "Tennis",
+        "Yoga",
+    }
