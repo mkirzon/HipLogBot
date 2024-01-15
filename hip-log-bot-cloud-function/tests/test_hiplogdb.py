@@ -5,7 +5,7 @@ import utils
 from firebase_admin import firestore
 from services.hiplogdb import HipLogDB
 from models.daily_log import DailyLog
-from models.record import Activity
+from models.record import Activity, Symptom
 from google.cloud.firestore_v1.collection import CollectionReference
 
 
@@ -122,6 +122,11 @@ def test_delete_log(conn, db):
     assert status1 != status2
 
 
+@pytest.mark.skip(reason="TODO")
+def test_delete_log_nonexistent(conn, db):
+    pass
+
+
 def test_get_activity_summary(conn, caplog, db):
     # For reference how to change logging (must use Run mode, not debug mode):
     # caplog.set_level(logging.DEBUG, logger="services.hiplogdb")
@@ -135,7 +140,7 @@ def test_get_activity_summary(conn, caplog, db):
     assert x["total_count"] == 3
 
 
-def test_get_activity_list_by_user(conn, db):
+def test_get_activity_list_by_user(conn, reset_testuser, db):
     # Initialize a few, in reverse chrono order to test for sorting
     log_data = [
         ("2023-01-01", "Tennis"),
@@ -149,9 +154,35 @@ def test_get_activity_list_by_user(conn, db):
             DailyLog(date=date, activities=[Activity(activity_name)]),
         )
 
-    # TODO: bad test, b/c kinda polluted by the other tests that upload tennis/yoga
     assert set(db.get_activity_list_by_user(utils.test_username)) == {
         "C",
         "Tennis",
         "Yoga",
+    }
+
+
+def test_get_symptom_list_by_user(conn, reset_testuser, db):
+    # Initialize a few
+
+    # Case 1: activity+symptom
+    db.upload_log(
+        utils.test_username,
+        DailyLog(
+            date="2023-01-01",
+            symptoms=[Symptom("headache", 1)],
+            activities=[Activity("Yoga")],
+        ),
+    )
+    # Case 2: symptom only
+    db.upload_log(
+        utils.test_username, DailyLog(date="2023-01-02", symptoms=[Symptom("groin", 2)])
+    )
+    # Case 3: activity only
+    db.upload_log(
+        utils.test_username, DailyLog(date="2023-01-03", activities=[Activity("Yoga")])
+    )
+
+    assert set(db.get_symptom_list_by_user(utils.test_username)) == {
+        "headache",
+        "groin",
     }

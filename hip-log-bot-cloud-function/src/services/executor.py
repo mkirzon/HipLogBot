@@ -76,6 +76,12 @@ class Executor:
             activity_str = ",\n".join(activity_list)
             res = f"Here are the activities you've previously logged:\n{activity_str}"
 
+        elif self._intent.type == SupportedIntents.GetSymptomList:
+            # TODO: functionalize this with GetActivityList
+            symptom_list = self._hiplogdb.get_symptom_list_by_user(self._intent.user)
+            symptom_str = ",\n".join(symptom_list)
+            res = f"Here are the symptoms you've previously logged:\n{symptom_str}"
+
         elif self._intent.type == SupportedIntents.GetDailyLog:
             log = self._hiplogdb.get_log(
                 self._intent.user, self._intent.date, initialize_empty=True
