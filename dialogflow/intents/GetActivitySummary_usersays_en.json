@@ -36,5 +36,27 @@
     "count": 0,
     "lang": "en",
     "updated": 0
+  },
+  {
+    "data": [
+      {
+        "text": "Show me my ",
+        "userDefined": false
+      },
+      {
+        "text": "pushup",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " stats",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "lang": "en",
+    "updated": 0
   }
 ]

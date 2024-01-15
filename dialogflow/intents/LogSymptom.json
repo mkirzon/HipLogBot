@@ -1,54 +1,75 @@
 {
-  "id": "1c810b9e-369e-457c-8fe9-fd798e9e6c17",
-  "name": "LogPain",
+  "id": "4bd14adc-d60a-4c9f-a9a1-8fe8a89f8c63",
+  "name": "LogSymptom",
   "auto": true,
-  "contexts": [],
+  "contexts": [
+    "await-symptom-info"
+  ],
   "responses": [
     {
       "resetContexts": false,
       "action": "",
-      "affectedContexts": [],
+      "affectedContexts": [
+        {
+          "name": "LogSymptom-followup",
+          "lifespan": 1
+        }
+      ],
       "parameters": [
         {
-          "id": "66ec321b-be63-4afa-8a42-a4342455f511",
-          "name": "body_part",
-          "required": true,
-          "dataType": "@BodyPart",
-          "value": "$body_part",
-          "defaultValue": "",
-          "isList": false,
-          "prompts": [],
-          "promptMessages": [],
-          "noMatchPromptMessages": [],
-          "noInputPromptMessages": [],
-          "outputDialogContexts": []
-        },
-        {
-          "id": "84e088ae-bb7e-47e4-95e5-daf9edd41aff",
-          "name": "pain_level",
-          "required": true,
-          "dataType": "@PainLevel",
-          "value": "$pain_level",
-          "defaultValue": "",
-          "isList": false,
-          "prompts": [],
-          "promptMessages": [],
-          "noMatchPromptMessages": [],
-          "noInputPromptMessages": [],
-          "outputDialogContexts": []
-        },
-        {
-          "id": "788d1db9-1159-4600-818a-e9a71902ec6d",
+          "id": "57170c02-d914-4efe-afde-6c9c923507c5",
           "name": "date",
           "required": true,
           "dataType": "@sys.date",
           "value": "$date",
+          "defaultValue": "today",
+          "isList": false,
+          "prompts": [
+            {
+              "lang": "en",
+              "value": "When was this?"
+            }
+          ],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        },
+        {
+          "id": "74bb5c5c-01fc-45f9-a175-976d4e4b650c",
+          "name": "severity",
+          "required": true,
+          "dataType": "@Severity",
+          "value": "$severity",
           "defaultValue": "",
           "isList": false,
           "prompts": [
             {
               "lang": "en",
-              "value": "When?"
+              "value": "What\u0027s the severity? You can rank it 0-3 or say none/low/medium/high"
+            }
+          ],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        },
+        {
+          "id": "08cf5081-19bd-4e96-b04c-060a4f73cc4e",
+          "name": "symptom",
+          "required": true,
+          "dataType": "@Symptom",
+          "value": "$symptom",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [
+            {
+              "lang": "en",
+              "value": "What\u0027s the symptom name"
+            },
+            {
+              "lang": "en",
+              "value": "Give a short name for this symptom"
             }
           ],
           "promptMessages": [],
@@ -63,6 +84,9 @@
           "title": "",
           "textToSpeech": "",
           "lang": "en",
+          "speech": [
+            "Got it. Log another?"
+          ],
           "condition": ""
         }
       ],

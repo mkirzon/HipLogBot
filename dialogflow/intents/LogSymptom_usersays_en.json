@@ -1,0 +1,789 @@
+[
+  {
+    "id": "ba81b788-f30e-4595-b336-4e1c303a9f7f",
+    "data": [
+      {
+        "text": "headache",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "3",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "fbf61e25-ffe0-427b-a2d9-766f6e8e9dd6",
+    "data": [
+      {
+        "text": "today\u0027s",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "diarrhoea",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      },
+      {
+        "text": " was ",
+        "userDefined": false
+      },
+      {
+        "text": "really bad",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "e9827474-e1c3-4d8f-b6c8-188bebd80cec",
+    "data": [
+      {
+        "text": "faint",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "headache",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "3 days ago",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "e1f04d72-944f-45cb-9b14-3f9c024e7d52",
+    "data": [
+      {
+        "text": "today\u0027s",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "IBS",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": true
+      },
+      {
+        "text": " was ",
+        "userDefined": false
+      },
+      {
+        "text": "fine",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "4ae52293-ff08-4691-ad69-95cbdad9927c",
+    "data": [
+      {
+        "text": "my ",
+        "userDefined": false
+      },
+      {
+        "text": "ankle",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": true
+      },
+      {
+        "text": " hurt ",
+        "userDefined": false
+      },
+      {
+        "text": "alot",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "5b2481c3-49f0-424f-8e4b-b54fc06fbe84",
+    "data": [
+      {
+        "text": "yesterday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      },
+      {
+        "text": ", my ",
+        "userDefined": false
+      },
+      {
+        "text": "headache",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": true
+      },
+      {
+        "text": " was ",
+        "userDefined": false
+      },
+      {
+        "text": "ok",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "bb5f9397-54c6-4005-9404-5257bbb92b99",
+    "data": [
+      {
+        "text": "some",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "left hip",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      },
+      {
+        "text": " pain ",
+        "userDefined": false
+      },
+      {
+        "text": "two days ago",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "74d4034d-3fa1-4019-bf79-7a11084395d5",
+    "data": [
+      {
+        "text": "really bad",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "migraine",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "yesterday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "afeba436-77c7-48fe-a098-84c70cbc520f",
+    "data": [
+      {
+        "text": "2023-02-01",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "left eye conjunctivitis",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "bad",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "1c49b1ee-97b7-4dbe-820c-15a62d43b219",
+    "data": [
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "left tennis elbow",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "high",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "32e2376b-9872-402c-8f37-7b31ddacfba3",
+    "data": [
+      {
+        "text": "3",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "57160cd5-737d-4987-9fd1-540af1971a72",
+    "data": [
+      {
+        "text": "headache",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "2",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "75f9eaed-23df-4dbe-846b-66207648afc8",
+    "data": [
+      {
+        "text": "shin tingle",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "low",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "3d4821de-fcf7-4841-a5fb-80ab92b5fba8",
+    "data": [
+      {
+        "text": "Left hip",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "3",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "b69164d1-1096-49c4-b055-8915f88dbec7",
+    "data": [
+      {
+        "text": "right eye",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "3",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "c28ece02-606f-4dcf-a874-8ededf5ab6eb",
+    "data": [
+      {
+        "text": "left foot neuroma",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "83e78904-ce93-4a51-b942-a69f64a173b4",
+    "data": [
+      {
+        "text": "groin",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "3",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "yesterday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "8f7f1d60-6e3e-4c05-96d3-0534dbea5d6c",
+    "data": [
+      {
+        "text": "bad",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "stomach cramp",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "43590974-2ac4-41c5-a71f-d1ff691cde59",
+    "data": [
+      {
+        "text": "bad stomach cramp",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "37b606f8-d8ee-4a57-86db-e649612031ac",
+    "data": [
+      {
+        "text": "really bad",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "cramps",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "f9477262-12d1-4e18-8096-2d89c5ddc1d4",
+    "data": [
+      {
+        "text": "today\u0027s",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "left knee",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      },
+      {
+        "text": " hurt ",
+        "userDefined": false
+      },
+      {
+        "text": "alot",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "6703b5f4-40a9-4f0f-9cd3-1c174f5c7e8b",
+    "data": [
+      {
+        "text": "left knee",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "be5a1ab6-540f-449f-be8b-df0a93f5c245",
+    "data": [
+      {
+        "text": "knee",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "6541360a-96bc-4b56-9810-ab58b0a7443d",
+    "data": [
+      {
+        "text": "left hip",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "65744e09-57d8-42a5-8059-17ea91cd712f",
+    "data": [
+      {
+        "text": "hip",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "5b837716-1d4c-45b3-9d5c-feea228fd950",
+    "data": [
+      {
+        "text": "left knee",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      },
+      {
+        "text": " hurt ",
+        "userDefined": false
+      },
+      {
+        "text": "alot",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "8cbaea78-7fcb-4947-95e0-dbe305057156",
+    "data": [
+      {
+        "text": "really bad",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "left knee",
+        "meta": "@Symptom",
+        "alias": "symptom",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "b8475afb-bc40-4912-b661-d3e4cddf5865",
+    "data": [
+      {
+        "text": "really bad",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "1aba649c-0401-417a-824e-a3c94c210a3a",
+    "data": [
+      {
+        "text": "today\u0027s",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      },
+      {
+        "text": " left knee hurt ",
+        "userDefined": false
+      },
+      {
+        "text": "alot",
+        "meta": "@Severity",
+        "alias": "severity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  }
+]

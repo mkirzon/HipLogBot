@@ -1,0 +1,92 @@
+[
+  {
+    "value": "Left hip",
+    "synonyms": [
+      "Left hip"
+    ]
+  },
+  {
+    "value": "Right hip",
+    "synonyms": [
+      "Right hip"
+    ]
+  },
+  {
+    "value": "Left ankle",
+    "synonyms": [
+      "Left ankle"
+    ]
+  },
+  {
+    "value": "Ankle",
+    "synonyms": [
+      "Ankle"
+    ]
+  },
+  {
+    "value": "Shoulder",
+    "synonyms": [
+      "Shoulder"
+    ]
+  },
+  {
+    "value": "Right heel tingle",
+    "synonyms": [
+      "Right heel tingle"
+    ]
+  },
+  {
+    "value": "Sore throat",
+    "synonyms": [
+      "Sore throat"
+    ]
+  },
+  {
+    "value": "eustachian tube dysfunction",
+    "synonyms": [
+      "eustachian tube dysfunction"
+    ]
+  },
+  {
+    "value": "Urinary tract discomfort",
+    "synonyms": [
+      "Urinary tract discomfort"
+    ]
+  },
+  {
+    "value": "Headache",
+    "synonyms": [
+      "Headache"
+    ]
+  },
+  {
+    "value": "Sore toe",
+    "synonyms": [
+      "Sore toe"
+    ]
+  },
+  {
+    "value": "Shin splint",
+    "synonyms": [
+      "Shin splint"
+    ]
+  },
+  {
+    "value": "Gum pain",
+    "synonyms": [
+      "Gum pain"
+    ]
+  },
+  {
+    "value": "Knee",
+    "synonyms": [
+      "Knee"
+    ]
+  },
+  {
+    "value": "[a-zA-Z\\s]+",
+    "synonyms": [
+      "[a-zA-Z\\s]+"
+    ]
+  }
+]

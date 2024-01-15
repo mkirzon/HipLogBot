@@ -1,9 +1,9 @@
 [
   {
-    "id": "9a8f835a-6fa5-44fa-8f48-4dcc336a241c",
+    "id": "5bbfbe56-7c50-4fb9-9c48-7a4d6cdeaafd",
     "data": [
       {
-        "text": "How many records are there?",
+        "text": "help",
         "userDefined": false
       }
     ],
@@ -13,10 +13,10 @@
     "updated": 0
   },
   {
-    "id": "9946c713-cd50-430c-b4c4-f1e0e98ceac3",
+    "id": "67a77e4f-1d92-4572-9cc9-9fb195d1f7cc",
     "data": [
       {
-        "text": "How many records do I have?",
+        "text": "What features are there?",
         "userDefined": false
       }
     ],
@@ -26,10 +26,10 @@
     "updated": 0
   },
   {
-    "id": "8adef809-419e-4393-9bbf-8844d97314d3",
+    "id": "d91d350e-38d9-44ac-bde9-db6f77b90d04",
     "data": [
       {
-        "text": "How many days have I logged?",
+        "text": "What can you do?",
         "userDefined": false
       }
     ],
@@ -39,21 +39,23 @@
     "updated": 0
   },
   {
+    "id": "4cc16d00-c835-4222-80e8-830a72587876",
     "data": [
       {
-        "text": "how many logs do i have",
+        "text": "What can I say?",
         "userDefined": false
       }
     ],
     "isTemplate": false,
-    "count": 1,
+    "count": 0,
     "lang": "en",
     "updated": 0
   },
   {
+    "id": "fae305e3-a1f6-4377-8173-a241b592d810",
     "data": [
       {
-        "text": "How many logs do i have",
+        "text": "What commands do you support?",
         "userDefined": false
       }
     ],

@@ -1,5 +1,267 @@
 [
   {
+    "id": "bff277ed-630b-4d01-8a25-39b4ef56fdcc",
+    "data": [
+      {
+        "text": "Create an activity log: I did something today",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "10ccef2a-d9fc-4bce-85d6-ab12065ed4cb",
+    "data": [
+      {
+        "text": "Log an activity: I did ",
+        "userDefined": false
+      },
+      {
+        "text": "something",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": true
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "d163ab6a-24f4-4b82-a9c9-cbd4f1a0a3c0",
+    "data": [
+      {
+        "text": "cycling",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "10min",
+        "meta": "@sys.duration",
+        "alias": "duration",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "908a05a2-6a65-4e7f-8cb3-c78b669f1b98",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "3",
+        "meta": "@sys.number",
+        "alias": "nsets",
+        "userDefined": false
+      },
+      {
+        "text": " sets of ",
+        "userDefined": false
+      },
+      {
+        "text": "hip adductions",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": ": ",
+        "userDefined": false
+      },
+      {
+        "text": "35",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": false
+      },
+      {
+        "text": ", ",
+        "userDefined": false
+      },
+      {
+        "text": "45",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": true
+      },
+      {
+        "text": ", and ",
+        "userDefined": false
+      },
+      {
+        "text": "50 kg",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "06e89735-8739-4327-8c5c-2b2de30653f6",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "5",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": ",",
+        "userDefined": false
+      },
+      {
+        "text": "6",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": ",",
+        "userDefined": false
+      },
+      {
+        "text": "7",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "pushups",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "2bfa58b5-13bf-412f-bd5c-6f7c80821a8b",
+    "data": [
+      {
+        "text": "I did ",
+        "userDefined": false
+      },
+      {
+        "text": "3",
+        "userDefined": false
+      },
+      {
+        "text": " sets of ",
+        "userDefined": false
+      },
+      {
+        "text": "curls",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": true
+      },
+      {
+        "text": ": ",
+        "userDefined": false
+      },
+      {
+        "text": "10",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": "x ",
+        "userDefined": false
+      },
+      {
+        "text": "12kg",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": false
+      },
+      {
+        "text": ", ",
+        "userDefined": false
+      },
+      {
+        "text": "8",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": "x ",
+        "userDefined": false
+      },
+      {
+        "text": "12kg",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": false
+      },
+      {
+        "text": ", ",
+        "userDefined": false
+      },
+      {
+        "text": "8",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": "x ",
+        "userDefined": false
+      },
+      {
+        "text": "12kg",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
     "id": "b6d08868-0381-4825-833e-9e8bd0e06e8e",
     "data": [
       {
@@ -631,7 +893,7 @@
       }
     ],
     "isTemplate": false,
-    "count": 2,
+    "count": 3,
     "lang": "en",
     "updated": 0
   },
@@ -952,6 +1214,7 @@
     "updated": 0
   },
   {
+    "id": "4521033e-3d2c-41b5-a926-8d0133301641",
     "data": [
       {
         "text": "i did ",
@@ -990,6 +1253,7 @@
     "updated": 0
   },
   {
+    "id": "b9893a38-6bd2-40a2-b169-598d0401f140",
     "data": [
       {
         "text": "i did ",
@@ -1028,6 +1292,7 @@
     "updated": 0
   },
   {
+    "id": "c9044dbc-4503-4352-b03d-2a3902910d18",
     "data": [
       {
         "text": "i did ",
@@ -1066,6 +1331,709 @@
     ],
     "isTemplate": false,
     "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "25f3bbbf-8b29-4db5-9a4b-c7b45f01351a",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "pullups",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "4",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": ",",
+        "userDefined": false
+      },
+      {
+        "text": "5",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": ",",
+        "userDefined": false
+      },
+      {
+        "text": "6",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 3,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "ae9d6af3-03cd-42d8-b776-f579244a067b",
+    "data": [
+      {
+        "text": "I did ",
+        "userDefined": false
+      },
+      {
+        "text": "pullups",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "1",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": ",",
+        "userDefined": false
+      },
+      {
+        "text": "2",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": ",",
+        "userDefined": false
+      },
+      {
+        "text": "3",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "8664fdbb-a638-4045-b747-ce06908dcd76",
+    "data": [
+      {
+        "text": "I did ",
+        "userDefined": false
+      },
+      {
+        "text": "5",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "handstands",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "7dbb3b21-e71b-4264-874c-4ece7adadc45",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "4",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "handstands",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "7f2cef2a-5a75-46ba-9f3c-fd5ba5e602b7",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "3",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "handstands",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "2 minutes",
+        "meta": "@sys.duration",
+        "alias": "duration",
+        "userDefined": false
+      },
+      {
+        "text": " each",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "f5dc5cfa-22d4-4a72-b2e5-5429c12deb66",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "handstands",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": ": ",
+        "userDefined": false
+      },
+      {
+        "text": "3",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": "x ",
+        "userDefined": false
+      },
+      {
+        "text": "5minutes",
+        "meta": "@sys.duration",
+        "alias": "duration",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "4ef5e522-37b0-4744-890f-a6113448acb2",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "3",
+        "meta": "@sys.number",
+        "alias": "nsets",
+        "userDefined": false
+      },
+      {
+        "text": " sets of ",
+        "userDefined": false
+      },
+      {
+        "text": "hip adductions",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      },
+      {
+        "text": " with ",
+        "userDefined": false
+      },
+      {
+        "text": "45",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": false
+      },
+      {
+        "text": ", ",
+        "userDefined": false
+      },
+      {
+        "text": "50",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": false
+      },
+      {
+        "text": ", and ",
+        "userDefined": false
+      },
+      {
+        "text": "60 kg",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 3,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "3cb276e1-bd0b-4500-8070-d1f95e4260a4",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "3",
+        "meta": "@sys.number",
+        "alias": "nsets",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "handstands",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "2 minutes",
+        "meta": "@sys.duration",
+        "alias": "duration",
+        "userDefined": false
+      },
+      {
+        "text": " each",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "8d992856-e61b-4a8c-bd6f-355c04c7e764",
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "quidditch",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "3f800d12-78e0-4894-a0cb-6475d860c7f3",
+    "data": [
+      {
+        "text": "I did ",
+        "userDefined": false
+      },
+      {
+        "text": "yoga",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "f9951e5a-b2e0-4815-8a59-f59e2016a20d",
+    "data": [
+      {
+        "text": "Hip adductors",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "45kg",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "yesterday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "yoga",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      },
+      {
+        "text": " for ",
+        "userDefined": false
+      },
+      {
+        "text": "30minutes",
+        "meta": "@sys.duration",
+        "alias": "duration",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "hip adductors",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "yesterday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      },
+      {
+        "text": ": ",
+        "userDefined": false
+      },
+      {
+        "text": "10",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": "x ",
+        "userDefined": false
+      },
+      {
+        "text": "12kg",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": false
+      },
+      {
+        "text": ", ",
+        "userDefined": false
+      },
+      {
+        "text": "13",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": "x ",
+        "userDefined": false
+      },
+      {
+        "text": "45kg",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "yoga",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "yesterday",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "10m",
+        "meta": "@sys.duration",
+        "alias": "duration",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "data": [
+      {
+        "text": "i did ",
+        "userDefined": false
+      },
+      {
+        "text": "Hip adductors",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": ": ",
+        "userDefined": false
+      },
+      {
+        "text": "68kg",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "12",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": "x, ",
+        "userDefined": false
+      },
+      {
+        "text": "6kg",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": false
+      },
+      {
+        "text": " ",
+        "userDefined": false
+      },
+      {
+        "text": "2",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": "x",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "data": [
+      {
+        "text": "Hip adductors",
+        "meta": "@Activity",
+        "alias": "activity",
+        "userDefined": false
+      },
+      {
+        "text": ": ",
+        "userDefined": false
+      },
+      {
+        "text": "12",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": "x ",
+        "userDefined": false
+      },
+      {
+        "text": "68kg",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": false
+      },
+      {
+        "text": ",  ",
+        "userDefined": false
+      },
+      {
+        "text": "2",
+        "meta": "@sys.number-integer",
+        "alias": "reps",
+        "userDefined": false
+      },
+      {
+        "text": "x ",
+        "userDefined": false
+      },
+      {
+        "text": "6kg",
+        "meta": "@sys.unit-weight",
+        "alias": "weight",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
     "lang": "en",
     "updated": 0
   }

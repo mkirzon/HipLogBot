@@ -82,5 +82,23 @@
     "count": 0,
     "lang": "en",
     "updated": 0
+  },
+  {
+    "data": [
+      {
+        "text": "delete the log for ",
+        "userDefined": false
+      },
+      {
+        "text": "today",
+        "meta": "@sys.date",
+        "alias": "date",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
   }
 ]

@@ -1,0 +1,9 @@
+{
+  "id": "e55c4bf2-a188-4f5d-8d3f-43c545209242",
+  "name": "Severity",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": false,
+  "allowFuzzyExtraction": true
+}

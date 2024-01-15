@@ -10,7 +10,7 @@
       "affectedContexts": [],
       "parameters": [
         {
-          "id": "89765c50-d8fc-4dc9-8af9-baf65089d47a",
+          "id": "d5e0ce3d-6313-42f8-9b0f-3af475571552",
           "name": "activity",
           "required": true,
           "dataType": "@Activity",
@@ -29,17 +29,21 @@
           "outputDialogContexts": []
         },
         {
-          "id": "44243193-d034-4120-beff-2e3e73c8e5da",
+          "id": "c191af6a-5175-45bd-af5f-12a42f9c7ee3",
           "name": "date",
           "required": true,
           "dataType": "@sys.date",
           "value": "$date",
-          "defaultValue": "",
+          "defaultValue": "today",
           "isList": false,
           "prompts": [
             {
               "lang": "en",
-              "value": "When?"
+              "value": "When was this?"
+            },
+            {
+              "lang": "en",
+              "value": "What date do you want to log $activity?"
             }
           ],
           "promptMessages": [],
@@ -48,13 +52,13 @@
           "outputDialogContexts": []
         },
         {
-          "id": "e7452e4d-d8b5-4342-b12c-4e9d4a7cec4b",
+          "id": "8a00c0b7-c01c-4a88-a990-ce5fe4396894",
           "name": "duration",
           "required": false,
           "dataType": "@sys.duration",
           "value": "$duration",
           "defaultValue": "",
-          "isList": false,
+          "isList": true,
           "prompts": [],
           "promptMessages": [],
           "noMatchPromptMessages": [],
@@ -62,13 +66,13 @@
           "outputDialogContexts": []
         },
         {
-          "id": "cf619c74-2f05-4db0-9cdc-9163090c047c",
+          "id": "5c05d477-dc8b-46e0-84d2-94eeaf1346ba",
           "name": "reps",
           "required": false,
           "dataType": "@sys.number-integer",
           "value": "$reps",
-          "defaultValue": "",
-          "isList": false,
+          "defaultValue": "1",
+          "isList": true,
           "prompts": [],
           "promptMessages": [],
           "noMatchPromptMessages": [],
@@ -76,13 +80,27 @@
           "outputDialogContexts": []
         },
         {
-          "id": "89b7176f-47aa-4b86-bbf5-e6929650dbe1",
+          "id": "4460c724-b611-4379-a361-245a7bdc5793",
           "name": "weight",
           "required": false,
           "dataType": "@sys.unit-weight",
           "value": "$weight",
           "defaultValue": "",
-          "isList": false,
+          "isList": true,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        },
+        {
+          "id": "4cc67976-2a1b-4fe2-9d8f-aa96fa5e939e",
+          "name": "nsets",
+          "required": false,
+          "dataType": "@sys.number",
+          "value": "$nsets",
+          "defaultValue": "",
+          "isList": true,
           "prompts": [],
           "promptMessages": [],
           "noMatchPromptMessages": [],
@@ -90,15 +108,7 @@
           "outputDialogContexts": []
         }
       ],
-      "messages": [
-        {
-          "type": "0",
-          "title": "",
-          "textToSpeech": "",
-          "lang": "en",
-          "condition": ""
-        }
-      ],
+      "messages": [],
       "speech": []
     }
   ],

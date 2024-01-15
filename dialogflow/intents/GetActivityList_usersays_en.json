@@ -1,9 +1,9 @@
 [
   {
-    "id": "9a8f835a-6fa5-44fa-8f48-4dcc336a241c",
+    "id": "f0473565-d7e9-4aba-a234-19c1c4e0104f",
     "data": [
       {
-        "text": "How many records are there?",
+        "text": "Activity list",
         "userDefined": false
       }
     ],
@@ -13,10 +13,10 @@
     "updated": 0
   },
   {
-    "id": "9946c713-cd50-430c-b4c4-f1e0e98ceac3",
+    "id": "f5630fdf-6d44-4e5d-ac5c-6dcea81e5af1",
     "data": [
       {
-        "text": "How many records do I have?",
+        "text": "What activities have I logged?",
         "userDefined": false
       }
     ],
@@ -26,10 +26,10 @@
     "updated": 0
   },
   {
-    "id": "8adef809-419e-4393-9bbf-8844d97314d3",
+    "id": "e32cabf9-f86b-4294-b9d4-2a96b14e4cf4",
     "data": [
       {
-        "text": "How many days have I logged?",
+        "text": "List my activities",
         "userDefined": false
       }
     ],
@@ -39,21 +39,23 @@
     "updated": 0
   },
   {
+    "id": "1a10e9ce-76de-46b5-b2a1-f5499428976a",
     "data": [
       {
-        "text": "how many logs do i have",
+        "text": "What activities can I track?",
         "userDefined": false
       }
     ],
     "isTemplate": false,
-    "count": 1,
+    "count": 0,
     "lang": "en",
     "updated": 0
   },
   {
+    "id": "dc85d3c5-5174-4a72-9d02-e2509dc43530",
     "data": [
       {
-        "text": "How many logs do i have",
+        "text": "What activities can I log?",
         "userDefined": false
       }
     ],

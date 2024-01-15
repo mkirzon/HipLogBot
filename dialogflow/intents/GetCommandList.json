@@ -1,12 +1,12 @@
 {
-  "id": "ee9557df-0491-475d-b6b3-d88d4761861b",
-  "name": "Default Welcome Intent",
+  "id": "96b8ed58-4dca-43fd-a6de-aed5659d379a",
+  "name": "GetCommandList",
   "auto": true,
   "contexts": [],
   "responses": [
     {
       "resetContexts": false,
-      "action": "input.welcome",
+      "action": "",
       "affectedContexts": [],
       "parameters": [],
       "messages": [
@@ -15,11 +15,6 @@
           "title": "",
           "textToSpeech": "",
           "lang": "en",
-          "speech": [
-            "Hello! How can I help you?",
-            "Good day! What can I do for you today?",
-            "Greetings! How can I assist?"
-          ],
           "condition": ""
         }
       ],
@@ -27,14 +22,10 @@
     }
   ],
   "priority": 500000,
-  "webhookUsed": false,
+  "webhookUsed": true,
   "webhookForSlotFilling": false,
   "fallbackIntent": false,
-  "events": [
-    {
-      "name": "WELCOME"
-    }
-  ],
+  "events": [],
   "conditionalResponses": [],
   "condition": "",
   "conditionalFollowupEvents": []

@@ -1,0 +1,40 @@
+[
+  {
+    "id": "51c552a1-84e1-421c-92d8-90cd3796f739",
+    "data": [
+      {
+        "text": "What pains are already in the system?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "fb7ef73a-5b8d-4f29-9e34-6f8c12a55532",
+    "data": [
+      {
+        "text": "What symptoms have I logged before?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "data": [
+      {
+        "text": "What symtpoms have i logged",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  }
+]

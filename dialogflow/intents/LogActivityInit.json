@@ -1,13 +1,18 @@
 {
-  "id": "ee9557df-0491-475d-b6b3-d88d4761861b",
-  "name": "Default Welcome Intent",
+  "id": "6b484a91-d1e2-4488-b9a4-2c3d660578f2",
+  "name": "LogActivityInit",
   "auto": true,
   "contexts": [],
   "responses": [
     {
       "resetContexts": false,
-      "action": "input.welcome",
-      "affectedContexts": [],
+      "action": "",
+      "affectedContexts": [
+        {
+          "name": "Activity",
+          "lifespan": 5
+        }
+      ],
       "parameters": [],
       "messages": [
         {
@@ -16,9 +21,7 @@
           "textToSpeech": "",
           "lang": "en",
           "speech": [
-            "Hello! How can I help you?",
-            "Good day! What can I do for you today?",
-            "Greetings! How can I assist?"
+            "Great, let\u0027s log an activity! What did you do and when?"
           ],
           "condition": ""
         }
@@ -30,11 +33,7 @@
   "webhookUsed": false,
   "webhookForSlotFilling": false,
   "fallbackIntent": false,
-  "events": [
-    {
-      "name": "WELCOME"
-    }
-  ],
+  "events": [],
   "conditionalResponses": [],
   "condition": "",
   "conditionalFollowupEvents": []

@@ -1,13 +1,18 @@
 {
-  "id": "ee9557df-0491-475d-b6b3-d88d4761861b",
-  "name": "Default Welcome Intent",
+  "id": "1e26155a-3d0f-45d5-b673-a2a630677692",
+  "name": "LogSymptomInit",
   "auto": true,
   "contexts": [],
   "responses": [
     {
       "resetContexts": false,
-      "action": "input.welcome",
-      "affectedContexts": [],
+      "action": "",
+      "affectedContexts": [
+        {
+          "name": "await-symptom-info",
+          "lifespan": 1
+        }
+      ],
       "parameters": [],
       "messages": [
         {
@@ -16,9 +21,7 @@
           "textToSpeech": "",
           "lang": "en",
           "speech": [
-            "Hello! How can I help you?",
-            "Good day! What can I do for you today?",
-            "Greetings! How can I assist?"
+            "Great. To log a symptom, use this format: [symptom] [severity 0-3] [when/date]"
           ],
           "condition": ""
         }
@@ -30,11 +33,7 @@
   "webhookUsed": false,
   "webhookForSlotFilling": false,
   "fallbackIntent": false,
-  "events": [
-    {
-      "name": "WELCOME"
-    }
-  ],
+  "events": [],
   "conditionalResponses": [],
   "condition": "",
   "conditionalFollowupEvents": []

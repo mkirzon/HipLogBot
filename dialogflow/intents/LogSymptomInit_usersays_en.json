@@ -1,0 +1,28 @@
+[
+  {
+    "id": "4977bd9b-a76f-4215-bedd-5f36a0462dfb",
+    "data": [
+      {
+        "text": "Log a symptom",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "24811858-7261-49a0-92da-18311a384556",
+    "data": [
+      {
+        "text": "log a symptom",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "lang": "en",
+    "updated": 0
+  }
+]

@@ -1,12 +1,14 @@
 {
-  "id": "ee9557df-0491-475d-b6b3-d88d4761861b",
-  "name": "Default Welcome Intent",
+  "id": "1b2ede41-ab54-41c0-8216-49cdbda369bc",
+  "name": "LogSymptom - no",
   "auto": true,
-  "contexts": [],
+  "contexts": [
+    "LogSymptom-followup"
+  ],
   "responses": [
     {
       "resetContexts": false,
-      "action": "input.welcome",
+      "action": "LogSymptom.LogSymptom-no",
       "affectedContexts": [],
       "parameters": [],
       "messages": [
@@ -16,9 +18,7 @@
           "textToSpeech": "",
           "lang": "en",
           "speech": [
-            "Hello! How can I help you?",
-            "Good day! What can I do for you today?",
-            "Greetings! How can I assist?"
+            "Alright then, all done with logging your symptoms."
           ],
           "condition": ""
         }
@@ -30,11 +30,7 @@
   "webhookUsed": false,
   "webhookForSlotFilling": false,
   "fallbackIntent": false,
-  "events": [
-    {
-      "name": "WELCOME"
-    }
-  ],
+  "events": [],
   "conditionalResponses": [],
   "condition": "",
   "conditionalFollowupEvents": []

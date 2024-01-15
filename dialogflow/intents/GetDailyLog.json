@@ -10,12 +10,12 @@
       "affectedContexts": [],
       "parameters": [
         {
-          "id": "aaae7958-a4cb-4137-8643-4b278e824a10",
+          "id": "5e7b4ed4-aafb-40d9-bb01-6000e72c7cbe",
           "name": "date",
-          "required": false,
+          "required": true,
           "dataType": "@sys.date",
           "value": "$date",
-          "defaultValue": "",
+          "defaultValue": "today",
           "isList": false,
           "prompts": [],
           "promptMessages": [],
