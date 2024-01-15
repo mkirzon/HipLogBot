@@ -26,7 +26,9 @@ class Executor:
 
         # Known errors: return a polished error message for handled error types
         except ValueError as e:  # noqa
-            logger.error(f"Caught error: {e}")
+            logger.error(f"Caught ValueError: {e}")
+            error_occurred = True
+
             traceback.print_exc()
             # TODO: change
             if "Unsupported intent" in str(e):
@@ -37,15 +39,13 @@ class Executor:
             else:
                 raise
 
-                error_occurred = True
-
         # Entirely unknown errors but "caught" within executor (as oppose to even
         # broader error from main.py)
         except Exception:
+            logger.error(f"Caught unknown exception: {e}")
+            error_occurred = True
             traceback.print_exc()
             res = "Something went wrong. Try a different way or type 'help'"
-
-            error_occurred = True
 
         # Include trace and error in logs
         finally:

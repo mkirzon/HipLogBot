@@ -1,5 +1,6 @@
 import logging
 import os
+from typing import List
 from firebase_admin import firestore
 from models.daily_log import DailyLog
 from utils import is_valid_date_format
@@ -107,7 +108,7 @@ class HipLogDB:
         stats = {}
 
         # Stat 1: total num
-        # TODO need to filte ron the contents of the keys of thea ctiviteis
+        # TODO need to filter on the contents of the keys of the activities
         query = self._get_user_dailylogs_ref(user).order_by(
             f"activities.{activity_name}"
         )
@@ -119,12 +120,38 @@ class HipLogDB:
 
         return stats
 
+    def get_activity_list_by_user(self, user: str) -> List[str]:
+        """Get a list of activities for a user
+
+        TODO:
+            * This is highly inefficient and requires downloading each document for a
+            user and should instead be handled with a user attribute that's maintained
+            on each upload
+        """
+        # Get all the daily logs for the user
+        daily_logs_ref = self._get_user_dailylogs_ref(user).stream()
+
+        # Set to store unique activities
+        unique_activities_set = set()
+
+        # Iterate over daily logs and extract activities
+        for daily_log in daily_logs_ref:
+            activities_map = daily_log.get("activities")
+
+            # Add activities to the set
+            unique_activities_set.update(activities_map.keys())
+
+        return list(unique_activities_set)
+
     def get_num_logs_by_user(self, user: str) -> int:
         return self._get_user_dailylogs_ref(user).count().get()[0][0].value
 
     # Private methods
     def _get_user_log_ref(self, user: str, date: str):
+        """Get reference to a user's single day log"""
+
         return self._get_user_dailylogs_ref(user).document(date)
 
     def _get_user_dailylogs_ref(self, user: str):
+        """Get reference to all daily logs for a user"""
         return self._collection.document(user).collection("DailyLogs")
