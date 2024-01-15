@@ -8,9 +8,9 @@ class SupportedIntents(Enum):
         "Log an activity",
         "I did yoga today, I did 10 pullups, I held plank for 30 seconds",
     )
-    LogPain = (
-        "LogPain",
-        "Log a pain (on a scale of 1 to 3)",
+    LogSymptom = (
+        "LogSymptom",
+        "Log a symptom with its severity (on a scale of 0 to 3)",
         "Left hip 1, Right knee high, Left leg none today",
     )
     GetDailyLog = (

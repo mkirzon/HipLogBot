@@ -8,9 +8,9 @@ logger = logging.getLogger(__name__)
 
 class Record:
     """
-    Base class for records to share by Activities/Pains/etc
+    Base class for records to share (eg by Activities/Symptoms/etc)
 
-    A generic object to store a name (eg Activity name, a Pain body part) + any number
+    A generic object to store a name (eg Activity name, a symptom location) + any number
     of attributes. The point of the Base class is to share generic methods for
     initialization, printing, properties
     """
@@ -190,7 +190,7 @@ class Activity(Record):
         "Shoulder press 2 sets: 10x 12kg, 8x 10kg"
         """
 
-        return f"{self.name} {len(self.sets)} sets: " + ", ".join(
+        return f"{self.name.title()} {len(self.sets)} sets: " + ", ".join(
             [s.__str__() for s in self.sets]
         )
 
@@ -226,24 +226,24 @@ class Activity(Record):
         return result
 
 
-class Pain(Record):
+class Symptom(Record):
     ALLOWED_LEVELS = [0, 1, 2, 3]
 
-    def __init__(self, name, level: int):
+    def __init__(self, name, severity: int):
         super().__init__(name)
 
-        if level not in self.ALLOWED_LEVELS:
+        if severity not in self.ALLOWED_LEVELS:
             raise ValueError(
-                f"Invalid pain level: {level}. Allowed levels are: {', '.join(map(str, self.ALLOWED_LEVELS))}"  # noqa
+                f"Invalid severity: {severity}. Allowed severities are: {', '.join(map(str, self.ALLOWED_LEVELS))}"  # noqa
             )
-        self.level = level
+        self.severity = severity
 
     # Magic methods
     def __str__(self):
-        """Print method for a Pain
+        """Print method for a Symptom
 
         Sample to demonstrate format:
         "Left hip: 3"
         """
 
-        return f"{self.name}: {self.level}"
+        return f"{self.name.title()}: {self.severity}"

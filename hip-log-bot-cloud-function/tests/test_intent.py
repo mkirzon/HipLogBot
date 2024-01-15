@@ -71,15 +71,15 @@ def sample_requests():
                 "intent": {"displayName": "LogActivity"},
             }
         },
-        "LogPain_1": {
+        "LogSymptom_1": {
             "queryResult": {
                 "parameters": {
-                    "pain_level": "2",
-                    "body_part": "Left hip",
+                    "severity": "2",
+                    "symptom": "Left hip",
                     "date": "2023-08-31T12:00:00+01:00",
                 },
                 "intent": {
-                    "displayName": "LogPain",
+                    "displayName": "LogSymptom",
                 },
             }
         },
@@ -114,7 +114,7 @@ def test_intent_init_for_activity_name_only(sample_requests):
         "date": "2023-07-24T12:00:00+01:00",
         "activity": "Yoga",
     }
-    assert intent._log_input == {"name": "Yoga", "sets": [{"reps": 1}]}
+    assert intent._log_input == {"name": "yoga", "sets": [{"reps": 1}]}
     assert intent._date == "2023-07-24"
     assert intent._user == "23970740102517391"
 
@@ -122,7 +122,7 @@ def test_intent_init_for_activity_name_only(sample_requests):
 def test_intent_init_for_activity_with_sets(sample_requests):
     intent = Intent(sample_requests["LogActivity_with_sets"])
     assert intent._log_input == {
-        "name": "Curls",
+        "name": "curls",
         "sets": [
             {"reps": 3, "weight": {"amount": 12, "unit": "kg"}},
             {"reps": 10, "weight": {"amount": 10, "unit": "kg"}},
@@ -203,15 +203,15 @@ def test_intent_init_user_info_missing():
 def test_intent_init_with_weight(sample_requests):
     intent = Intent(sample_requests["LogActivity_with_weight"])
     assert intent.log_input == {
-        "name": "Hip Adductions",
+        "name": "hip adductions",
         "sets": [{"reps": 1, "weight": {"amount": 10, "unit": "kg"}, "duration": ""}],
     }
 
 
-def test_intent_init_for_pain(sample_requests):
-    intent = Intent(sample_requests["LogPain_1"])
+def test_intent_init_for_Symptom(sample_requests):
+    intent = Intent(sample_requests["LogSymptom_1"])
     assert intent._date == "2023-08-31"
-    assert intent._log_input == {"name": "Left Hip", "level": 2}
+    assert intent._log_input == {"name": "left hip", "severity": 2}
 
 
 def test_intent_init_for_get_daily_log(sample_requests):
@@ -270,7 +270,7 @@ def test_intent_properties(sample_requests):
     intent = Intent(sample_requests["LogActivity_1"])
     assert intent.type == "LogActivity"
     assert intent.entity == {"date": "2023-07-24T12:00:00+01:00", "activity": "Yoga"}
-    assert intent.log_input == {"name": "Yoga", "sets": [{"reps": 1}]}
+    assert intent.log_input == {"name": "yoga", "sets": [{"reps": 1}]}
     assert intent.date == "2023-07-24"
 
 

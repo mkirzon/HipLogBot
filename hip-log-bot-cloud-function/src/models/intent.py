@@ -12,7 +12,7 @@ class Intent:
     expected by the python API (eg to initialize logs and Activities).
 
     Some of the transformations it may do are:
-    * Capitalize activity/pain names
+    * Capitalize names
     * others?
 
     """
@@ -103,12 +103,12 @@ class Intent:
 
     def _extract_log_input(self):
         """Parse the raw entity dict into the dict input that matches the dict
-        initialization format of the Activity/Pain/Record classes
+        initialization format of the Record classes
 
         This sets the _log_input attribute, which aligns the names and types:
         * 'date' is removed
-        * 'acitivity' or 'body_part' will be renamed to 'name'
-        * 'pain_level' will be renamed to 'level' and cast to int
+        * 'activity' or 'symptom' will be renamed to 'name'
+        * 'severity' will be cast to int
         * Any attributes that are empty (strings), will be skipped
 
         Raises:
@@ -123,7 +123,7 @@ class Intent:
         # Extract date for date-based activities
         if self.type in [
             SupportedIntents.LogActivity,
-            SupportedIntents.LogPain,
+            SupportedIntents.LogSymptom,
             SupportedIntents.GetDailyLog,
             SupportedIntents.DeleteDailyLog,
         ]:
@@ -138,7 +138,7 @@ class Intent:
 
         # Now do the processing. In some cases, intent keys/vals need to be renamed
         if self.type == SupportedIntents.LogActivity:
-            self._log_input["name"] = self._raw_entity["activity"].title()
+            self._log_input["name"] = self._raw_entity["activity"].lower()
 
             # Prepare the set dicts from the individaul arrays of reps/durations/weights
             self._log_input["sets"] = []
@@ -169,12 +169,12 @@ class Intent:
             else:
                 self._log_input["sets"].append({"reps": 1})
 
-        elif self.type == SupportedIntents.LogPain:
-            self._log_input["name"] = self._raw_entity["body_part"].title()
-            self._log_input["level"] = int(self._raw_entity["pain_level"])
+        elif self.type == SupportedIntents.LogSymptom:
+            self._log_input["name"] = self._raw_entity["symptom"].lower()
+            self._log_input["severity"] = int(self._raw_entity["severity"])
 
         elif self.type == SupportedIntents.GetActivitySummary:
-            self._log_input["name"] = self._raw_entity["activity"].title()
+            self._log_input["name"] = self._raw_entity["activity"].lower()
 
         elif self.type in [
             SupportedIntents.DeleteDailyLog,
