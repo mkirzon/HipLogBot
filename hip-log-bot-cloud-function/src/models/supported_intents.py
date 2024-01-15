@@ -25,13 +25,18 @@ class SupportedIntents(Enum):
     )
     GetActivityList = (
         "GetActivityList",
-        "Get a list of previously created activities",
+        "Get a list of previously logged activities",
         "List my activities. What activities have I logged?",
     )
     GetActivitySummary = (
         "GetActivitySummary",
         "Get an activity's summary",
         "Show me my pushup stats, What’s my cycling history?",
+    )
+    GetSymptomList = (
+        "GetSymptomList",
+        "Get a list of previously logged symptoms",
+        "List my symptoms. What symptoms have I logged?",
     )
     DeleteDailyLog = (
         "DeleteDailyLog",

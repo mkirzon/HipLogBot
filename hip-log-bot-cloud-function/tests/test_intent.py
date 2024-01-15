@@ -92,12 +92,28 @@ def sample_requests():
                 },
             }
         },
-        "get_activity_summary": {
+        "GetActivitySummary_1": {
             "queryResult": {
                 "parameters": {"activity": "Yoga"},
                 "intent": {
                     "name": "projects/hip-log-bot/agent/intents/0a2df690-4073-45f6-8a55-6111a98bda0d",  # noqa
                     "displayName": "GetActivitySummary",
+                },
+            }
+        },
+        "GetSymptomList_1": {
+            "queryResult": {
+                "parameters": {},
+                "intent": {
+                    "displayName": "GetSymptomList",
+                },
+            }
+        },
+        "GetActivityList_1": {
+            "queryResult": {
+                "parameters": {},
+                "intent": {
+                    "displayName": "GetActivityList",
                 },
             }
         },
@@ -221,8 +237,18 @@ def test_intent_init_for_get_daily_log(sample_requests):
 
 
 def test_intent_init_for_get_activity_summary(sample_requests):
-    intent = Intent(sample_requests["get_activity_summary"])
+    intent = Intent(sample_requests["GetActivitySummary_1"])
     assert intent.type == "GetActivitySummary"
+
+
+def test_intent_init_for_get_symptom_list(sample_requests):
+    intent = Intent(sample_requests["GetSymptomList_1"])
+    assert intent.type == "GetSymptomList"
+
+
+def test_intent_init_for_get_activity_list(sample_requests):
+    intent = Intent(sample_requests["GetActivityList_1"])
+    assert intent.type == "GetActivityList"
 
 
 def test_intent_init_for_get_num_logs():

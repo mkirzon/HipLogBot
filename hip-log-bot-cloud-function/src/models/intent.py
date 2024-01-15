@@ -182,6 +182,7 @@ class Intent:
             SupportedIntents.GetNumLogs,
             SupportedIntents.GetCommandList,
             SupportedIntents.GetActivityList,
+            SupportedIntents.GetSymptomList,
         ]:
             logger.debug("Skipping any log input parsing for this intent")
             pass

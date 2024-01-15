@@ -4,7 +4,7 @@ import os
 import re
 import firebase_admin
 from models.daily_log import DailyLog
-from models.record import Activity
+from models.record import Activity, Symptom
 from services.hiplogdb import HipLogDB
 import utils
 from firebase_admin import firestore
@@ -185,11 +185,11 @@ def test_multiple_multisets(conn):
     )
 
 
-def test_simple_symptom_log(conn):
+def test_simple_symptom_log(conn, caplog):
     request = {
         "queryResult": {
             "parameters": {
-                "symptom": "left ankle",
+                "symptom": "Left ankle",  # deliberate cases
                 "severity": "1",
                 "date": "2023-11-06T12:00:00Z",
             },
@@ -201,6 +201,7 @@ def test_simple_symptom_log(conn):
     res = executor.run()
 
     assert re.search("1x symptom records", res)
+    assert "{'left ankle'" in caplog.text
 
 
 def test_get_activity_summary(conn):
@@ -219,7 +220,7 @@ def test_get_activity_summary(conn):
     assert "Summary Stats" in res
 
 
-def test_get_activity_list_by_user(conn):
+def test_get_activity_list_by_user(conn, reset_testuser):
     # TODO: replace this with a dummy user upload at the beginning of all tests
     log_data = [
         ("2023-01-01", "A"),
@@ -246,6 +247,35 @@ def test_get_activity_list_by_user(conn):
     res = executor.run()
 
     assert "Here are the activities you've previously logged:\nA,\nB,\nC" == res
+
+
+def test_get_symptom_list(conn):
+    # TODO: replace this with a dummy user upload at the beginning of all tests
+    log_data = [
+        ("2023-01-01", "A", 1),
+        ("2023-01-02", "C", 2),
+        ("2023-01-06", "B", 3),
+    ]
+
+    for date, symptom, severity in log_data:
+        HipLogDB().upload_log(
+            utils.test_username,
+            DailyLog(date=date, symptoms=[Symptom(symptom, severity)]),
+        )
+
+    request = {
+        "queryResult": {
+            "parameters": {},
+            "intent": {
+                "displayName": "GetSymptomList",
+            },
+        }
+    }
+
+    executor = Executor(request)
+    res = executor.run()
+
+    assert "Here are the symptoms you've previously logged:\nA,\nB,\nC" == res
 
 
 def test_catch_mismatch_error_on_run(conn, caplog):

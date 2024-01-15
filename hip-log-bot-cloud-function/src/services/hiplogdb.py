@@ -145,6 +145,33 @@ class HipLogDB:
         res.sort()
         return res
 
+    def get_symptom_list_by_user(self, user: str) -> List[str]:
+        """Get a list of symptoms for a user
+
+        TODO:
+            * This is highly inefficient and requires downloading each document for a
+            user and should instead be handled with a user attribute that's maintained
+            on each upload
+        """
+        # Get all the daily logs for the user
+        daily_logs_ref = self._get_user_dailylogs_ref(user).stream()
+
+        # Set to store unique symptoms
+        unique_symptoms_set = set()
+
+        # Iterate over daily logs and extract symptoms
+        for daily_log in daily_logs_ref:
+            logger.debug(f"Reading symptoms from doc: {daily_log.get('')}")
+            symptoms_map = daily_log.get("symptoms")
+            # TODO: need to handle if there's no symptoms in a dailylog
+
+            # Add symptoms to the set
+            unique_symptoms_set.update(symptoms_map.keys())
+
+        res = list(unique_symptoms_set)
+        res.sort()
+        return res
+
     def get_num_logs_by_user(self, user: str) -> int:
         return self._get_user_dailylogs_ref(user).count().get()[0][0].value
 
