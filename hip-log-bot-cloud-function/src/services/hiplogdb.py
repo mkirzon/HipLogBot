@@ -136,7 +136,9 @@ class HipLogDB:
 
         # Iterate over daily logs and extract activities
         for daily_log in daily_logs_ref:
-            activities_map = daily_log.get("activities")
+            daily_log_dict = daily_log.get("")
+            logger.debug(f"Reading doc: {daily_log_dict}")
+            activities_map = daily_log_dict.get("activities", {})
 
             # Add activities to the set
             unique_activities_set.update(activities_map.keys())
@@ -164,7 +166,6 @@ class HipLogDB:
             daily_log_dict = daily_log.get("")
             logger.debug(f"Reading symptoms from doc: {daily_log_dict}")
             symptoms_map = daily_log_dict.get("symptoms", {})
-            # TODO: need to handle if there's no symptoms in a dailylog
 
             # Add symptoms to the set
             unique_symptoms_set.update(symptoms_map.keys())
