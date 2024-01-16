@@ -161,8 +161,9 @@ class HipLogDB:
 
         # Iterate over daily logs and extract symptoms
         for daily_log in daily_logs_ref:
-            logger.debug(f"Reading symptoms from doc: {daily_log.get('')}")
-            symptoms_map = daily_log.get("symptoms")
+            daily_log_dict = daily_log.get("")
+            logger.debug(f"Reading symptoms from doc: {daily_log_dict}")
+            symptoms_map = daily_log_dict.get("symptoms", {})
             # TODO: need to handle if there's no symptoms in a dailylog
 
             # Add symptoms to the set

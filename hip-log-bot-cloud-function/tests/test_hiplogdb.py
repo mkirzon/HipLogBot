@@ -188,7 +188,18 @@ def test_get_symptom_list_by_user(conn, reset_testuser, db):
     }
 
 
-@pytest.mark.skip(reason="TODO")
 def test_get_symptom_list_by_user_missing_symptom(conn, reset_testuser, db):
     # Upload an item directly that is missing 'symptoms' among its attributes.
-    pass
+    date = "2023-11-05"
+    legacy_doc = {
+        "activity_notes": None,
+        "date": date,
+        "pain_notes": None,
+        "activities": {"Pullups": {"sets": [{"reps": 2}, {"reps": 3}]}},
+        "pains": {},
+    }
+    db._get_user_log_ref(utils.test_username, date).set(legacy_doc)
+
+    # Test that you can still get symptoms
+    symptom_list = db.get_symptom_list_by_user(utils.test_username)
+    assert isinstance(symptom_list, list)
