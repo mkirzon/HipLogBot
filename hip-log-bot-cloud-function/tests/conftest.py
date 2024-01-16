@@ -23,3 +23,5 @@ def reset_testuser():
     for doc in docs:
         print(f"Deleting doc {doc.id} => {doc.to_dict()}")
         doc.reference.delete()
+
+    # TODO: reset any other attributes beyond DailyLogs
